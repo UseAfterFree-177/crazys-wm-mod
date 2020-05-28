@@ -38,7 +38,7 @@ bool WorkFarmer(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.disobey_check(actiontype, JOB_FARMER))			// they refuse to work
 	{
 		ss << "${name} refused to work during the " << (Day0Night1 ? "night" : "day") << " shift.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked tending crops on the farm.\n \n";
@@ -231,7 +231,7 @@ bool WorkFarmer(sGirl& girl, bool Day0Night1, cRng& rng)
 	cGirls::PossiblyGainNewTrait(&girl, "Tough", 50, actiontype, "Working in the heat of the sun has made ${name} rather Tough.", Day0Night1);
 
 	// Push out the turn report
-	girl.m_Events.AddMessage(ss.str(), imagetype, msgtype);
+	girl.AddMessage(ss.str(), imagetype, msgtype);
 
 #pragma endregion
 	return false;

@@ -40,7 +40,7 @@ bool WorkCombatTraining(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.disobey_check(actiontype, JOB_FIGHTTRAIN))			// they refuse to work
 	{
 		ss << "${name} refused to work during the " << (Day0Night1 ? "night" : "day") << " shift.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} trains for combat.\n \n";
@@ -276,7 +276,7 @@ bool WorkCombatTraining(sGirl& girl, bool Day0Night1, cRng& rng)
     girl.upd_Enjoyment(actiontype, enjoy);
     girl.upd_Enjoyment(actiontype2, enjoy);
 
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_COMBAT, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_COMBAT, Day0Night1);
 	brothel->m_Filthiness += 2;	// fighting is dirty
 	if (girl.is_unpaid()) { wages = 0; }
 	else { wages = 25 + (skill * 5); } // `J` Pay her more if she learns more

@@ -248,7 +248,7 @@ bool cMissionKidnap::kidnap(sGang& gang, std::stringstream& ss, sGirl& girl)
 
     if (captured)
     {
-        girl.m_Events.AddMessage(NGmsg.str(), girlimagetype, eventtype);
+        girl.AddMessage(NGmsg.str(), girlimagetype, eventtype);
         g_Game->dungeon().AddGirl(&girl, dungeonreason);
         gang.BoostStat(STAT_INTELLIGENCE);
     }

@@ -33,7 +33,7 @@ bool WorkIntern(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.has_active_trait("AIDS"))
 	{
 		ss << "Health laws prohibit anyone with AIDS from working in the Medical profession so ${name} was sent to the waiting room.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
         girl.FullJobReset(JOB_CLINICREST);
 		return false;
 	}
@@ -42,14 +42,14 @@ bool WorkIntern(sGirl& girl, bool Day0Night1, cRng& rng)
 		ss << "There is nothing more she can learn here so she is promoted to ";
 		if (girl.is_slave())	{ ss << "Nurse.";	girl.m_DayJob = girl.m_NightJob = JOB_NURSE; }
 		else /*            */	{ ss << "Doctor.";	girl.m_DayJob = girl.m_NightJob = JOB_DOCTOR; }
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_GOODNEWS);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_GOODNEWS);
 		return false;	// not refusing
 	}
 
 	if (girl.disobey_check(actiontype, JOB_INTERN))			// they refuse to work
 	{
 		ss << "${name} refused to work during the " << (Day0Night1 ? "night" : "day") << " shift.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} trains in the Medical field.\n \n";
@@ -169,7 +169,7 @@ bool WorkIntern(sGirl& girl, bool Day0Night1, cRng& rng)
 	else /*             */	{ enjoy += rng % 2;		ss << "Otherwise, the shift passed uneventfully."; }
     girl.upd_Enjoyment(actiontype, enjoy);
 
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
 
 	if (girl.is_unpaid()) { wages = 0; }
 	else { wages = 25 + (skill * 5); } // `J` Pay her more if she learns more
@@ -192,7 +192,7 @@ bool WorkIntern(sGirl& girl, bool Day0Night1, cRng& rng)
 		ss << "${name} has completed her Internship and has been promoted to ";
 		if (girl.is_slave())	{ ss << "Nurse.";	girl.m_DayJob = girl.m_NightJob = JOB_NURSE; }
 		else /*            */	{ ss << "Doctor.";	girl.m_DayJob = girl.m_NightJob = JOB_DOCTOR; }
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_GOODNEWS);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_GOODNEWS);
 	}
 
 	return false;

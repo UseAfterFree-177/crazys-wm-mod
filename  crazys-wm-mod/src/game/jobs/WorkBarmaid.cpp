@@ -39,21 +39,21 @@ bool WorkBarmaid(sGirl& girl, bool Day0Night1, cRng& rng)
 	{
 		ss << "${name} let lust get the better of her and she ended up missing her " << (Day0Night1 ? "night" : "day") << " shift.";
 		girl.upd_temp_stat(STAT_LIBIDO, -20);
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_MAST, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_MAST, EVENT_NOWORK);
 		return true;
 	}
 	else if (girl.disobey_check(actiontype, JOB_BARMAID))
 	{
 		//Making mssg more informative (what was refused?)
 		ss << "${name} refused to work as a barmaid in your bar " << (Day0Night1 ? "tonight." : "today.");
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	else if (brothel->m_TotalCustomers < 1)
 	{
 		ss << "There were no customers in the bar on the " << (Day0Night1 ? "night" : "day") << " shift so ${name} just cleaned up a bit.";
 		brothel->m_Filthiness -= 20 + girl.service() * 2;
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return false;
 	}
 	ss << "${name} worked as a barmaid.\n \n";
@@ -847,7 +847,7 @@ bool WorkBarmaid(sGirl& girl, bool Day0Night1, cRng& rng)
 	brothel->m_Fame += Bfame;
 	brothel->m_Filthiness += Bfilth;
 
-	girl.m_Events.AddMessage(ss.str(), imagetype, msgtype);
+	girl.AddMessage(ss.str(), imagetype, msgtype);
 
 
 	// Improve stats

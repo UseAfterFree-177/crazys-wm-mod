@@ -31,21 +31,21 @@ bool WorkDoctor(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.has_active_trait("AIDS"))
 	{
 		ss << "Health laws prohibit anyone with AIDS from working in the Medical profession so ${name} was sent to the waiting room.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
 		girl.m_PrevDayJob = girl.m_PrevNightJob = girl.m_DayJob = girl.m_NightJob = JOB_CLINICREST;
 		return false;
 	}
 	if (girl.is_slave())
 	{
 		ss << "Slaves are not allowed to be Doctors so ${name} was reassigned to being a Nurse.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
 		girl.m_PrevDayJob = girl.m_PrevNightJob = girl.m_DayJob = girl.m_NightJob = JOB_NURSE;
 		return false;
 	}
 	if (girl.medicine() < 50 || girl.intelligence() < 50)
 	{
 		ss << "${name} does not have enough training to work as a Doctor. She has been reassigned to Internship so she can learn what she needs.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
 		girl.m_PrevDayJob = girl.m_PrevNightJob = girl.m_DayJob = girl.m_NightJob = JOB_INTERN;
 		return false;
 	}
@@ -54,7 +54,7 @@ bool WorkDoctor(sGirl& girl, bool Day0Night1, cRng& rng)
 		if (girl.disobey_check(actiontype, JOB_DOCTOR))			// they refuse to work
 		{
 			ss << "${name} refused to work during the " << (Day0Night1 ? "night" : "day") << " shift.";
-			girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+			girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 			return true;
 		}
 	}
@@ -95,7 +95,7 @@ bool WorkDoctor(sGirl& girl, bool Day0Night1, cRng& rng)
 		ss << "Otherwise, the shift passed uneventfully.\n";
 	}
 
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
 	patients += (int)(jobperformance / 10);		// `J` 1 patient per 10 point of performance
 
 	/* `J` this will be a place holder until a better payment system gets done
@@ -109,7 +109,7 @@ bool WorkDoctor(sGirl& girl, bool Day0Night1, cRng& rng)
 	brothel->m_Finance.clinic_income(earned);
 	ss.str("");
 	ss << "${name} earned " << earned << " gold from taking care of " << patients << " patients.\n";
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
 
 	wages += (patients * 10);
 	girl.m_Tips = max(0, tips);

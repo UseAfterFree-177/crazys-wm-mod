@@ -38,7 +38,7 @@ bool WorkBarStripper(sGirl& girl, bool Day0Night1, cRng& rng)
 	{
 		//SIN - More informative mssg to show *what* she refuses
 		ss << "${name} refused to strip off in front of the creeps in your club " << (Day0Night1 ? "tonight." : "today.");
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked as a stripper in the club.\n \n";
@@ -428,7 +428,7 @@ bool WorkBarStripper(sGirl& girl, bool Day0Night1, cRng& rng)
 		if (girl.has_active_trait("Shroud Addict"))		    girl.add_item(g_Game->inventory_manager().GetItem("Shroud Mushroom"));
 		if (girl.has_active_trait("Fairy Dust Addict"))	    girl.add_item(g_Game->inventory_manager().GetItem("Fairy Dust"));
 		if (girl.has_active_trait("Viras Blood Addict"))	    girl.add_item(g_Game->inventory_manager().GetItem("Vira Blood"));
-		girl.m_Events.AddMessage(warning, IMGTYPE_ORAL, EVENT_WARNING);
+		girl.AddMessage(warning, IMGTYPE_ORAL, EVENT_WARNING);
 	}
 
 	if (girl.is_pregnant())
@@ -483,7 +483,7 @@ bool WorkBarStripper(sGirl& girl, bool Day0Night1, cRng& rng)
 
 
     girl.upd_Enjoyment(actiontype, enjoy);
-	girl.m_Events.AddMessage(ss.str(), imagetype, msgtype);
+	girl.AddMessage(ss.str(), imagetype, msgtype);
 
 
 	int roll_max = (girl.beauty() + girl.charisma());

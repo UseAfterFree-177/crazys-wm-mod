@@ -38,7 +38,7 @@ bool WorkSleazyWaitress(sGirl& girl, bool Day0Night1, cRng& rng)
 	{
 		//SIN - More informative mssg to show *what* she refuses
 		ss << "${name} refused to be a waitress for the creeps in your strip club " << (Day0Night1 ? "tonight." : "today.");
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} is instructed to work at your sleazy restaurant as a waitress. She is informed that the customers here want good service, but they chose this place because of the promise of attractive women in skimpy clothing. If she wants to be successful, she will need to impress them with her body as well as her service.\n \n";
@@ -566,7 +566,7 @@ bool WorkSleazyWaitress(sGirl& girl, bool Day0Night1, cRng& rng)
         girl.upd_Enjoyment(ACTION_SEX, -2);
 		girl.spirit(-2);
 		imagetype = IMGTYPE_GROUP;
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_GROUP, EVENT_DANGER);
+		girl.AddMessage(ss.str(), IMGTYPE_GROUP, EVENT_DANGER);
 		if (girl.lose_trait("Virgin"))
 		{
 			ss << "\nShe is no longer a virgin.\n";
@@ -732,7 +732,7 @@ bool WorkSleazyWaitress(sGirl& girl, bool Day0Night1, cRng& rng)
 	girl.handjob(hand);
 	girl.anal(anal);
     girl.upd_Enjoyment(actiontype, enjoy);
-	girl.m_Events.AddMessage(ss.str(), imagetype, Day0Night1);
+	girl.AddMessage(ss.str(), imagetype, Day0Night1);
 
 	// Improve stats
 	int xp = 15, skill = 3;

@@ -39,7 +39,7 @@ bool WorkComunityService(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.disobey_check(actiontype, JOB_COMUNITYSERVICE))			// they refuse to work
 	{
 		ss << "${name} refused to work during the " << (Day0Night1 ? "night" : "day") << " shift.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked doing community service.\n \n";
@@ -194,13 +194,13 @@ bool WorkComunityService(sGirl& girl, bool Day0Night1, cRng& rng)
 	girl.m_Pay = max(0, wages);
 
     g_Game->player().disposition(dispo);
-	girl.m_Events.AddMessage(ss.str(), imagetype, msgtype);
+	girl.AddMessage(ss.str(), imagetype, msgtype);
 
 	help += (int)(jobperformance / 10);		//  1 helped per 10 point of performance
 
 	ss.str("");
 	ss << "${name} helped " << help << " people today.";
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
 
 	// Improve stats
 	int xp = 10, skill = 3;

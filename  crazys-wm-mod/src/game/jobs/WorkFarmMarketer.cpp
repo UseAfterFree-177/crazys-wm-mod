@@ -40,7 +40,7 @@ bool WorkFarmMarketer(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.disobey_check(actiontype, JOB_MARKETER))			// they refuse to work
 	{
 		ss << "${name} refused to work during the " << (Day0Night1 ? "night" : "day") << " shift.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked as a marketer on the farm.";
@@ -260,7 +260,7 @@ bool WorkFarmMarketer(sGirl& girl, bool Day0Night1, cRng& rng)
 	cGirls::PossiblyGainNewTrait(&girl,		"Psychic",		90, actiontype, "${name} has learned to size up the buyers so well that you'd almost think she was Psychic.", Day0Night1);
 
 	// Push out the turn report
-	girl.m_Events.AddMessage(ss.str(), imagetype, msgtype);
+	girl.AddMessage(ss.str(), imagetype, msgtype);
 
 #pragma endregion
 	return false;

@@ -31,7 +31,7 @@ bool WorkFarmHand(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (roll_a <= 50 && (girl.disobey_check(actiontype, JOB_FARMHAND) || girl.disobey_check(actiontype2, JOB_FARMHAND)))
 	{
 		ss << "${name} refused to work on the farm.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked cleaning and repairing the farm.\n \n";
@@ -133,7 +133,7 @@ bool WorkFarmHand(sGirl& girl, bool Day0Night1, cRng& rng)
 
 
 	// do all the output
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_MAID, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_MAID, Day0Night1);
 	brothel->m_Filthiness -= int(CleanAmt);
 
 	// Money

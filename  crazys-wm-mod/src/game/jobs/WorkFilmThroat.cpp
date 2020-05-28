@@ -161,7 +161,7 @@ bool FilmThroat::CheckRefuseWork(sGirl& girl) {
     if (girl.health() < 20)
     {
         ss << ("The crew refused to film a throatjob scene because ${name} is not healthy enough.\n\"We are NOT filming snuff\".");
-        girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
         return true;
     }
     else if (girl.has_active_trait("Mind Fucked"))
@@ -185,7 +185,7 @@ bool FilmThroat::CheckRefuseWork(sGirl& girl) {
                 girl.pclove(2);
                 girl.spirit(1);
                 girl.pchate(-1);
-                girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+                girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
                 return true;
             }
             else if (g_Game->player().disposition() > -30) //pragmatic
@@ -209,7 +209,7 @@ bool FilmThroat::CheckRefuseWork(sGirl& girl) {
         }
         else // not a slave
         {
-            girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+            girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
             return true;
         }
     }

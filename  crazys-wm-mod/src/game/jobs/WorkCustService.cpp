@@ -37,7 +37,7 @@ bool WorkCustService(sGirl& girl, bool Day0Night1, cRng& rng)
 		//SIN - More informative mssg to show *what* she refuses
 		//ss << " refused to work during the " << (Day0Night1 ? "night" : "day") << " shift.";
 		ss << "${name} refused to provide Customer Service in your brothel " << (Day0Night1 ? "tonight." : "today.");
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked as Customer Service.\n \n";
@@ -127,7 +127,7 @@ bool WorkCustService(sGirl& girl, bool Day0Night1, cRng& rng)
 		else
 		{
 			//If there aren't enough customers to take care of, time to quit.
-			girl.m_Events.AddMessage(girl.FullName() + " ran out of customers to take care of.", IMGTYPE_PROFILE, Day0Night1);
+			girl.AddMessage(girl.FullName() + " ran out of customers to take care of.", IMGTYPE_PROFILE, Day0Night1);
 			break;
 		}
 	}
@@ -145,13 +145,13 @@ bool WorkCustService(sGirl& girl, bool Day0Night1, cRng& rng)
 	string debug = "";
 	debug += ("There were " + intstring(g_Game->GetNumCustomers()) + " customers.\n");
 	debug += ("She could have handled " + intstring(numCusts) + " customers.\n");
-	girl.m_Events.AddMessage(debug, IMGTYPE_PROFILE, EVENT_DEBUG);
+	girl.AddMessage(debug, IMGTYPE_PROFILE, EVENT_DEBUG);
 #endif
 	// Now pay the girl.
 
 	girl.m_Pay += 50;
 	g_Game->gold().staff_wages(50);  // wages come from you
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
 
 	// Raise skills
 	int xp = 5 + (serviced / 5), skill = 2 + (serviced / 10);

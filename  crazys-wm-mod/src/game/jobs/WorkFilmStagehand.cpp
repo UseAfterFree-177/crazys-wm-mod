@@ -33,7 +33,7 @@ bool WorkFilmStagehand(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (roll_a <= 50 && (girl.disobey_check(actiontype, JOB_STAGEHAND) || girl.disobey_check(actiontype2, JOB_STAGEHAND)))
 	{
 		ss << "${name} refused to work as a stagehand today.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked as a stagehand.\n \n";
@@ -131,7 +131,7 @@ bool WorkFilmStagehand(sGirl& girl, bool Day0Night1, cRng& rng)
 	}
 
 
-	girl.m_Events.AddMessage(ss.str(), imagetype, SHIFT_NIGHT);
+	girl.AddMessage(ss.str(), imagetype, SHIFT_NIGHT);
 	if (filming) brothel->m_StagehandQuality += int(jobperformance);
 	brothel->m_Filthiness -= int(CleanAmt);
 	girl.m_Tips = max(0, tips);

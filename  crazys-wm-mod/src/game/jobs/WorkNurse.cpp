@@ -38,7 +38,7 @@ bool WorkNurse(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.has_active_trait("AIDS"))
 	{
 		ss << "Health laws prohibit anyone with AIDS from working in the Medical profession so ${name} was sent to the waiting room.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
         girl.FullJobReset(JOB_CLINICREST);
 		return false;
 	}
@@ -53,7 +53,7 @@ bool WorkNurse(sGirl& girl, bool Day0Night1, cRng& rng)
 			else				ss << "in an empty patient bed.";
 			girl.tiredness(-(rng % 40));
 		}
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked as a nurse.\n \n";
@@ -394,7 +394,7 @@ bool WorkNurse(sGirl& girl, bool Day0Night1, cRng& rng)
 #pragma region	//	Finish the shift			//
 
 
-	girl.m_Events.AddMessage(ss.str(), imagetype, Day0Night1);
+	girl.AddMessage(ss.str(), imagetype, Day0Night1);
 
 	// Money
 	girl.m_Tips = max(0, tips);
@@ -410,7 +410,7 @@ bool WorkNurse(sGirl& girl, bool Day0Night1, cRng& rng)
 	}
 	brothel->m_Finance.clinic_income(earned);
 	ss.str("");	ss << "${name} earned " << earned << " gold from taking care of " << patients << " patients.";
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
 
 
 	// Improve stats

@@ -331,7 +331,7 @@ int sLuaGirl::add_message(lua_State *L) {
     std::string message = luaL_checkstring(L, 2);
     int imgtype = luaL_checkinteger(L, 3);
     int evtype = luaL_checkinteger(L, 4);
-    girl.m_Events.AddMessage(message, imgtype, evtype);
+    girl.AddMessage(message, imgtype, evtype);
     return 0;
 }
 

@@ -38,7 +38,7 @@ bool WorkFarmResearch(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.disobey_check(actiontype, JOB_RESEARCH))			// they refuse to work
 	{
 		ss << "${name} refused to work during the " << (Day0Night1 ? "night" : "day") << " shift.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked as a reseacher on the farm.";
@@ -324,7 +324,7 @@ bool WorkFarmResearch(sGirl& girl, bool Day0Night1, cRng& rng)
 
     girl.upd_Enjoyment(actiontype, enjoy);
 
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
 
 	// Money
 	girl.m_Tips = max(0, tips);

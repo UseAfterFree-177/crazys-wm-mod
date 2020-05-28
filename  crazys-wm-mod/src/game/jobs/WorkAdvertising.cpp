@@ -35,7 +35,7 @@ bool WorkAdvertising(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.disobey_check(actiontype, JOB_ADVERTISING))
 	{
 		ss << "${name} refused to advertise the brothel today.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} is assigned to advertise the brothel.\n \n";
@@ -126,7 +126,7 @@ bool WorkAdvertising(sGirl& girl, bool Day0Night1, cRng& rng)
 		{
 			stringstream warning;
 			warning << "${name} comes up to you and asks you to change her job, She does not like advertizing.\n";
-			girl.m_Events.AddMessage(warning.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+			girl.AddMessage(warning.str(), IMGTYPE_PROFILE, EVENT_WARNING);
 		}
 		else if (saysomething > 25)
 		{
@@ -153,7 +153,7 @@ bool WorkAdvertising(sGirl& girl, bool Day0Night1, cRng& rng)
 #pragma endregion
 #pragma region	//	Finish the shift			//
 
-	girl.m_Events.AddMessage(ss.str(), imagetype, msgtype);
+	girl.AddMessage(ss.str(), imagetype, msgtype);
 
 	// now to boost the brothel's advertising level accordingly
 	brothel->m_AdvertisingLevel += (multiplier / 100);

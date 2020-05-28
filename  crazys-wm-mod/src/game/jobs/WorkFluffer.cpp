@@ -34,19 +34,19 @@ bool WorkFluffer(sGirl& girl, bool Day0Night1, cRng& rng)
 	// No film crew.. then go home	// `J` this will be taken care of in building flow, leaving it in for now
 	if (brothel->num_girls_on_job(JOB_CAMERAMAGE, SHIFT_NIGHT) == 0 || brothel->num_girls_on_job(JOB_CRYSTALPURIFIER, SHIFT_NIGHT) == 0)
 	{
-		girl.m_Events.AddMessage("There was no crew to film the scene, so she took the day off", IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage("There was no crew to film the scene, so she took the day off", IMGTYPE_PROFILE, EVENT_NOWORK);
 		return false;	// not refusing
 	}
 	else if (Num_Actress(*brothel) < 1)
 	{
-		girl.m_Events.AddMessage("There were no actresses to film, so she took the day off", IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage("There were no actresses to film, so she took the day off", IMGTYPE_PROFILE, EVENT_NOWORK);
 		return false;	// not refusing
 	}
 	int roll = rng.d100();
 	if (roll <= 10 && girl.disobey_check(ACTION_WORKMOVIE, JOB_FLUFFER))
 	{
 		ss << "${name} refused to work as a fluffer today";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked as a fluffer.\n \n";
@@ -90,7 +90,7 @@ bool WorkFluffer(sGirl& girl, bool Day0Night1, cRng& rng)
 	else if (jobperformance < 0)	ss << "She performed poorly, she reduced the scene quality " << (int)jobperformance << "% with her lack of passion while sucking dicks. \n";
 	else /*                   */	ss << "She did not really effect the scene quality.\n";
 
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_ORAL, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_ORAL, Day0Night1);
 	brothel->m_FlufferQuality += (int)jobperformance;
 	girl.m_Tips = max(0, tips);
 	girl.m_Pay = max(0, wages);

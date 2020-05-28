@@ -174,7 +174,7 @@ bool WorkWhore(sGirl& girl, bool Day0Night1, cRng& rng) {
 
             if (rng.percent(iNum)) rival->m_NumGangs--;			// WD:	Destroy rival gang
 
-            girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+            girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
         }
     }
 
@@ -425,7 +425,7 @@ bool WorkWhore(sGirl& girl, bool Day0Night1, cRng& rng) {
         {
             if (fuckMessage.str().length() > 0)	// if there is a reason, include it in her messages.
             {
-                girl.m_Events.AddMessage(fuckMessage.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+                girl.AddMessage(fuckMessage.str(), IMGTYPE_PROFILE, EVENT_WARNING);
             }
             continue;	// otherwise just move on
         }
@@ -689,7 +689,7 @@ bool WorkWhore(sGirl& girl, bool Day0Night1, cRng& rng) {
         // WD:	Save gold earned
         wages += pay;
         tips += tip;
-        girl.m_Events.AddMessage(fuckMessage.str(), imageType, Day0Night1);
+        girl.AddMessage(fuckMessage.str(), imageType, Day0Night1);
     }
 
     // WD:	Reduce number of availabe customers for next whore
@@ -706,7 +706,7 @@ bool WorkWhore(sGirl& girl, bool Day0Night1, cRng& rng) {
 
     girl.m_Tips = max(0, tips);
     girl.m_Pay = max(0, wages);
-    girl.m_Events.AddMessage(summary, IMGTYPE_PROFILE, Day0Night1);
+    girl.AddMessage(summary, IMGTYPE_PROFILE, Day0Night1);
 
     //gain
     cGirls::PossiblyGainNewTrait(&girl, "Good Kisser", 50, actiontype, "${name} has had a lot of practice kissing and as such as become a Good Kisser.", Day0Night1);

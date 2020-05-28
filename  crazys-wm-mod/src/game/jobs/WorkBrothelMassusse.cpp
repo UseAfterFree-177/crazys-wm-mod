@@ -38,7 +38,7 @@ bool WorkBrothelMasseuse(sGirl& girl, bool Day0Night1, cRng& rng)
 	{
 		//SIN - More informative mssg to show *what* she refuses
 		ss << "${name} refused to massage customers in your brothel " << (Day0Night1 ? "tonight." : "today.");
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked massaging customers.\n \n";
@@ -340,7 +340,7 @@ bool WorkBrothelMasseuse(sGirl& girl, bool Day0Night1, cRng& rng)
 
     girl.upd_Enjoyment(actiontype, work);
 
-	girl.m_Events.AddMessage(ss.str(), imageType, Day0Night1);
+	girl.AddMessage(ss.str(), imageType, Day0Night1);
 
 
 	// Improve stats

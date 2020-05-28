@@ -75,7 +75,7 @@ bool TherapyJob::DoWork(sGirl& girl, bool is_night) {
     if (!needs_therapy(girl))
     {
         ss << m_TherapyData.NoNeedMessage;
-        if (!is_night)	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+        if (!is_night)	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
         girl.FullJobReset(JOB_CENTREREST);
         girl.m_PrevWorkingDay = girl.m_WorkingDay = 0;
         return false; // not refusing

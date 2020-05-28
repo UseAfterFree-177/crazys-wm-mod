@@ -42,7 +42,7 @@ bool WorkExploreCatacombs(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.disobey_check(actiontype, JOB_EXPLORECATACOMBS))
 	{
 		ss << "${name} refused to go into the catacombs during the " << (Day0Night1 ? "night" : "day") << " shift.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} went into the catacombs to see what she can find.\n \n";
@@ -99,7 +99,7 @@ bool WorkExploreCatacombs(sGirl& girl, bool Day0Night1, cRng& rng)
                 {
                     stringstream sse;
                     sse << "(Error: You need a Non-Human Random Girl to allow WorkExploreCatacombs randomness)";
-                    girl.m_Events.AddMessage(sse.str(), IMGTYPE_PROFILE, Day0Night1);
+                    girl.AddMessage(sse.str(), IMGTYPE_PROFILE, Day0Night1);
                     fight_outcome = 1;
                 }
             }
@@ -144,7 +144,7 @@ bool WorkExploreCatacombs(sGirl& girl, bool Day0Night1, cRng& rng)
             ss << " That's a hell of a way to lose your virginity; naturally, she's rather distressed by this fact.";
             health -= 1, happy -= 10, spirit -= 2, sex -= 2, combat -= 2, injury += 2;
         }
-        girl.m_Events.AddMessage(ss.str(), IMGTYPE_DEATH, EVENT_DANGER);
+        girl.AddMessage(ss.str(), IMGTYPE_DEATH, EVENT_DANGER);
 
         if (!girl.calc_insemination(*cGirls::GetBeast(), 1.0 + (NumMon * 0.5)))
         {
@@ -239,7 +239,7 @@ bool WorkExploreCatacombs(sGirl& girl, bool Day0Night1, cRng& rng)
 
 	if (num_monsters + num_items + gold < 1) ss << "She came out empty handed.";
 
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_COMBAT, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_COMBAT, Day0Night1);
 
 	ss.str("");
 	if (girl.get_stat(STAT_LIBIDO) > 90 && type_monster_girls + type_unique_monster_girls > 0 && brothel->is_sex_type_allowed(SKILL_LESBIAN))
@@ -247,14 +247,14 @@ bool WorkExploreCatacombs(sGirl& girl, bool Day0Night1, cRng& rng)
 		ss << "${name} was real horny so she had a little fun with the girl" << (type_monster_girls + type_unique_monster_girls > 1 ? "s" : "") << " she captured.";
 		girl.upd_temp_stat(STAT_LIBIDO, -50, true);
 		girl.lesbian(type_monster_girls + type_unique_monster_girls);
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_LESBIAN, Day0Night1);
+		girl.AddMessage(ss.str(), IMGTYPE_LESBIAN, Day0Night1);
 	}
 	else if (girl.get_stat(STAT_LIBIDO) > 90 && type_beasts > 0 && brothel->is_sex_type_allowed(SKILL_BEASTIALITY))
 	{
 		ss << "${name} was real horny so she had a little fun with the beast" << (type_beasts > 1 ? "s" : "") << " she captured.";
 		girl.upd_temp_stat(STAT_LIBIDO, -50, true);
 		girl.beastiality(type_beasts);
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_BEAST, Day0Night1);
+		girl.AddMessage(ss.str(), IMGTYPE_BEAST, Day0Night1);
 		if (!girl.calc_insemination(*cGirls::GetBeast(), 1.0))
 		{
 			g_Game->push_message(girl.FullName() + " has gotten inseminated", 0);

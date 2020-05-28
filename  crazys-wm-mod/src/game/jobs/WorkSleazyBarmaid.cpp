@@ -39,7 +39,7 @@ bool WorkSleazyBarmaid(sGirl& girl, bool Day0Night1, cRng& rng)
 	{
 		//Making mssg more informative (what was refused?)
 		ss << "${name} refused to be a barmaid in your sleazy strip club " << (Day0Night1 ? "tonight." : "today.");
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked as a bartender in the strip club.\n \n";
@@ -245,7 +245,7 @@ bool WorkSleazyBarmaid(sGirl& girl, bool Day0Night1, cRng& rng)
 
 
     girl.upd_Enjoyment(actiontype, enjoy);
-	girl.m_Events.AddMessage(ss.str(), imagetype, Day0Night1);
+	girl.AddMessage(ss.str(), imagetype, Day0Night1);
 
 
 	int roll_max = (girl.beauty() + girl.charisma());

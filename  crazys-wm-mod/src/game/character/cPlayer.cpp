@@ -680,7 +680,7 @@ void cPlayer::AutomaticFoodItemUse(sGirl& girl, const char* item_name, string me
     girl.add_item(item);
     girl.equip(item, true);
     remove_item(item);
-    girl.m_Events.AddMessage(message, IMGTYPE_DEATH, EVENT_WARNING);
+    girl.AddMessage(message, IMGTYPE_DEATH, EVENT_WARNING);
 }
 
 void cPlayer::AutomaticItemUse(sGirl& girl, const char* item_name, string message)
@@ -695,7 +695,7 @@ void cPlayer::AutomaticItemUse(sGirl& girl, const char* item_name, string messag
         girl.add_item(item);
         remove_item(item);
         girl.equip(item, false);
-        girl.m_Events.AddMessage(message, IMGTYPE_PROFILE, EVENT_WARNING);
+        girl.AddMessage(message, IMGTYPE_PROFILE, EVENT_WARNING);
     }
 }
 
@@ -709,7 +709,7 @@ bool cPlayer::AutomaticSlotlessItemUse(sGirl& girl, const char* item_name, strin
     girl.add_item(item);
     remove_item(item);
     girl.equip(item, false);
-    girl.m_Events.AddMessage(message, IMGTYPE_DEATH, EVENT_WARNING);
+    girl.AddMessage(message, IMGTYPE_DEATH, EVENT_WARNING);
     return true;
 }
 

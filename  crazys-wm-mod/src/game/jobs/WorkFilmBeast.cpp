@@ -37,7 +37,7 @@ bool FilmBeast::CheckCanWork(sGirl& girl) {
         // no beasts = no scene
         if (g_Game->storage().beasts() < 1)
         {
-            girl.m_Events.AddMessage("You have no beasts for this scene, so she had the day off.", IMGTYPE_PROFILE, EVENT_NOWORK);
+            girl.AddMessage("You have no beasts for this scene, so she had the day off.", IMGTYPE_PROFILE, EVENT_NOWORK);
             return false;
         }
         return true;
@@ -51,7 +51,7 @@ bool FilmBeast::CheckRefuseWork(sGirl& girl) {
     if (girl.health() < 20)
     {
         ss << "The crew refused to film a Bestiality scene with ${name} because she is not healthy enough.\n\"She could get hurt.\"";
-        girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
         return true;
     }
     else if (girl.has_active_trait("Nymphomaniac"))
@@ -68,7 +68,7 @@ bool FilmBeast::CheckRefuseWork(sGirl& girl) {
                 ss << " She was so passionate that you allowed her the day off.\n";
                 girl.pclove(2);
                 girl.pchate(-1);
-                girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+                girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
                 return true;
             }
             else if (g_Game->player().disposition() > -30) //pragmatic
@@ -98,7 +98,7 @@ bool FilmBeast::CheckRefuseWork(sGirl& girl) {
         else // not a slave
         {
             ss << " She left the set.";
-            girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+            girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
             return true;
         }
     }

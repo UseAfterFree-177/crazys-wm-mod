@@ -47,7 +47,7 @@ bool WorkFreetime(sGirl& girl, bool Day0Night1, cRng& rng)
 
 	// `J` NOTE: one message to tell she is resting - use a separate one to tell the anything else she does
 	ss << "${name} rested and recovered some energy.";
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
 
 	int imagetype = IMGTYPE_PROFILE;
 	int messagetype = Day0Night1;
@@ -857,7 +857,7 @@ bool WorkFreetime(sGirl& girl, bool Day0Night1, cRng& rng)
 					if (g_Game->has_building(BuildingType::CLINIC) && rng.percent(50))		// She tries stealing from your clinic
 					{
 						ss << "She got caught by the guards in your clinic and they brought her to your dungeon.\n";
-						girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+						girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
 						girl.m_DayJob = girl.m_NightJob = JOB_INDUNGEON;
 						if(girl.m_Building)
 						    girl.m_Building->remove_girl(&girl);
@@ -873,7 +873,7 @@ bool WorkFreetime(sGirl& girl, bool Day0Night1, cRng& rng)
 					else if (rng.percent(50))
 					{
 						ss << "She got caught by the clinic guards and was unable to pay so they sent her to jail.\n";
-						girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+						girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
 						g_Game->AddGirlToPrison(&girl);
 						return false;
 					}
@@ -2316,7 +2316,7 @@ bool WorkFreetime(sGirl& girl, bool Day0Night1, cRng& rng)
 
 
 	// `J` only add a new message if something new was done.
-	if (ss.str().length() > 0) girl.m_Events.AddMessage(ss.str(), imagetype, messagetype);
+	if (ss.str().length() > 0) girl.AddMessage(ss.str(), imagetype, messagetype);
 
   girl.upd_base_stat(STAT_HEALTH, U_Health, false);		// do health first in case she dies
   girl.upd_base_stat(STAT_TIREDNESS, U_Tiredness, false);
@@ -2397,7 +2397,7 @@ bool cJobManager::AddictBuysDrugs(string Addiction, string Drug, sGirl& girl, IB
 	if ((brothel->num_girls_on_job(JOB_MATRON, true) >= 1 || brothel->num_girls_on_job(JOB_MATRON, false) >= 1)
 		&& g_Dice.percent(70))
 	{
-		girl.m_Events.AddMessage("Matron confiscates drugs", IMGTYPE_PROFILE, EVENT_WARNING);
+		girl.AddMessage("Matron confiscates drugs", IMGTYPE_PROFILE, EVENT_WARNING);
 		return girl.remove_item(item) == 0;
 		return false;
 	}

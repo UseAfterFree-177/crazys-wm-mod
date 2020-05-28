@@ -36,7 +36,7 @@ bool WorkBeastCare(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (roll_a < 50 && girl.disobey_check(actiontype, JOB_BEASTCARER))
 	{
 		ss << "${name} refused to take care of beasts during the " << (Day0Night1 ? "night" : "day") << " shift.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked taking care of beasts.\n \n";
@@ -151,7 +151,7 @@ bool WorkBeastCare(sGirl& girl, bool Day0Night1, cRng& rng)
 #pragma region	//	Finish the shift			//
 
 	g_Game->storage().add_to_beasts(addbeasts);
-	girl.m_Events.AddMessage(ss.str(), imagetype, msgtype);
+	girl.AddMessage(ss.str(), imagetype, msgtype);
 
 	// Money
 	girl.m_Tips = max(0, tips);

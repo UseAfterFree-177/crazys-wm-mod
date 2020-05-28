@@ -39,7 +39,7 @@ bool WorkSOStraight(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.has_active_trait("Straight"))
 	{
 		ss << "${name} is already Straight.";
-		if (Day0Night1 == SHIFT_DAY)	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+		if (Day0Night1 == SHIFT_DAY)	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
 		girl.FullJobReset(JOB_HOUSEREST);
 		girl.m_PrevWorkingDay = girl.m_WorkingDay = 0;
 		return false;	// not refusing
@@ -195,7 +195,7 @@ bool WorkSOStraight(sGirl& girl, bool Day0Night1, cRng& rng)
 
     girl.upd_Enjoyment(actiontype, enjoy);
 
-	girl.m_Events.AddMessage(ss.str(), imagetype, msgtype);
+	girl.AddMessage(ss.str(), imagetype, msgtype);
 
 #pragma endregion
 	return false;

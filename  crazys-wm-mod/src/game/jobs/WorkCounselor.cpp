@@ -38,7 +38,7 @@ bool WorkCounselor(sGirl& girl, bool Day0Night1, cRng& rng)
 		if (roll_a <= 50 && girl.disobey_check(actiontype, JOB_COUNSELOR))
 		{
 			ss << "${name} refused to counsel anyone.";
-			girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+			girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
             girl.upd_Enjoyment(ACTION_WORKREHAB, -1);
 			return true;
 		}
@@ -57,7 +57,7 @@ bool WorkCounselor(sGirl& girl, bool Day0Night1, cRng& rng)
 	else if (roll_a >= 90)	{ enjoy += rng % 3 + 1;	ss << "She had a pleasant time working."; }
 	else /*             */	{ enjoy += rng % 2;		ss << "Otherwise, the shift passed uneventfully."; }
 
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_TEACHER, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_TEACHER, Day0Night1);
 
 	int rehabers = brothel->num_girls_on_job(JOB_REHAB, Day0Night1);
 	// work out the pay between the house and the girl

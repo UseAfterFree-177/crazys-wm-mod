@@ -61,7 +61,7 @@ bool WorkCleaning(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (roll_a <= 50 && girl.disobey_check(actiontype, JOB_CLEANING))
 	{
 		ss << "${name} refused to clean during the " << (Day0Night1 ? "night" : "day") << " shift.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked cleaning the brothel.\n \n";
@@ -237,7 +237,7 @@ bool WorkCleaning(sGirl& girl, bool Day0Night1, cRng& rng)
 		wages = int(jobperformance); // `J` Pay her based on how much she cleaned
 	}
 
-	girl.m_Events.AddMessage(ss.str(), imagetype, Day0Night1);
+	girl.AddMessage(ss.str(), imagetype, Day0Night1);
     CleaningUpdateGirl(girl, rng, Day0Night1, enjoy, tips, wages, jobperformance);
 	return false;
 }
@@ -279,7 +279,7 @@ bool WorkCleanArena(sGirl& girl, bool Day0Night1, cRng& rng)
     if (roll_a <= 50 && girl.disobey_check(actiontype, JOB_CLEANARENA))
     {
         ss << "${name} refused to clean the arena.";
-        girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
         return true;
     }
     ss << "${name} worked cleaning the arena.\n \n";
@@ -339,7 +339,7 @@ bool WorkCleanArena(sGirl& girl, bool Day0Night1, cRng& rng)
     }
 
     // do all the output
-    girl.m_Events.AddMessage(ss.str(), IMGTYPE_MAID, Day0Night1);
+    girl.AddMessage(ss.str(), IMGTYPE_MAID, Day0Night1);
 
     CleaningUpdateGirl(girl, rng, Day0Night1, enjoy, tips, wages, CleanAmt);
     return false;
@@ -356,7 +356,7 @@ bool WorkCleanCentre(sGirl& girl, bool Day0Night1, cRng& rng)
     if (roll_a <= 50 && girl.disobey_check(actiontype, JOB_CLEANCENTRE))
     {
         ss << "${name} refused to clean the Centre.";
-        girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
         return true;
     }
     ss << "${name} worked cleaning the Centre.\n \n";
@@ -435,7 +435,7 @@ bool WorkCleanCentre(sGirl& girl, bool Day0Night1, cRng& rng)
     // `J` - Finish the shift - CleanCentre
 
     // Push out the turn report
-    girl.m_Events.AddMessage(ss.str(), imagetype, msgtype);
+    girl.AddMessage(ss.str(), imagetype, msgtype);
 
     CleaningUpdateGirl(girl, rng, Day0Night1, enjoy, tips, wages, CleanAmt);
 
@@ -454,7 +454,7 @@ bool WorkCleanHouse(sGirl& girl, bool Day0Night1, cRng& rng)
     if (roll_a <= 50 && girl.disobey_check(actiontype, JOB_CLEANHOUSE))
     {
         ss << "${name} refused to clean your house.";
-        girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
         return true;
     }
     ss << "${name} worked cleaning your house.\n \n";
@@ -512,7 +512,7 @@ bool WorkCleanHouse(sGirl& girl, bool Day0Night1, cRng& rng)
     }
 
     // do all the output
-    girl.m_Events.AddMessage(ss.str(), IMGTYPE_MAID, Day0Night1);
+    girl.AddMessage(ss.str(), IMGTYPE_MAID, Day0Night1);
 
     CleaningUpdateGirl(girl, rng, Day0Night1, enjoy, tips, wages, CleanAmt);
     return false;
@@ -529,7 +529,7 @@ bool WorkJanitor(sGirl& girl, bool Day0Night1, cRng& rng)
     if (roll_a <= 50 && girl.disobey_check(actiontype, JOB_JANITOR))
     {
         ss << "${name} refused to clean the Clinic.";
-        girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
         return true;
     }
     ss << "${name} worked cleaning the Clinic.\n \n";
@@ -623,7 +623,7 @@ bool WorkJanitor(sGirl& girl, bool Day0Night1, cRng& rng)
     }
 
     // do all the output
-    girl.m_Events.AddMessage(ss.str(), IMGTYPE_MAID, Day0Night1);
+    girl.AddMessage(ss.str(), IMGTYPE_MAID, Day0Night1);
 
     // Improve girl
     CleaningUpdateGirl(girl, rng, Day0Night1, enjoy, tips, wages, CleanAmt);

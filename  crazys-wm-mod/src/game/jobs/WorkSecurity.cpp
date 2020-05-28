@@ -32,7 +32,7 @@ bool WorkSecurity(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.disobey_check(actiontype, JOB_SECURITY))
 	{
 		ss << "${name} refused to work security in your brothel " << (Day0Night1 ? "tonight." : "today.");
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked Security in the brothel.\n \n";
@@ -157,7 +157,7 @@ bool WorkSecurity(sGirl& girl, bool Day0Night1, cRng& rng)
 	brothel->m_SecurityLevel += int(SecLev);
 
 	ss << "\nPatrolling the building, ${name} increased the security level by " << int(SecLev) << ".";
-	girl.m_Events.AddMessage(ss.str(), imagetype, Day0Night1);
+	girl.AddMessage(ss.str(), imagetype, Day0Night1);
 
 	// Improve girl
 	int xp = 15, skill = 2;

@@ -34,14 +34,14 @@ bool WorkBarPiano(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.disobey_check(actiontype, JOB_PIANO))
 	{
 		ss << "${name} refused to play piano in your bar " << (Day0Night1 ? "tonight." : "today.");
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	else if (brothel->m_TotalCustomers < 1)
 	{
 		ss << "There were no customers in the bar on the " << (Day0Night1 ? "night" : "day") << " shift so ${name} just cleaned up a bit.";
 		brothel->m_Filthiness -= 20 + girl.service() * 2;
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return false;
 	}
 
@@ -397,7 +397,7 @@ bool WorkBarPiano(sGirl& girl, bool Day0Night1, cRng& rng)
 	cGirls::PossiblyLoseExistingTrait(&girl, "Nervous", 30, ACTION_WORKMUSIC, "${name} seems to finally be getting over her shyness. She's not always so Nervous anymore.", Day0Night1);
 
 	// Push out the turn report
-	girl.m_Events.AddMessage(ss.str(), imagetype, msgtype);
+	girl.AddMessage(ss.str(), imagetype, msgtype);
 
 #pragma endregion
 	return false;

@@ -40,7 +40,7 @@ bool WorkBeastCapture(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.disobey_check(actiontype, JOB_BEASTCAPTURE))			// they refuse to work
 	{
 		ss << "${name} refused to capture beasts during the " << (Day0Night1 ? "night" : "day") << " shift.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} equipped herself and went out to hunt for exotic beasts and animals.\n \n";
@@ -283,7 +283,7 @@ bool WorkBeastCapture(sGirl& girl, bool Day0Night1, cRng& rng)
 	//lose traits
 	cGirls::PossiblyLoseExistingTrait(&girl, "Fragile", 15, actiontype, "${name} has had to heal from so many injuries you can't say she is fragile anymore.", Day0Night1);
 
-	girl.m_Events.AddMessage(ss.str(), imagetype, msgtype);
+	girl.AddMessage(ss.str(), imagetype, msgtype);
 
 #pragma endregion
 	return false;

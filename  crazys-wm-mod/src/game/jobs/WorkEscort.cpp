@@ -31,7 +31,7 @@ bool WorkEscort(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.disobey_check(actiontype, JOB_ESCORT))
 	{
 		ss << "${name} refused to work during the " << (Day0Night1 ? "night" : "day") << " shift.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} has been assigned to work as an Escort. She is informed that various men will ask for her to accompany them on dates, whether because they need a date for a social engagement of some kind or because of their own loneliness. Her skills in service, her beauty, her charisma, her intelligence, and her refinement may all be tested to provide the ideal date that each client requests. And, of course, should she decide to spend some \"extra\" time with the client, she will need to perform well with each of their sexual proclivities. This is her choice, however.\n \n";
@@ -1939,7 +1939,7 @@ break;	// end Es_DeadBeat
 	girl.fame(rng%skill);
 	girl.performance(rng%skill + 1);
 
-	girl.m_Events.AddMessage(ss.str(), imagetype, Day0Night1);
+	girl.AddMessage(ss.str(), imagetype, Day0Night1);
 
 	//gain traits
 	cGirls::PossiblyGainNewTrait(&girl, "Charismatic", 60, actiontype, "Dealing with customers and talking with them about their problems has made ${name} more Charismatic.", Day0Night1);

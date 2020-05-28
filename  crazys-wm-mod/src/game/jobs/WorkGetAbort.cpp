@@ -81,7 +81,7 @@ bool WorkGetAbort(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (!girl.is_pregnant())
 	{
 		ss << "${name} is not pregant so she was sent to the waiting room.";
-		if (Day0Night1 == SHIFT_DAY)	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+		if (Day0Night1 == SHIFT_DAY)	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
         girl.FullJobReset(JOB_CLINICREST);
 		girl.m_WorkingDay = girl.m_PrevWorkingDay = 0;
 		return false;	// not refusing
@@ -91,7 +91,7 @@ bool WorkGetAbort(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (!hasDoctor)
 	{
 		ss << "${name} does nothing. You don't have any Doctors working. (require 1) ";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
 		return false;	// not refusing
 	}
 	ss << "${name} is in the Clinic to get an abortion.\n \n";
@@ -238,7 +238,7 @@ bool WorkGetAbort(sGirl& girl, bool Day0Night1, cRng& rng)
 #pragma endregion
 #pragma region	//	Finish the shift			//
 
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, msgtype);
+	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, msgtype);
 
 	// Improve girl
 	int libido = -8;

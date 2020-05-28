@@ -65,7 +65,7 @@ bool GenericFilmJob::WorkFilm(sGirl& girl) {
     int finalqual = brothel->AddScene(&girl, job(), result.bonus, m_FilmData.Type, m_FilmData.SceneName);
     ss << "Her scene is valued at: " << finalqual << " gold.\n";
 
-    girl.m_Events.AddMessage(ss.str(), m_FilmData.Image, EVENT_DAYSHIFT);
+    girl.AddMessage(ss.str(), m_FilmData.Image, EVENT_DAYSHIFT);
 
     result.wages += finalqual * 2;
     // You own her so you don't have to pay her.
@@ -121,7 +121,7 @@ bool GenericFilmJob::CheckCanWork(sGirl& girl) {
     // No film crew.. then go home	// `J` this will be taken care of in building flow, leaving it in for now
     if (brothel->num_girls_on_job(JOB_CAMERAMAGE, SHIFT_NIGHT) == 0 || brothel->num_girls_on_job(JOB_CRYSTALPURIFIER, SHIFT_NIGHT) == 0)
     {
-        girl.m_Events.AddMessage("There was no crew to film the scene, so she took the day off", IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage("There was no crew to film the scene, so she took the day off", IMGTYPE_PROFILE, EVENT_NOWORK);
         return false;
     }
     return true;
@@ -131,7 +131,7 @@ bool GenericFilmJob::CheckRefuseWork(sGirl& girl) {
     if (girl.disobey_check(ACTION_WORKMOVIE, job()))
     {
         ss << girl.FullName() << m_FilmData.MsgRefuse;
-        girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
         return true;
     } else {
         ss << girl.FullName() << m_FilmData.MsgWork << "\n ";

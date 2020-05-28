@@ -33,7 +33,7 @@ bool WorkFilmPromoter(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (roll <= 20 && girl.disobey_check(ACTION_WORKMOVIE, JOB_PROMOTER))
 	{
 		ss << "${name} refused to work as a promoter today.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked to promote the sales of the studio's films.\n \n";
@@ -90,7 +90,7 @@ bool WorkFilmPromoter(sGirl& girl, bool Day0Night1, cRng& rng)
 		else /*                   */	ss << " She did not really help promote the studio.\n";
 	}
 
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, SHIFT_NIGHT);
+	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, SHIFT_NIGHT);
 	girl.m_Tips = max(0, tips);
 	girl.m_Pay = max(0, wages);
 

@@ -1674,7 +1674,7 @@ void IBuilding::do_daily_items(sGirl& girl)
         else if (cook)		imagetype = IMGTYPE_COOK;
         else if (maid)		imagetype = IMGTYPE_MAID;
 
-        girl.m_Events.AddMessage(ss.str(), imagetype, EVENT_SUMMARY);
+        girl.AddMessage(ss.str(), imagetype, EVENT_SUMMARY);
 
     }
 }

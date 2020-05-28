@@ -34,13 +34,13 @@ bool WorkCrystalPurifier(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (brothel->num_girls_on_job(JOB_CAMERAMAGE, SHIFT_NIGHT) == 0 || brothel->num_girls_on_job(JOB_CRYSTALPURIFIER, SHIFT_NIGHT) == 0)
 	{
 		ss << "There was no crew to film the scene, so ${name} took the day off";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return false;	// not refusing
 	}
 	else if (Num_Actress(*brothel) < 1)
 	{
 		ss << "There were no actresses to film, so ${name} took the day off";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return false;	// not refusing
 	}
 
@@ -65,7 +65,7 @@ bool WorkCrystalPurifier(sGirl& girl, bool Day0Night1, cRng& rng)
 			if (girl.m_DayJob == JOB_FILMFREETIME)
 			{
 				ss << " but she refused to work.";
-				girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+				girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 			}
 			else
 			{
@@ -75,7 +75,7 @@ bool WorkCrystalPurifier(sGirl& girl, bool Day0Night1, cRng& rng)
 				else if (girl.m_DayJob == JOB_FLUFFER)			ss << " wanted to see the action live instead of watching it afterwards.\n";
 				else if (girl.m_DayJob == JOB_STAGEHAND)		ss << " wanted to clean instead of editing scenes.\n";
 				else if (girl.m_DayJob == JOB_CAMERAMAGE)		ss << " preferred to film the scenes rather than edit them.\n";
-				girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_BACKTOWORK);
+				girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_BACKTOWORK);
 			}
 			return true;
 		}
@@ -123,7 +123,7 @@ bool WorkCrystalPurifier(sGirl& girl, bool Day0Night1, cRng& rng)
 	else if (jobperformance < 0)	ss << "She did a bad job today, she reduced the scene quality " << (int)jobperformance << "% with her poor performance. \n";
 	else /*                   */	ss << "She did not really help the scene quality.\n";
 
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
 	brothel->m_PurifierQaulity += (int)jobperformance;
 	girl.m_Tips = max(0, tips);
 	girl.m_Pay = max(0, wages);

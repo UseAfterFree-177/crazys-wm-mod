@@ -102,7 +102,7 @@ bool FilmBuk::CheckRefuseWork(sGirl& girl) {
                 ss << " \"filthy\" bukkake scene.\nShe was clearly upset so you allowed her the day off.";
                 girl.pclove(2);
                 girl.pchate(-1);
-                girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+                girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
                 return true;
             }
             else if (g_Game->player().disposition() > -30) //pragmatic
@@ -129,7 +129,7 @@ bool FilmBuk::CheckRefuseWork(sGirl& girl) {
         else // not a slave
         {
             ss << " \"disgusting\" bukkake scene and left the set.";
-            girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+            girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
             return true;
         }
     }

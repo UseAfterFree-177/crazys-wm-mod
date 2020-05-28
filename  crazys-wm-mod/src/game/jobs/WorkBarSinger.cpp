@@ -34,7 +34,7 @@ bool WorkBarSinger(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.disobey_check(actiontype, JOB_SINGER))
 	{
 		ss << "${name} refused to sing in your bar " << (Day0Night1 ? "tonight." : "today.");
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	else if (brothel->m_TotalCustomers < 1)
@@ -42,7 +42,7 @@ bool WorkBarSinger(sGirl& girl, bool Day0Night1, cRng& rng)
 		ss.str("");
 		ss << "There were no customers in the bar on the " << (Day0Night1 ? "night" : "day") << " shift so ${name} just cleaned up a bit.";
 		brothel->m_Filthiness -= 20 + girl.service() * 2;
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return false;
 	}
 
@@ -391,7 +391,7 @@ bool WorkBarSinger(sGirl& girl, bool Day0Night1, cRng& rng)
 	brothel->m_Happiness += happy;
 
     girl.upd_Enjoyment(actiontype, enjoy);
-	girl.m_Events.AddMessage(ss.str(), imagetype, msgtype);
+	girl.AddMessage(ss.str(), imagetype, msgtype);
 	int roll_max = (girl.beauty() + girl.charisma());
 	roll_max /= 4;
 	wages += 10 + rng%roll_max;

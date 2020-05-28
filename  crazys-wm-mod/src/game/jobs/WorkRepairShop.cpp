@@ -34,7 +34,7 @@ bool WorkRepairShop(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (!girl.has_active_trait("Construct") && !girl.has_active_trait("Half-Construct"))
 	{
 		ss << "${name} has no artificial parts so she was sent to the Healing center.";
-		if (Day0Night1 == SHIFT_DAY) girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+		if (Day0Night1 == SHIFT_DAY) girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
 		if (girl.m_DayJob == JOB_GETREPAIRS)	girl.m_DayJob = JOB_GETHEALING;
 		if (girl.m_NightJob == JOB_GETREPAIRS)	girl.m_NightJob = JOB_GETHEALING;
 		return false;	// not refusing
@@ -109,7 +109,7 @@ bool WorkRepairShop(sGirl& girl, bool Day0Night1, cRng& rng)
 		if (girl.m_NightJob == JOB_GETREPAIRS)	girl.m_NightJob = JOB_CLINICREST;
 	}
 
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
 
 	return false;
 }

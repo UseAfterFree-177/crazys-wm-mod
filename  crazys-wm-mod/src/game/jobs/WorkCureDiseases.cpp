@@ -51,7 +51,7 @@ bool WorkCureDiseases(sGirl& girl, bool Day0Night1, cRng& rng)
 		else/*                             */	{ ss << " so she was sent to the waiting room."; }
 		girl.m_PrevDayJob = girl.m_PrevNightJob = girl.m_YesterDayJob = girl.m_YesterNightJob = girl.m_DayJob = girl.m_NightJob = newjob;
 		girl.m_PrevWorkingDay = girl.m_WorkingDay = 0;
-		if (Day0Night1 == SHIFT_DAY)	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+		if (Day0Night1 == SHIFT_DAY)	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
 		return false;	// not refusing
 	}
 	int numdoctor = brothel->num_girls_on_job(JOB_DOCTOR, Day0Night1);
@@ -59,7 +59,7 @@ bool WorkCureDiseases(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (numdoctor + numnurse < 1)
 	{
 		ss << "${name} does nothing. You don't have any Doctors or Nurses working. (requires 2 Doctors and 4 Nurses for fastest results) ";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_WARNING);
 		return false;	// not refusing
 	}
 
@@ -299,7 +299,7 @@ bool WorkCureDiseases(sGirl& girl, bool Day0Night1, cRng& rng)
 #pragma endregion
 #pragma region	//	Finish the shift			//
 
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, msgtype);
+	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, msgtype);
 
 	// Improve girl
     if (girl.has_active_trait("Lesbian"))	girl.upd_temp_stat(STAT_LIBIDO, numnurse + numdoctor);

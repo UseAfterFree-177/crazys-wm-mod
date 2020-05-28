@@ -880,7 +880,7 @@ bool WorkHousePet(sGirl& girl, bool Day0Night1, cRng& rng)
 	}
 
 
-	girl.m_Events.AddMessage(ss.str(), imagetype, Day0Night1);
+	girl.AddMessage(ss.str(), imagetype, Day0Night1);
 
 
 	// Improve stats

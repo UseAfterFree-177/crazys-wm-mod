@@ -39,7 +39,7 @@ bool WorkHallDealer(sGirl& girl, bool Day0Night1, cRng& rng)
 		//SIN - More informative mssg to show *what* she refuses
 		//ss << " refused to work during the " << (Day0Night1 ? "night" : "day") << " shift.";
 		ss << "${name} refused to work as a card dealer in the gambling hall " << (Day0Night1 ? "tonight." : "today.");
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked as a dealer in the gambling hall.\n \n";
@@ -609,7 +609,7 @@ bool WorkHallDealer(sGirl& girl, bool Day0Night1, cRng& rng)
 
 
     girl.upd_Enjoyment(ACTION_WORKHALL, work);
-	girl.m_Events.AddMessage(ss.str(), imagetype, Day0Night1);
+	girl.AddMessage(ss.str(), imagetype, Day0Night1);
 
 	// work out the pay between the house and the girl
 	wages += (rng % ((int)(((girl.beauty() + girl.charisma()) / 2)*0.5f))) + 10;

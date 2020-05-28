@@ -40,7 +40,7 @@ bool WorkPeepShow(sGirl& girl, bool Day0Night1, cRng& rng)
 	{
 		//SIN - More informative mssg to show *what* she refuses
 		ss << "${name} refused to be in your brothel's peep show " << (Day0Night1 ? "tonight." : "today.");
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} let the customers watch her get naked.\n \n";
@@ -367,7 +367,7 @@ bool WorkPeepShow(sGirl& girl, bool Day0Night1, cRng& rng)
     girl.upd_Enjoyment(ACTION_WORKSTRIP, enjoy);
 
 	// work out the pay between the house and the girl
-	girl.m_Events.AddMessage(ss.str(), imagetype, Day0Night1);
+	girl.AddMessage(ss.str(), imagetype, Day0Night1);
 	// Money
 	girl.m_Tips = max(0, tips);
 	girl.m_Pay = max(0, wages);

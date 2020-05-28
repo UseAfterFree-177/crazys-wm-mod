@@ -31,7 +31,7 @@ bool WorkHouseCook(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (roll_a <= 50 && girl.disobey_check(actiontype, JOB_HOUSECOOK))
 	{
 		ss << "${name} refused to cook for your house.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked cooking for your house.\n \n";
@@ -124,7 +124,7 @@ bool WorkHouseCook(sGirl& girl, bool Day0Night1, cRng& rng)
 
 
 	// do all the output
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_COOK, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_COOK, Day0Night1);
 
 
 	// Improve girl

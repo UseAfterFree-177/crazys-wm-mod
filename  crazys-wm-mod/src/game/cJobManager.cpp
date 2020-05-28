@@ -2357,12 +2357,12 @@ void cJobManager::handle_simple_job(sGirl& girl, bool is_night)
     if (refused)
     {
         brothel->m_Fame -= girl.fame();
-        girl.m_Events.AddMessage(girl.FullName() + " refused to work so made no money.", IMGTYPE_PROFILE, EVENT_SUMMARY);
+        girl.AddMessage("${name} refused to work so made no money.", IMGTYPE_PROFILE, EVENT_SUMMARY);
     }
     else
     {
         brothel->m_Fame += girl.fame();
-        girl.m_Events.AddMessage(GirlPaymentText(brothel, &girl, totalTips, totalPay, totalTips + totalPay, is_night),
+        girl.AddMessage(GirlPaymentText(brothel, &girl, totalTips, totalPay, totalTips + totalPay, is_night),
                 IMGTYPE_PROFILE, EVENT_SUMMARY);
     }
 }

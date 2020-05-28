@@ -107,13 +107,13 @@ bool FilmBdsm::CheckRefuseWork(sGirl& girl) {
     if (girl.health() < 40)
     {
         ss << "The crew refused to film a dungeon scene with ${name} because she is not healthy enough.\n\"We are NOT filming snuff.\"";
-        girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
         return true;
     }
     else if (girl.is_pregnant())
     {
         ss << "The crew refused to do a BDSM scene with ${name} due to her pregnancy.";
-        girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+        girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
         return true;
     }
     else if (girl.has_active_trait("Mind Fucked"))
@@ -136,7 +136,7 @@ bool FilmBdsm::CheckRefuseWork(sGirl& girl) {
                 ss << "\"monstrous\" place.\nShe was starting to panic, so you allowed her the day off.\n";
                 girl.pclove(2);
                 girl.pchate(-1);
-                girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+                girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
                 return true;
             }
             else if (g_Game->player().disposition() > -30) //pragmatic
@@ -172,7 +172,7 @@ bool FilmBdsm::CheckRefuseWork(sGirl& girl) {
         else // not a slave
         {
             ss << " \"monstrous\" place.\n";
-            girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+            girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
             return true;
         }
     }

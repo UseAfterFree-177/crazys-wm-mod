@@ -37,7 +37,7 @@ bool WorkFightArenaGirls(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.disobey_check(actiontype, JOB_FIGHTARENAGIRLS))			// they refuse to work
 	{
 		ss << "${name} refused to work during the " << (Day0Night1 ? "night" : "day") << " shift.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} was assigned to fight other girls in the arena.\n \n";
@@ -233,7 +233,7 @@ bool WorkFightArenaGirls(sGirl& girl, bool Day0Night1, cRng& rng)
 	girl.m_Pay = max(0, wages);
 
 
-	girl.m_Events.AddMessage(ss.str(), imagetype, Day0Night1);
+	girl.AddMessage(ss.str(), imagetype, Day0Night1);
 	girl.fame(fame);
 	girl.exp(xp);
 	girl.combat(rng%fightxp + skill);
@@ -254,7 +254,7 @@ bool WorkFightArenaGirls(sGirl& girl, bool Day0Night1, cRng& rng)
 	brothel->m_Finance.arena_income(earned);
 	ss.str("");
 	ss << "${name} drew in " << jobperformance << " people to watch her and you earned " << earned << " from it.";
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
 
 
 	//gain traits

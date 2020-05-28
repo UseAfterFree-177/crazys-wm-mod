@@ -31,7 +31,7 @@ bool WorkCityGuard(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.disobey_check(actiontype, JOB_CITYGUARD))			// they refuse to work
 	{
 		ss << "${name} refused to work during the " << (Day0Night1 ? "night" : "day") << " shift.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} helps guard the city.\n \n";
@@ -106,7 +106,7 @@ bool WorkCityGuard(sGirl& girl, bool Day0Night1, cRng& rng)
 		}
 	}
 
-	girl.m_Events.AddMessage(ss.str(), imagetype, Day0Night1);
+	girl.AddMessage(ss.str(), imagetype, Day0Night1);
     g_Game->player().suspicion(sus);
 	girl.m_Tips = max(0, tips);
 	girl.m_Pay = max(0, wages);

@@ -38,7 +38,7 @@ bool WorkFeedPoor(sGirl& girl, bool Day0Night1, cRng& rng)
 	if (girl.disobey_check(ACTION_WORKCENTRE, JOB_FEEDPOOR))			// they refuse to work
 	{
 		ss << "${name} refused to work during the " << (Day0Night1 ? "night" : "day") << " shift.";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	ss << "${name} worked feeding the poor.";
@@ -272,7 +272,7 @@ bool WorkFeedPoor(sGirl& girl, bool Day0Night1, cRng& rng)
 	{
 		if (brothel->is_sex_type_allowed(SKILL_NORMALSEX) && (roll_b <= 50 || brothel->is_sex_type_allowed(SKILL_ANAL))) //Tweak to avoid an issue when roll > 50 && anal is restricted
 		{
-			girl.m_Events.AddMessage(ss.str(), IMGTYPE_SEX, Day0Night1);
+			girl.AddMessage(ss.str(), IMGTYPE_SEX, Day0Night1);
 			girl.normalsex(2);
 			if (girl.lose_trait("Virgin"))
 			{
@@ -285,7 +285,7 @@ bool WorkFeedPoor(sGirl& girl, bool Day0Night1, cRng& rng)
 		}
 		else if (brothel->is_sex_type_allowed(SKILL_ANAL))
 		{
-			girl.m_Events.AddMessage(ss.str(), IMGTYPE_ANAL, Day0Night1);
+			girl.AddMessage(ss.str(), IMGTYPE_ANAL, Day0Night1);
 			girl.anal(2);
 		}
 		brothel->m_Happiness += 100;
@@ -300,11 +300,11 @@ bool WorkFeedPoor(sGirl& girl, bool Day0Night1, cRng& rng)
 		dispo += 4;
 		girl.oralsex(2);
 		fame += 1;
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_ORAL, Day0Night1);
+		girl.AddMessage(ss.str(), IMGTYPE_ORAL, Day0Night1);
 	}
 	else
 	{
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, Day0Night1);
 	}
 
 #pragma endregion
@@ -328,7 +328,7 @@ bool WorkFeedPoor(sGirl& girl, bool Day0Night1, cRng& rng)
 	brothel->m_Finance.centre_costs(cost);
 	ss.str("");
 	ss << "${name} feed " << feed << " costing you " << cost << " gold.";
-	girl.m_Events.AddMessage(ss.str(), imagetype, msgtype);
+	girl.AddMessage(ss.str(), imagetype, msgtype);
 
 
 	// Improve stats

@@ -31,7 +31,7 @@ bool WorkFilmDominatrix(sGirl* girl, sBrothel* brothel, bool Day0Night1, string&
 	// No film crew.. then go home	// `J` this will be taken care of in building flow, leaving it in for now
 	if (brothel->num_girls_on_job(JOB_CAMERAMAGE, SHIFT_NIGHT) == 0 || brothel->num_girls_on_job(JOB_CRYSTALPURIFIER, SHIFT_NIGHT) == 0)
 	{
-		girl.m_Events.AddMessage("There was no crew to film the scene, so she took the day off", IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage("There was no crew to film the scene, so she took the day off", IMGTYPE_PROFILE, EVENT_NOWORK);
 		return false;
 	}
 	
@@ -50,7 +50,7 @@ bool WorkFilmDominatrix(sGirl* girl, sBrothel* brothel, bool Day0Night1, string&
 	if (roll <= 10 && girl.disobey_check(ACTION_WORKMOVIE, brothel))
 	{
 		ss << "She refused to be a Dominatrix on film today.\n";
-		girl.m_Events.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
+		girl.AddMessage(ss.str(), IMGTYPE_PROFILE, EVENT_NOWORK);
 		return true;
 	}
 	else if (roll <= 10) { enjoy -= rng % 3 + 1;	ss << "She didn't want be a Dominatrix today, but she did it anyway.\n\n"; }
@@ -75,7 +75,7 @@ bool WorkFilmDominatrix(sGirl* girl, sBrothel* brothel, bool Day0Night1, string&
 		g_Game->push_message(girl.m_Realname + " has gotten pregnant", 0);
 	}*/
 
-	girl.m_Events.AddMessage(ss.str(), IMGTYPE_DOM, Day0Night1);
+	girl.AddMessage(ss.str(), IMGTYPE_DOM, Day0Night1);
 
 	// work out the pay between the house and the girl
 	if(girl.is_unpaid())
