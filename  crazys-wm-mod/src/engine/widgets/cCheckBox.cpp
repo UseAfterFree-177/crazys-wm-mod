@@ -33,16 +33,16 @@ void cCheckBox::DrawWidget(const CGraphics& gfx)
 {
 	if (IsDisabled()) return;
 
-	int off = (m_LeftOrRight ? m_Label.GetWidth() : m_Width) + 4;
+	int off = m_LeftOrRight ? m_Label.GetWidth() + 4 : 0;
 	// Draw the window
-    m_Border.DrawSurface(m_XPos + (m_LeftOrRight ? off : 0), m_YPos);
-    m_Surface.DrawSurface(m_XPos + (m_LeftOrRight ? off + 1 : 1), m_YPos + 1);
+    m_Border.DrawSurface(m_XPos + off, m_YPos);
+    m_Surface.DrawSurface(m_XPos + off + 1, m_YPos + 1);
 
 	if (m_StateOn)
 	{
-		m_Image.DrawSurface(m_XPos + (m_LeftOrRight ? off : 0), m_YPos);
+		m_Image.DrawSurface(m_XPos + off, m_YPos);
 	}
-	m_Label.DrawSurface(m_XPos + (m_LeftOrRight ? 0 : off), m_YPos);
+	m_Label.DrawSurface(m_XPos + (m_LeftOrRight ? 0 : m_Width + 4), m_YPos);
 }
 
 cCheckBox::cCheckBox(cInterfaceWindow* parent, int id, int x, int y, int width, int height, std::string text, int fontsize, bool leftorright):
@@ -56,6 +56,9 @@ cCheckBox::cCheckBox(cInterfaceWindow* parent, int id, int x, int y, int width, 
     m_Font.SetColor(0, 0, 0);
     m_Label = m_Font.RenderText(std::move(text));
     m_LeftOrRight = leftorright;
+
+    // adjust width to account for label
+    m_Width += m_Label.GetWidth() + 4;
 }
 
 void cCheckBox::SetCallback(std::function<void(bool)> cb)
