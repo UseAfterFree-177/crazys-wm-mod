@@ -169,9 +169,10 @@ set(SRC cEvents.cpp
 
 add_executable(WhoreMaster ${BUILDINGS_SRC} ${SCREENS_SRC} ${JOBS_SRC} ${CHARACTER_SRC} ${SCRIPTING_SRC} ${SRC} main.cpp)
 target_link_libraries(WhoreMaster PUBLIC WMEngine)
-set_target_properties(WhoreMaster PROPERTIES CXX_STANDARD 14)
+set_target_properties(WhoreMaster PROPERTIES CXX_STANDARD 14 RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/..")
 
 target_include_directories(WhoreMaster PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+
 
 if (UNIX)
     target_compile_definitions(WhoreMaster PUBLIC LINUX=1)
