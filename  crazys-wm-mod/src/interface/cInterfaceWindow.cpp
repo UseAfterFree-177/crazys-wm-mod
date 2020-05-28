@@ -37,6 +37,7 @@
 #include "interface/CGraphics.h"
 #include "cColor.h"
 #include "cChoiceMessage.h"
+#include <cassert>
 
 using namespace std;
 

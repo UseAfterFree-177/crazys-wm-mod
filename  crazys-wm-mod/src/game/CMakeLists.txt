@@ -173,13 +173,6 @@ set_target_properties(WhoreMaster PROPERTIES CXX_STANDARD 14)
 
 target_include_directories(WhoreMaster PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
-# libsdl-ttf2.0-dev
-add_executable(CombatTest ${BUILDINGS_SRC} ${SCREENS_SRC} ${JOBS_SRC} ${CHARACTER_SRC} ${SCRIPTING_SRC} ${SRC} main.cpp combat/combat_test.cpp jobs/GenericJob.cpp jobs/Therapy.cpp)
-target_link_libraries(CombatTest PUBLIC WMEngine)
-set_target_properties(CombatTest PROPERTIES CXX_STANDARD 14)
-target_include_directories(CombatTest PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-
 if (UNIX)
     target_compile_definitions(WhoreMaster PUBLIC LINUX=1)
-    target_compile_definitions(CombatTest PUBLIC LINUX=1)
 endif(UNIX)

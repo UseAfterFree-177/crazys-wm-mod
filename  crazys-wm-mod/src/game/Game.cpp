@@ -972,12 +972,12 @@ void Game::LoadData()
     {
         for (int i = 0; i < fl_t.size(); i++)				// loop over the list, loading the files
         {
-
+            g_LogFile.info("traits", "Loading traits from file '", fl_t[i].full(), '\'');
             traits().load_xml(*LoadXMLDocument(fl_t[i].full())->RootElement());
         }
+    } else {
+        g_LogFile.error("traits", "Could not find any trait files in '", traitdir.c_str(), '\'');
     }
-
-    //traits().LoadTraitsModifications( DirPath() << "Resources" << "Data" << "OtherModifiers.xml");
 }
 
 cTariff& Game::tariff()

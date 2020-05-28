@@ -20,6 +20,7 @@
 #define __CONSTANTS_H
 
 #include <array>
+#include <string>
 
 typedef unsigned int u_int;
 class sAttribute;

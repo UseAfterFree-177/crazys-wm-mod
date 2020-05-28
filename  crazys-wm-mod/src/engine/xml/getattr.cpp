@@ -19,6 +19,7 @@
 
 #include "xml/util.h"
 #include <tinyxml2.h>
+#include <cassert>
 #include "CLog.h"
 
 
