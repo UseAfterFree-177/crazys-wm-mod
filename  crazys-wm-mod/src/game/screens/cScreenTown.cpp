@@ -25,7 +25,6 @@
 #include "FileList.h"
 #include "cObjectiveManager.hpp"
 #include "Game.hpp"
-#include "interface/cChoiceMessage.h"
 #include <sstream>
 #include "sConfig.h"
 
@@ -209,7 +208,7 @@ void cScreenTown::do_walk()
         HideWidget(girlimage_id, false);
 	}
 
-    girl->TriggerEvent("meet.town");
+    girl->TriggerEvent("girl:meet:town");
 }
 
 bool cScreenTown::buy_building(static_brothel_data* bck)

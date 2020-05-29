@@ -32,45 +32,44 @@ extern sColor g_ChoiceMessageHeaderColor;
 extern sColor g_ChoiceMessageBackgroundColor;
 extern sColor g_ChoiceMessageSelectedColor;
 
-cChoice::cChoice(int x, int y, int width, int height, int ID, int num_choices, int item_height, int max_str_len, int fontsize, cInterfaceWindow* parent) :
-    cUIWidget(ID, x, y, width, height, parent), m_Choices(num_choices), m_ChoicesSurface(num_choices), m_FontSize(fontsize), m_Font(&GetGraphics())
+cChoice::cChoice(int x, int y, int width, int height, int ID, std::string question, std::vector<std::string> options, int fontsize, cInterfaceWindow* parent) :
+        cUIWidget(ID, x, y, width, height, parent), m_Choices(options.size()), m_ChoicesSurface(options.size()), m_FontSize(fontsize),
+        m_Font(GetGraphics().LoadFont(cfg.fonts.normal(), fontsize))
 {
-    m_Font.LoadFont(cfg.fonts.normal(), fontsize);
     m_Font.SetColor(g_ChoiceMessageTextColor.r, g_ChoiceMessageTextColor.g, g_ChoiceMessageTextColor.b);
+    Question(std::move(question));
 
-    if(max_str_len > 0) {
-        int MaxWidth = 0, MaxHeight = 0;
-        std::string temp = std::string(max_str_len, 'W');
-        m_Font.GetSize(temp, MaxWidth, MaxHeight);
-        int newHeight = (MaxHeight * num_choices) + 2;
-
-        if (newHeight > GetGraphics().GetHeight())
-            newHeight = GetGraphics().GetHeight() - 34;
-        if (MaxWidth > GetGraphics().GetWidth())
-            MaxWidth = GetGraphics().GetWidth() - 2;
-
-        m_NumDrawnElements = newHeight / MaxHeight;
-        if (m_NumDrawnElements >= num_choices) {
-            m_ScrollDisabled = true;
-            m_eWidth = (MaxWidth);
-        } else
-            m_eWidth = (MaxWidth - (18));
-        m_eHeight = MaxHeight;
-
-        m_CurrChoice = -1;
-        m_Width = MaxWidth;
-        m_Height = newHeight;
-        m_FontSize = fontsize;
-
-        m_XPos = ((GetGraphics().GetWidth() / 2) - (m_Width / 2));
-        m_YPos = ((GetGraphics().GetHeight() / 2) - (m_Height / 2));
-    } else {
-        if ((height - 2) / item_height < num_choices)
-            height = (num_choices*item_height) + 2;
-        m_NumDrawnElements = (height - 2) / item_height;
-        m_eWidth = (width - (18));
-        m_eHeight = item_height;
+    int MaxWidth = 0, MaxHeight = 0;
+    m_Font.GetSize(m_Question, MaxWidth, MaxHeight);
+    for(auto& opt : options) {
+        int nw;
+        m_Font.GetSize(opt, nw, MaxHeight);
+        if(nw > MaxWidth)
+            MaxWidth = nw;
     }
+    int newHeight = MaxHeight * options.size() + 2;
+
+    if (newHeight > GetGraphics().GetHeight())
+        newHeight = GetGraphics().GetHeight() - 34;
+    if (MaxWidth > GetGraphics().GetWidth())
+        MaxWidth = GetGraphics().GetWidth() - 2;
+
+    m_NumDrawnElements = newHeight / MaxHeight;
+    if (m_NumDrawnElements >= options.size()) {
+        m_ScrollDisabled = true;
+        m_eWidth = (MaxWidth);
+    } else
+        m_eWidth = (MaxWidth - (18));
+    m_eHeight = MaxHeight;
+
+    m_CurrChoice = -1;
+    m_Width = MaxWidth;
+    m_Height = newHeight;
+    m_FontSize = fontsize;
+
+    m_XPos = ((GetGraphics().GetWidth() / 2) - (m_Width / 2));
+    m_YPos = ((GetGraphics().GetHeight() / 2) - (m_Height / 2));
+
 
     m_Border = GetGraphics().CreateSurface(m_Width + (m_ScrollDisabled ? 2 : 20), m_Height + 2, g_ChoiceMessageBorderColor);
     m_Background = GetGraphics().CreateSurface(m_Width - (m_ScrollDisabled ? 0 : 18), m_Height, g_ChoiceMessageBackgroundColor);
@@ -86,7 +85,9 @@ cChoice::cChoice(int x, int y, int width, int height, int ID, int num_choices, i
     m_DownOff = GetGraphics().LoadImage(ButtonPath("DownOff.png"), 16, 16, true);
     m_CurrDown = m_DownOff;
 
-    Question("");
+    for(std::size_t i = 0; i < options.size(); ++i) {
+        AddChoice(std::move(options[i]), i);
+    }
 }
 
 int cChoice::num_choices() const

@@ -53,6 +53,7 @@ namespace scripting
 		std::string m_Name;
         const cScriptManager* m_Manager = nullptr;
         pEventMapping  m_Fallback = nullptr;
+
         std::unordered_map<sEventID, sEventTarget, EventIDHash> m_Events;
         std::unordered_map<sEventID, std::vector<sEventTarget>, EventIDHash> m_Triggers;
     };

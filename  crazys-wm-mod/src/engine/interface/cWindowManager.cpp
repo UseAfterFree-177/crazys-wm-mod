@@ -209,14 +209,7 @@ void cWindowManager::SetActiveGirl(sGirl * girl)
 void cWindowManager::InputChoice(std::string question, std::vector<std::string> options, std::function<void(int)> callback)
 {
     auto choice_window = GetModalWindow();
-    int length = std::max_element(begin(options), end(options),
-                                  [](const std::string& a, const std::string& b){ return a.size() < b.size(); })->size();
-    length = std::max(length, (int)question.size());
-    auto cb = std::make_unique<cChoice>(224, 112, 352, 384, 0, options.size(), 32, length, 16, choice_window.get());
-    cb->Question(std::move(question));
-    for(std::size_t i = 0; i < options.size(); ++i) {
-        cb->AddChoice(std::move(options[i]), i);
-    }
+    auto cb = std::make_unique<cChoice>(224, 112, 352, 384, 0, std::move(question), std::move(options), 16, choice_window.get());
     cb->SetCallback( std::move(callback) );
     choice_window->AddWidget(std::move(cb));
 }

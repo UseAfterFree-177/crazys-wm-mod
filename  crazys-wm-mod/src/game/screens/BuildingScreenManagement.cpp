@@ -8,7 +8,6 @@
 #include "InterfaceProcesses.h"
 #include "Game.hpp"
 #include "buildings/queries.hpp"
-#include "interface/cChoiceMessage.h"
 #include <sstream>
 #include "cJobManager.h"
 #include "sConfig.h"

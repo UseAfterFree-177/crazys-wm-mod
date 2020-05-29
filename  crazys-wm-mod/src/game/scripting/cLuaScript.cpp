@@ -101,7 +101,10 @@ sScriptValue cLuaScript::RunEvent(const std::string& event_name, std::initialize
     // create new thread
     auto thread = m_State.newthread();
     // find function
-    thread.get_function(event_name);
+    if(!thread.get_function(event_name)) {
+        g_LogFile.error("scripting", "Could not find lua function '", event_name, "'");
+        throw std::runtime_error("Could not find lua function");
+    }
 
     for(auto& arg : params) {
     	arg.push(thread);

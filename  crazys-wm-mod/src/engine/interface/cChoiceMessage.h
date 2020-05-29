@@ -31,7 +31,7 @@
 class cChoice : public cUIWidget	// represents a list of text selections and the currently selected text
 {
 public:
-	cChoice(int x, int y, int width, int height, int ID, int num_choices, int item_height, int max_str_len, int fontsize, cInterfaceWindow* parent);
+	cChoice(int x, int y, int width, int height, int ID, std::string question, std::vector<std::string> options, int fontsize, cInterfaceWindow* parent);
 
     int num_choices() const;
 

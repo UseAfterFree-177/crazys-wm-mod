@@ -1,8 +1,8 @@
 <EventMapping>
-    <Event Name="girl:meet:arena" Script="MeetArenaTry.lua" Function="HandleEvent" />
-    <Event Name="girl:meet:town" Script="MeetTownDefault.lua" Function="HandleEvent" />
-    <Event Name="girl:meet:studio" Script="MeetCastingTry.lua" Function="HandleEvent" />
-    <Event Name="girl:meet:clinic" Script="MeetClinicTry.lua" Function="HandleEvent" />
+    <Event Name="girl:meet:arena" Script="MeetArenaTry.lua" Function="MeetArena" />
+    <Event Name="girl:meet:town" Script="MeetTownDefault.lua" Function="MeetTown" />
+    <Event Name="girl:meet:studio" Script="MeetCastingTry.lua" Function="MeetCasting" />
+    <Event Name="girl:meet:clinic" Script="MeetClinicTry.lua" Function="MeetClinic" />
     <Event Name="girl:gambling-lost.own" Script="GirlLostGamble.lua" Function="LostOwnGamble" />
     <Event Name="girl:gambling-lost.rival" Script="GirlLostGamble.lua" Function="LostRivalGamble" />
     <Event Name="girl:interact.dungeon" Script="DefaultInteract.lua" Function="InteractDungeon" />
