@@ -44,7 +44,19 @@ int cLuaState::pcall(int nargs, int nresults) {
 }
 
 cLuaState cLuaState::newthread() const {
-    return cLuaState{lua_newthread(m_State)};
+    lua_pushstring(m_State, "_threads");
+    int result_type = lua_gettable(m_State, LUA_REGISTRYINDEX);
+    if(result_type != LUA_TTABLE) {
+        g_LogFile.error("lua", "Could not get threads table! Got ", lua_typename(m_State, result_type));
+        throw std::runtime_error("Could not get lua threads table");
+    }
+    // get the number of current entries in the _threads list,
+    auto thread_num = lua_rawlen(m_State, -1) + 1;
+    lua_State* thread = lua_newthread(m_State);
+    lua_rawseti(m_State, -2, thread_num);
+    lua_pop(m_State, 1);
+    g_LogFile.info("lua", "Creating thread #", thread_num);
+    return cLuaState{thread};
 }
 
 std::string cLuaState::get_error() {
@@ -68,6 +80,11 @@ cLuaInterpreter::cLuaInterpreter() : cLuaState(luaL_newstate()) {
     if(!get_state())
         throw std::runtime_error("Could not create lua state");
     luaL_openlibs(get_state());
+
+    // prepare the threads table
+    lua_pushstring(get_state(), "_threads");
+    lua_newtable(get_state());
+    lua_settable(get_state(), LUA_REGISTRYINDEX);
 }
 
 cLuaInterpreter::~cLuaInterpreter() {
