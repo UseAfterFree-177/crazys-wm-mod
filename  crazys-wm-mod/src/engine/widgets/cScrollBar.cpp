@@ -174,7 +174,7 @@ void cScrollBar::DrawWidget(const CGraphics& gfx)
 
 	// draw buttons
     m_ImgButtonUp.DrawSurface(m_XPos, m_YPos);
-    m_ImgButtonUp.DrawSurface(m_XPos,  m_YPos + m_Height - m_ImgButtonDown.GetHeight());
+    m_ImgButtonDown.DrawSurface(m_XPos,  m_YPos + m_Height - m_ImgButtonDown.GetHeight());
 
 	// draw background
     m_ImgBarBG.DrawSurface(m_XPos, m_YPos + m_ImgButtonUp.GetHeight(), m_RectBGTop.get());
