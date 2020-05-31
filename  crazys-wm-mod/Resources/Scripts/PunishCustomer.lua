@@ -124,7 +124,7 @@ function KidnapGirl(min_age, max_age)
     wm.SetPlayerSuspicion(5)
     wm.SetPlayerDisposition(-5)
     local age = wm.Range(min_age, max_age)
-    local girl = Girl.CreateRandomGirl(age, false, false, true, false, false)
+    local girl = wm.CreateRandomGirl(age, false, false, true, false, false)
     -- TODO DUNGEON_GIRLKIDNAPPED
-    Girl.ToDungeon(girl, 3)
+    wm.ToDungeon(girl, 3)
 end

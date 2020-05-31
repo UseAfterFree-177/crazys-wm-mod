@@ -65,9 +65,9 @@ function PersonalSupervision(girl)
                     Dialog("Spitting with anger, you detail five of your guards to drag her off to the dungeons.")
                     -- TODO this creates a new girl, why?
                     local age = wm.Range(18, 30)
-                    local girl = Girl.CreateRandomGirl(age, false, false, true, false, false)
+                    local girl = wm.CreateRandomGirl(age, false, false, true, false, false)
                     -- TODO DUNGEON_GIRLKIDNAPPED
-                    Girl.ToDungeon(girl, 3)
+                    wm.ToDungeon(girl, 3)
                     Dialog("You hear murmurings from the crowd. You realize you have just kidnapped a woman in front of hundreds of witnesses. Your faux pas infuriates you even more.")
                     wm.SetPlayerDisposition(-25)
                     wm.SetPlayerSuspicion(25)
@@ -115,7 +115,7 @@ function PersonalSupervision(girl)
                     Dialog("Still, when you offer her the job, she takes it. You hear her mutter under her breath, \"Better working for an asshole than starving to death.\"")
                     girl:pclove(-100)
                     girl:pchate(25)
-                    Girl.AcquireGirl(girl)
+                    wm.AcquireGirl(girl)
                     return
                 else
                     Dialog("Worse, she spurns your offer of a job. \"There's plenty of work on the battlefields of Kandor Plains, I don't actually need to work for an asshole.\"")
@@ -172,7 +172,7 @@ function PersonalSupervision(girl)
                 girl:pclove(25)
                 girl:pcfear(-25)
                 girl:tiredness(25)
-                Girl.AcquireGirl(girl)
+                wm.AcquireGirl(girl)
                 return
             else
                 -- she still lost
@@ -196,7 +196,7 @@ function PersonalSupervision(girl)
                     "\"Surprised the hell out of me, too, honey. I bet against you in every one of your matches.\""
             )
             if choice == 0 then
-                Girl.AcquireGirl(girl)
+                wm.AcquireGirl(girl)
                 return
             else
                 Dialog("The girl's wonder at her win is spoiled by your public lack of confidence in her abilities.")
@@ -239,7 +239,7 @@ function FightTentacleBeast(girl)
             Dialog("Girl: \"Well, this was a nice change of pace. Do you have other interesting challenges like that in your bestiary?\"")
             Dialog("You smile. \" I do, and you can fight them daily if you accept the job.\"")
             Dialog("Girl: \"Sign me up!\"")
-            Girl.AcquireGirl(girl)
+            wm.AcquireGirl(girl)
             return
         else
             Dialog("Assuming she had figured out the beast's tricks, this second failure takes her completely by surprise. She's good enough that she recovers quickly - but not quite quickly enough.")
@@ -273,7 +273,7 @@ function HireFuckChoice(girl)
             girl:bdsm(50)
             girl:refinement(50)
         end
-        Girl.AcquireGirl(girl)
+        wm.AcquireGirl(girl)
         return
     end
 end
@@ -304,14 +304,14 @@ function WatchFromSuite(girl)
                     Dialog("You pull your measuring stick out of your pants. Her breasts are magnificent, and easily wrap around your cock completely.")
                     Dialog("It doesn't take long before you give her breasts a glistening seal of approval, coating her nipples with a salty glaze.")
                     Dialog("You certainly passed the qualifying interview, my dear!! Congratulations!")
-                    Girl.AcquireGirl(girl)
+                    wm.AcquireGirl(girl)
                 else
                     Dialog("Girl: \"I love fishing for compliments when my companion is smart enough to give me one.\"")
                     Dialog("She leans close, and gives you a quick peck on the cheek.")
                     Dialog("You pull her in even closer. and go for a more serious kiss.")
                     Dialog("She puts a hand on your chest to stop you. \"This is too fast for me.  I would love to hang around with you, though, and try to get to know you a little better.\"")
                     Dialog("\"I would like to see you again, too. Join my enterprise, and we'll see how the relationship goes.\"")
-                    Girl.AcquireGirl(girl)
+                    wm.AcquireGirl(girl)
                 end
             elseif choice == 2 then
                 Dialog("You climb down to the arena floor to supervise the try-out.")
@@ -340,7 +340,7 @@ function WatchFromSuite(girl)
                         Dialog("Girl: \"I'd like that, sir. Thank you.\"")
                         wm.SetPlayerDisposition(5)
                         girl:charisma(25)
-                        Girl.AcquireGirl(girl)
+                        wm.AcquireGirl(girl)
                     end
                 else
                     Masturbate(girl)
@@ -381,7 +381,7 @@ function WatchFromSuite(girl)
                     Dialog("Girl: \"Oh, I'll be a courtesan, alright. And I'll do more than just head!\"")
                     girl:libido(20)
                     girl:normalsex(20)
-                    Girl.AcquireGirl(girl)
+                    wm.AcquireGirl(girl)
                 elseif choice == 1 then
                     Dialog("Girl\" \"Sir! That's... just rude! I'll be back with the arena doctor.\"")
                     Dialog("She flounces off angrily, and you sigh to yourself. At least the arena doctor is on your payroll, so she will be discreet about your 'accident'.")
@@ -487,7 +487,7 @@ function AssassinationAttempt(girl)
             Dialog("She ties you to your chair, and gags you. She runs her knife along your penis from balls to tip, just before she leaves. \"Remember, no more expansion.\"")
         else
             Dialog("That's a pretty good deal. Against my better judgment, I'll take it.")
-            Girl.AcquireGirl(girl)
+            wm.AcquireGirl(girl)
             girl:obedience(100)
             girl:pclove(-100)
             girl:house(-100)
@@ -529,7 +529,7 @@ function HaveDate(girl)
                 Dialog("Girl: \"I came here looking for a job like that. I thought I'd have to earn it on the arena floor, but I'd be a fool to turn it down just because it's offered in a luxury suite.\"")
                 Dialog("Girl: \"But... no strings attached, right?\"  You laugh. \"Suspicious to the end!  No, my dear, there are no strings attached.\"")
                 wm.SetPlayerDisposition(10)
-                Girl.AcquireGirl(girl)
+                wm.AcquireGirl(girl)
             end
         else
             Dialog("Your comment only enrages her. \"You could have said something dumber, but you'd have to work hard at it.\"")

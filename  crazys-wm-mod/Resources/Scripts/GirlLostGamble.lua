@@ -20,7 +20,7 @@ function HandleDecision(girl)
         if result == 0 then
             Dialog("Girl: \"Thank you so much.\"")
             -- TODO does this make sense?
-            Girl.AcquireGirl(girl)
+            wm.AcquireGirl(girl)
         else
             Dialog("Girl: \"Please don't do this..\"")
         end

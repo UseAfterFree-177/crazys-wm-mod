@@ -25,13 +25,13 @@ function MeetCasting(girl)
                 return
             else
                 Dialog("Girl: \"I've been told and it's fine,  I really need the money.\"")
-                Girl.AcquireGirl(girl)
+                wm.AcquireGirl(girl)
             end
         else
             if response == 3 then
                 Dialog("Girl: \"I'm glad you saw my talent! I'm looking forward to learning my lines. Do you have a script?\"")
                 Dialog("You roll your eyes at her naivete. \"Sure, honey, just sign this contract and we'll make you a star.\"")
-                Girl.AcquireGirl(girl)
+                wm.AcquireGirl(girl)
                 Dialog("You suspect when she really finds out what she's signed up for, she's not going to like you very much.")
                 girl:happiness(-50)
                 girl.pchate(80)
@@ -51,11 +51,11 @@ function MeetCasting(girl)
         )
         if choice == 0 then
             Dialog("The girl gives you a bonecrushing hug and deliberately grinds her crotch into you. \"You won't regret this, sir!\"")
-            Girl.AcquireGirl(girl)
+            wm.AcquireGirl(girl)
             girl:pclove(25)
         else
             Dialog("Girl: \"Oh, pooh.  I thought you were interested in just me.\"")
-            Girl.AcquireGirl(girl)
+            wm.AcquireGirl(girl)
             girl:pclove(-25)
             girl:pchate(25)
             if wm.Percent(50) then
@@ -76,9 +76,9 @@ function MeetCasting(girl)
                     Dialog("Your men know you well enough - they drag her to the dungeon before you even have to say anything.")
                     Dialog("Wiping spittle off your cheek, you yell after them: \"Throw a slave bracelet on that bitch. I'll attend to her shortly.\"")
                     local age = wm.Range(18, 22)
-                    local othergirl = Girl.CreateRandomGirl(age, true, false, true, false, false)
+                    local othergirl = wm.CreateRandomGirl(age, true, false, true, false, false)
                     -- TODO DUNGEON_GIRLKIDNAPPED
-                    Girl.ToDungeon(othergirl, 3)
+                    wm.ToDungeon(othergirl, 3)
                 end
             end
         end

@@ -9,7 +9,7 @@ function MeetClinic(girl)
                 "\"I must be off, bye\"")
         if hire == 0 then
             Dialog("Girl: \"Ok, that would really be helpful.\"")
-            Girl.AcquireGirl(girl)
+            wm.AcquireGirl(girl)
         else
             Dialog("Girl: \"Ok, bye.\"")
         end

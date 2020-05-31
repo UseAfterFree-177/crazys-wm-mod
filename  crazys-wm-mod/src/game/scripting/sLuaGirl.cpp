@@ -57,30 +57,22 @@ void sLuaGirl::init(lua_State* L) {
             {"torture", sLuaGirl::torture},
             {nullptr, nullptr}
     };
-    luaL_openlib(L, nullptr, methods, 0);
+    luaL_setfuncs(L, methods, 0);
 
     // register shorthands for skill functions
     for(int i = 0; i < NUM_STATS; ++i) {
         lua_pushstring(L, tolower(get_stat_name((STATS)i)).c_str());
         lua_pushinteger(L, i);
-        lua_pushcclosure(L, sLuaGirl::up_getset_stat, 1);
+        lua_pushcclosure(L, up_getset_stat, 1);
         lua_settable(L, -3);
     }
 
     for(int i = 0; i < NUM_SKILLS; ++i) {
         lua_pushstring(L, tolower(get_skill_name((SKILLS)i)).c_str());
         lua_pushinteger(L, i);
-        lua_pushcclosure(L, sLuaGirl::up_getset_skill, 1);
+        lua_pushcclosure(L, up_getset_skill, 1);
         lua_settable(L, -3);
     }
-
-    luaL_Reg functions[] =  {
-            {"AcquireGirl", sLuaGirl::acquire_girl},
-            {"CreateRandomGirl", sLuaGirl::create_random_girl},
-            {"ToDungeon", sLuaGirl::to_dungeon},
-            {nullptr, nullptr}
-    };
-    luaL_openlib(L, "Girl", functions, 0);
 
     // TODO this can be a function
     lua_pushstring(L, "STATS");
@@ -115,7 +107,7 @@ void sLuaGirl::create(lua_State* L, sGirl* girl) {
     lua_setmetatable(L, -2);
 }
 
-sGirl& sLuaGirl::checkgirl(lua_State* L, int index) {
+sGirl& sLuaGirl::check_type(lua_State* L, int index) {
     void *ud = luaL_checkudata(L, index, "wm.Girl");
     luaL_argcheck(L, ud != nullptr, index, "`Girl' expected");
     sGirl* gp = *(sGirl**)ud;
@@ -123,8 +115,9 @@ sGirl& sLuaGirl::checkgirl(lua_State* L, int index) {
     return *gp;
 }
 
-int sLuaGirl::getset_stat(lua_State* L) {
-    auto& girl = checkgirl(L, 1);
+template<class T>
+int sCharacter<T>::getset_stat(lua_State* L) {
+    auto& girl = T::check_type(L, 1);
     int stat = luaL_checkinteger(L, 2);
     if(lua_gettop(L) == 3) {
         int value = luaL_checkinteger(L, 3);
@@ -137,8 +130,9 @@ int sLuaGirl::getset_stat(lua_State* L) {
     }
 }
 
-int sLuaGirl::getset_skill(lua_State* L) {
-    auto& girl = checkgirl(L, 1);
+template<class T>
+int sCharacter<T>::getset_skill(lua_State* L) {
+    auto& girl = T::check_type(L, 1);
     int stat = luaL_checkinteger(L, 2);
     if(lua_gettop(L) == 3) {
         int value = luaL_checkinteger(L, 3);
@@ -151,8 +145,9 @@ int sLuaGirl::getset_skill(lua_State* L) {
     }
 }
 
-int sLuaGirl::up_getset_skill(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+template<class T>
+int sCharacter<T>::up_getset_skill(lua_State *L) {
+    auto& girl = T::check_type(L, 1);
     int stat = lua_tointeger(L, lua_upvalueindex(1));
     if(lua_gettop(L) == 2) {
         int value = luaL_checkinteger(L, 2);
@@ -165,8 +160,9 @@ int sLuaGirl::up_getset_skill(lua_State *L) {
     }
 }
 
-int sLuaGirl::up_getset_stat(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+template<class T>
+int sCharacter<T>::up_getset_stat(lua_State *L) {
+    auto& girl = T::check_type(L, 1);
     int stat = lua_tointeger(L, lua_upvalueindex(1));
     if(lua_gettop(L) == 2) {
         int value = luaL_checkinteger(L, 2);
@@ -180,7 +176,7 @@ int sLuaGirl::up_getset_stat(lua_State *L) {
 }
 
 int sLuaGirl::add_trait(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     const char* trait = luaL_checkstring(L, 2);
     int temp_time = 0;
     if(lua_gettop(L) == 3) {
@@ -195,7 +191,7 @@ int sLuaGirl::add_trait(lua_State *L) {
 }
 
 int sLuaGirl::has_trait(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     bool has = false;
     // take an arbitrary number of trait names, return whether one of them is present
     for(int i = 2; i <= lua_gettop(L); ++i) {
@@ -207,7 +203,7 @@ int sLuaGirl::has_trait(lua_State *L) {
 }
 
 int sLuaGirl::remove_trait(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     const char* trait = luaL_checkstring(L, 2);
     girl.lose_trait(trait);
     return 0;
@@ -215,13 +211,13 @@ int sLuaGirl::remove_trait(lua_State *L) {
 
 
 int sLuaGirl::get_name(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     lua_pushstring(L, girl.FullName().c_str());
     return 1;
 }
 
 int sLuaGirl::calc_player_pregnancy(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
 
     bool preg = false;
     if(lua_gettop(L) == 2) {
@@ -235,7 +231,7 @@ int sLuaGirl::calc_player_pregnancy(lua_State *L) {
 }
 
 int sLuaGirl::acquire_girl(lua_State* L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     /* MYR: For some reason I can't figure out, a number of girl's house percentages
             are at zero or set to zero when they are sent to the brothel. I'm not sure
             how to fix it, so I'm explicitly setting the percentage to 60 here */
@@ -291,21 +287,21 @@ int sLuaGirl::create_random_girl(lua_State *L) {
 }
 
 int sLuaGirl::to_dungeon(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     int reason = luaL_checkinteger(L, 2);
     g_Game->dungeon().AddGirl(&girl, reason);
     return 0;
 }
 
 int sLuaGirl::is_slave(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     bool slave = girl.is_slave();
     lua_pushboolean(L, slave);
     return 1;
 }
 
 int sLuaGirl::has_item(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     const char* item = luaL_checkstring(L, 2);
     bool has = girl.has_item(item);
     lua_pushboolean(L, has);
@@ -313,20 +309,20 @@ int sLuaGirl::has_item(lua_State *L) {
 }
 
 int sLuaGirl::check_virginity(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     lua_pushboolean(L, is_virgin(girl));
     return 1;
 }
 
 int sLuaGirl::lose_virginity(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     bool result = girl.lose_trait("Virgin");
     lua_pushboolean(L, result);
     return 1;
 }
 
 int sLuaGirl::add_message(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     std::string message = luaL_checkstring(L, 2);
     int imgtype = luaL_checkinteger(L, 3);
     int evtype = luaL_checkinteger(L, 4);
@@ -335,20 +331,20 @@ int sLuaGirl::add_message(lua_State *L) {
 }
 
 int sLuaGirl::clear_pregnancy(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     girl.clear_pregnancy();
     return 0;
 }
 
 int sLuaGirl::is_pregnant(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     bool result = girl.is_pregnant();
     lua_pushboolean(L, result);
     return 1;
 }
 
 int sLuaGirl::start_pregnancy(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     int by_whom = luaL_checkinteger(L, 2);
 
     if (by_whom == 0)					// STATUS_PREGNANT_BY_PLAYER
@@ -366,7 +362,7 @@ int sLuaGirl::start_pregnancy(lua_State *L) {
 }
 
 int sLuaGirl::set_status(lua_State *L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     unsigned status = luaL_checkinteger(L, 2);
     int setto = luaL_checkinteger(L, 3);
     if (status == STATUS_PREGNANT || status == STATUS_PREGNANT_BY_PLAYER || status == STATUS_INSEMINATED)	// if creating pregnancy, remove old pregnancies
@@ -383,7 +379,7 @@ int sLuaGirl::set_status(lua_State *L) {
 }
 
 int sLuaGirl::has_status(lua_State* L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     unsigned status = luaL_checkinteger(L, 2);
     bool has = girl.has_status((STATUS)status);
     lua_pushboolean(L, has);
@@ -392,7 +388,7 @@ int sLuaGirl::has_status(lua_State* L) {
 
 int sLuaGirl::obey_check(lua_State * L)
 {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     auto action = ACTION_GENERAL;
     if(lua_gettop(L) == 2) {
         action = (Action_Types)luaL_checkinteger(L, 2);
@@ -404,14 +400,14 @@ int sLuaGirl::obey_check(lua_State * L)
 }
 
 int sLuaGirl::torture(lua_State* L) {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     cGirlTorture gt(&girl);
     return 0;
 }
 
 int sLuaGirl::give_money(lua_State * L)
 {
-    auto& girl = checkgirl(L, 1);
+    auto& girl = check_type(L, 1);
     int gold = luaL_checkinteger(L, 2);
     if(gold < 0)
         luaL_error(L, "Use `take_money` function if you want to take money from a girl.");
@@ -423,14 +419,14 @@ int sLuaGirl::give_money(lua_State * L)
 
 int sLuaGirl::weeks_pregnant(lua_State* L)
 {
-	auto& girl = checkgirl(L, 1);
+	auto& girl = check_type(L, 1);
 	lua_pushinteger(L, girl.m_WeeksPreg);
 	return 1;
 }
 
 int sLuaGirl::pregnancy_term(lua_State* L)
 {
-	auto& girl = checkgirl(L, 1);
+	auto& girl = check_type(L, 1);
 	lua_pushinteger(L, girl.get_preg_duration());
 	return 1;
 }
@@ -448,24 +444,24 @@ void sLuaCustomer::init(lua_State* L) {
 
 	// fill in the metatable
 	luaL_Reg methods[] = {
-			{"stat", sLuaGirl::getset_stat},
-			{"skill", sLuaGirl::getset_skill},
+			{"stat", getset_stat},
+			{"skill", getset_skill},
 			{nullptr, nullptr}
 	};
-	luaL_openlib(L, nullptr, methods, 0);
+    luaL_setfuncs(L, methods, 0);
 
 	// register shorthands for skill functions
 	for(int i = 0; i < NUM_STATS; ++i) {
 		lua_pushstring(L, tolower(get_stat_name((STATS)i)).c_str());
 		lua_pushinteger(L, i);
-		lua_pushcclosure(L, sLuaGirl::up_getset_stat, 1);
+		lua_pushcclosure(L, up_getset_stat, 1);
 		lua_settable(L, -3);
 	}
 
 	for(int i = 0; i < NUM_SKILLS; ++i) {
 		lua_pushstring(L, tolower(get_skill_name((SKILLS)i)).c_str());
 		lua_pushinteger(L, i);
-		lua_pushcclosure(L, sLuaGirl::up_getset_skill, 1);
+		lua_pushcclosure(L, up_getset_skill, 1);
 		lua_settable(L, -3);
 	}
 }
@@ -479,7 +475,7 @@ void sLuaCustomer::create(lua_State* L, sCustomer* cust) {
 	lua_setmetatable(L, -2);
 }
 
-sCustomer& sLuaCustomer::checkcust(lua_State* L, int index) {
+sCustomer& sLuaCustomer::check_type(lua_State* L, int index) {
 	void *ud = luaL_checkudata(L, index, "wm.Customer");
 	luaL_argcheck(L, ud != nullptr, index, "`wmCustomer' expected");
 	sCustomer* gp = *(sCustomer**)ud;

@@ -313,7 +313,7 @@ function GetBestialityMessage(girl, customer)
             message = message .. "Held down by the customer, ${name} gritted her teeth as the beast penetrated her roughly, mooing with definite discomfort when the customer told her to do so.";
         else
             -- Gondra: Vanilla Messages TODO Gondra: Replace/supplement these Vanilla messages.
-            message = message .. RandomChoice("Initially the customers was amused as the beast pounced " .. girlName .. ", who was not able to handle the beast, but the panicked shrieks of the girl as the horny monster tried to force itself onto her killed his mood though.",
+            message = message .. RandomChoice("Initially the customers was amused as the beast pounced ${name}, who was not able to handle the beast, but the panicked shrieks of the girl as the horny monster tried to force itself onto her killed his mood though.",
                     "${name} was disgusted by the idea but still allowed the customer to watch as she was fucked by some animals.")
         end
     elseif skill < 40 then
@@ -446,19 +446,19 @@ function GetBestialityMessage(girl, customer)
             -- MYR: Not a mistake. I meant to write 'seven'.
             message = message .. "the color " .. RandomChoice("purple", "seven", "mauve", "silver", "ochre", "pale yellow") .. "."
         elseif choice == 9 then
-            message = message .. wm.Range(5, 15) .. " werewolves wearing " .. wm.Range(1, 10) .. wm.RandomChoice("true", "minor artifact", "greater artifact", "godly", "near omnipotent") ..
-                    " rings of the " .. wm.RandomChoice("eternal", "body breaking", "corporal", "transcendent", "incorporeal") .. " hard-on."
+            message = message .. wm.Range(5, 15) .. " werewolves wearing " .. wm.Range(1, 10) .. RandomChoice("true", "minor artifact", "greater artifact", "godly", "near omnipotent") ..
+                    " rings of the " .. RandomChoice("eternal", "body breaking", "corporal", "transcendent", "incorporeal") .. " hard-on."
         elseif choice == 10 then
             message = message .. wm.Range(1, 12) .. " Elder Gods."
             if wm.Percent(30) then
-                message = message .. " (She thought " .. wm.RandomChoice("Cthulhu", "Hastur", "an Old One", "Shub-Niggurath", "Nyarlathotep", "Yog-Sothoth") ..
+                message = message .. " (She thought " .. RandomChoice("Cthulhu", "Hastur", "an Old One", "Shub-Niggurath", "Nyarlathotep", "Yog-Sothoth") ..
                         " was amongst them, but blacked out after a minute or so.)"
             end
         elseif choice == 11 then
-            message = message .. "the level " .. wm.Range(25, 45) .. " epic paragon " .. wm.RandomChoice("troll", "beholder", "displacer beast", "ettin", "gargoyle", "fire extinguisher") ..
-                    " with " .. wm.RandomChoice(20, 40) .. " strength and " .. wm.RandomChoice(20, 40) .. " constitution."
+            message = message .. "the level " .. wm.Range(25, 45) .. " epic paragon " .. RandomChoice("troll", "beholder", "displacer beast", "ettin", "gargoyle", "fire extinguisher") ..
+                    " with " .. RandomChoice(20, 40) .. " strength and " .. RandomChoice(20, 40) .. " constitution."
         elseif choice == 12 then
-            message = message .. "the phalanx of " .. wm.RandomChoice("horny orcs.", "goblins.", "sentient marbles.", "living garden gnomes.", "bugbears.")
+            message = message .. "the phalanx of " .. RandomChoice("horny orcs.", "goblins.", "sentient marbles.", "living garden gnomes.", "bugbears.")
         end
     end
     return message
@@ -504,7 +504,7 @@ function GetBDSMMessage(girl, customer)
             end
         elseif wm.Percent(66) and girl:has_trait("Mind Fucked") then
             message = "Naked, hollow-eyed and open-mouthed ${name} smiled at the customer drooling "
-            message = message .. wm.RandomChoice("and singing a Nursery Rhyme as she brutally slapped her clit.",
+            message = message .. RandomChoice("and singing a Nursery Rhyme as she brutally slapped her clit.",
                     "and crying as she fisted herself.",
                     "into her hands, and then wiping the slobber over her face and giggling like a child.",
                     "and purring as she played with the candle, its wax and its exquisite flame.",
@@ -526,7 +526,7 @@ function GetBDSMMessage(girl, customer)
             message = "The customer was unsettled by this BDSM session. As he " .. InsaneBDSM(girl) .. " It was just weird.\n"
             girl:fame(5)
         else
-            message = wm.RandomChoice(
+            message = RandomChoice(
                     "${name} was horrified as the customer clamped things on her, shoved things in her, and whipped, hurt and deliberately degraded her for his own sexual gratification.",
                     "${name} was frightened by being tied up and having pain inflicted on her.",
                     "${name} wept in pain and humiliation as the customer poured hot candle-wax on her sensitive parts.",
@@ -568,7 +568,7 @@ function GetBDSMMessage(girl, customer)
             message = message .. "The customer tied ${name}to a rack, where he used a paddle to spank her fat ass, her wobbly thighs and her flabby breasts, sending fat waves rippling all over her body. "
                     .. "The pain was too much for her, and her whimpering totally killed his mood.";
         else
-            message = message .. wm.RandomChoice("${name} was upset as the customer clamped things on her nipples and shoved things in her mouth, deliberately degrading her for his amusement.",
+            message = message .. RandomChoice("${name} was upset as the customer clamped things on her nipples and shoved things in her mouth, deliberately degrading her for his amusement.",
                     "${name} was not enjoying being bound and hurt, but endured it.",
                     "${name} squealed and struggled as the customer dripped sizzling candle-wax on sensitive areas.",
                     "${name} was still a bit scared as the customer began applying the bondage gear on her body, but didn't really show it.")
@@ -626,7 +626,7 @@ function GetBDSMMessage(girl, customer)
             message = "The customer had a great time in this BDSM session. As he " .. InsaneBDSM(girl) .. " It was just weird.\n"
             girl:fame(5)
         else
-            message = wm.RandomChoice("${name} was aroused as the customer deliberately hurt, used and degraded her for his sexual gratification.",
+            message = RandomChoice("${name} was aroused as the customer deliberately hurt, used and degraded her for his sexual gratification.",
                     "${name} was a little turned on by being tied up and having the customer hurting her.",
                     "${name} squealed and groaned as the customer stimulated her sensitive areas with scalding candle-wax.",
                     "Being at the mercy of the customer was something ${name} actually found herself enjoying a bit.")
@@ -789,6 +789,7 @@ function GetBDSMMessage(girl, customer)
             end
         end
     end
+    return message
 end
 
 ---@param customer wm.Customer
@@ -870,9 +871,9 @@ function HandleBDSMAggressiveCustomer(girl, customer)
 end
 
 function InsaneBDSM(girl)
-    local message = wm.RandomChoice("thwacked her nipples red with a stick", "deliberately came in her eye", "shoved his dick in her ass",
+    local message = RandomChoice("thwacked her nipples red with a stick", "deliberately came in her eye", "shoved his dick in her ass",
             "dripped hot candle wax on her asshole", "cruelly fisted her") .. " {name} " ..
-            wm.RandomChoice("started suddenly laughing", "softly began to sing", "stared up at him with an unnerving empty smile",
+            RandomChoice("started suddenly laughing", "softly began to sing", "stared up at him with an unnerving empty smile",
                     "grinned and silently wept", "started speaking in tongues") .. ", "
     if girl:morality() > 33 then
         message = message .. "urging him to cleanse her and saying something about fate, the Gods, and divine retribution."
@@ -1579,7 +1580,7 @@ function GetFootMessage(girl, customer)
         return "(Z text not done)\n"
     end
 
-    local skill = girl:foot()
+    local skill = girl:footjob()
     if skill < 20 then
         if wm.Percent(30) and girl:has_trait("Cum Addict") then
             return "${name} squeezed the customer's cock around with her feet and licked up every last drop of cum when he finally finished."
@@ -1710,7 +1711,7 @@ function GetOralMessage(girl, customer)
         return message
     end
 
-    local skill = girl:oral()
+    local skill = girl:oralsex()
     if skill < 20 then
         if wm.Percent(50) and girl:has_trait("Cum Addict") then
             return "The smell that came from the customers cock in front of her awoke ${name}'s hunger for cum, which made her work his shaft with considerable greed, forgetting to be careful with her teeth, until the customer came with a pained expression, letting her swallow what she craved."

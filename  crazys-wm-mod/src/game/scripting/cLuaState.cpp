@@ -64,7 +64,7 @@ void cLuaState::settable(int index, const char *key, int value) {
     lua_settable(m_State, index - 2);
 }
 
-cLuaInterpreter::cLuaInterpreter() : cLuaState(lua_open()) {
+cLuaInterpreter::cLuaInterpreter() : cLuaState(luaL_newstate()) {
     if(!get_state())
         throw std::runtime_error("Could not create lua state");
     luaL_openlibs(get_state());

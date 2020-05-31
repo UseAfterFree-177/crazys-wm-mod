@@ -87,12 +87,17 @@ static const luaL_Reg funx [] = {
         // rng
         { "Range",                       cLuaScript::Range},
         { "Percent",                     cLuaScript::Percent},
+        // girl
+        {"AcquireGirl",                  sLuaGirl::acquire_girl},
+        {"CreateRandomGirl",             sLuaGirl::create_random_girl},
+        {"ToDungeon",                    sLuaGirl::to_dungeon},
         { nullptr,                       nullptr }
 };
 
 cLuaScript::cLuaScript()
 {
-    luaL_register(m_State.get_state(), "wm", funx);
+    luaL_newlib(m_State.get_state(), funx);
+    lua_setglobal(m_State.get_state(), "wm");
     sLuaGirl::init(m_State.get_state());
     sLuaCustomer::init(m_State.get_state());
 }
@@ -112,19 +117,21 @@ sScriptValue cLuaScript::RunEvent(const std::string& event_name, std::initialize
 
     // run thread
     lua_State* s = thread.get_state();
-    int result = lua_resume(s, params.size());
+    int result = lua_resume(s, nullptr, params.size());
     if(result != 0 && result != LUA_YIELD) {
         g_LogFile.error("scripting", thread.get_error());
     } else {
         int top = lua_gettop(s);
         if(top > 0) {
     	    if(lua_isnumber(s, top)) {
-    	        return sScriptValue((float)lua_tonumber(s, top));
+    	        return sScriptValue((float)lua_tonumberx(s, top, nullptr));
     	    } else if(lua_isstring(s, top)) {
                 return sScriptValue(std::string(lua_tostring(s, top)));
     	    } else if(lua_isboolean(s, top)) {
                 return sScriptValue((bool)lua_toboolean(s, top));
     	    } else {
+    	        const char* top_as_str = lua_tostring(s, top);
+    	        g_LogFile.warning("lua", "Could not convert lua return value to C++ value: ", top_as_str);
     	        return boost::blank{};
     	    }
 		}
@@ -149,7 +156,7 @@ int cLuaScript::ChoiceBox(lua_State* state)
 
     auto callback = [state](int choice) {
         lua_pushinteger(state, choice);
-        auto result = lua_resume(state, 1);
+        auto result = lua_resume(state, nullptr, 1);
         if(result != 0 && result != LUA_YIELD) {
             g_LogFile.error("scripting", cLuaState{state}.get_error());
         }
@@ -163,7 +170,7 @@ int cLuaScript::Dialog(lua_State* state)
 {
     int nargs = lua_gettop(state);
     std::string text = luaL_checkstring(state, -1);
-    window_manager().PushMessage(text, 0, [state](){ lua_resume(state, 0); });
+    window_manager().PushMessage(text, 0, [state](){ lua_resume(state, nullptr, 0); });
     return 0;
 }
 

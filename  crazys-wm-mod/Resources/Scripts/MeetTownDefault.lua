@@ -10,7 +10,7 @@ function MeetTown(girl)
                    "\"I must be off, bye\"")
         if c == 0 then
             Dialog("Girl: \"Really?  That would be wonderful!  I was getting absolutely desperate.\"")
-            Girl.AcquireGirl(girl)
+            wm.AcquireGirl(girl)
         else
             Dialog("Girl: \"Ok, bye.\"")
         end

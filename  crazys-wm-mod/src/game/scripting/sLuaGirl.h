@@ -24,15 +24,19 @@ class sGirl;
 class sCustomer;
 struct lua_State;
 
-struct sLuaGirl {
-    static void init(lua_State* L);
-    static void create(lua_State* state, sGirl* girl);
-    static sGirl& checkgirl(lua_State* L, int index);
-
+template<class T>
+struct sCharacter {
     static int getset_stat(lua_State* L);
     static int getset_skill(lua_State* L);
+
     static int up_getset_stat(lua_State* L);
     static int up_getset_skill(lua_State* L);
+};
+
+struct sLuaGirl : public sCharacter<sLuaGirl>{
+    static void init(lua_State* L);
+    static void create(lua_State* state, sGirl* girl);
+    static sGirl& check_type(lua_State* L, int index);
 
     static int add_trait(lua_State* L);
     static int has_trait(lua_State* L);
@@ -72,10 +76,10 @@ struct sLuaGirl {
     static int create_random_girl(lua_State* L);
 };
 
-struct sLuaCustomer {
+struct sLuaCustomer : public sCharacter<sLuaCustomer>{
 	static void init(lua_State* L);
 	static void create(lua_State* L, sCustomer* girl);
-	static sCustomer& checkcust(lua_State* L, int index);
+	static sCustomer& check_type(lua_State* L, int index);
 };
 
 #endif //CRAZYS_WM_MOD_SLUAGIRL_H
