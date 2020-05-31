@@ -422,7 +422,7 @@ function BrothelInteractChoice(girl)
         elseif choice == 4 then
             Dialog("You almost trip over her as you enter the room. \"My Dear, what are you doing kneeling on the floor?\"  Seeing her kneeling before you gives you an idea...")
             -- Choice 3 // GOTO 101
-            local choice = ChoiceBox()
+            local choice = ChoiceBox("", "Blowjob", "Deep Throat", "Titty Fuck")
             Dialog("\"Well never mind the previous reason you're down there.  I shall give you a new one.\"  You pull your member from you pants and  bring it within inches of her face.")
             if choice == 0 then
                 Dialog("\"Now let's see how well you've learned to suck a cock.\"")
@@ -664,10 +664,10 @@ function BrothelInteractChoice(girl)
 end
 
 function InteractOffice(girl)
-    local choice = ChoiceBox("Instruct her to tidy up your office", "Review her performance",
+    local choice = ChoiceBox("", "Instruct her to tidy up your office", "Review her performance",
             "Send her on a mission", "Personal instruction", "Inspect her", "Go Back")
     if choice == 0 then
-        if girl:obey_check(wm.ACTIONS.CLEANING) then
+        if girl:obey_check(wm.ACTIONS.WORKCLEANING) then
             -- TODO clean
             Dialog("She puts on her maid's attire and sets about tidying up your office.  You always enjoy being around a women in a maid's outfit .")
         else
@@ -1244,7 +1244,7 @@ function InteractOffice(girl)
 
         Dialog("Remove your clothing.  I want to get a better look my investment.")
 
-        if girl:obey_check(wm.ACTIONS.STRIPPING) then
+        if girl:obey_check(wm.ACTIONS.WORKSTRIP) then
             -- TODO strip
             Dialog("She removes her clothing and stands nervously before you.")
             if girl:has_trait("Futanari") then
