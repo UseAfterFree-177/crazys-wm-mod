@@ -29,9 +29,7 @@ cCustomers::cCustomers()
 	ChangeCustomerBase();
 	//	m_Last=0;
 }
-cCustomers::~cCustomers()
-{
-}
+cCustomers::~cCustomers() = default;
 sCustomer::sCustomer() : ICharacter( g_Game->create_traits_collection() )
 {
 	m_IsWoman = false;

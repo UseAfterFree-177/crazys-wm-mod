@@ -33,8 +33,7 @@ public:
     bool LoadFont(const std::string& font, int size);
     void GetSize(const std::string& text, int &width, int &height) const;
 
-    int IsFontFixedWidth();
-	int GetFontHeight();	// returns the height in pixels of the font
+    int GetFontHeight();	// returns the height in pixels of the font
 	int GetFontLineSkip() const;	// returns the number of pixels you should have between lines
 	void SetFontBold(bool Bold = true);
 

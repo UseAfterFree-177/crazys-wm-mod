@@ -38,6 +38,7 @@
 #include "sStorage.hpp"
 #include "Inventory.hpp"
 #include "sLuaParameter.hpp"
+#include "utils/string.hpp"
 
 
 extern cRng g_Dice;
@@ -96,7 +97,29 @@ static const luaL_Reg funx [] = {
 
 cLuaScript::cLuaScript()
 {
+    auto L = m_State.get_state();
     luaL_newlib(m_State.get_state(), funx);
+    lua_pushstring(L, "STATS");
+    lua_newtable(L);
+    for(int i = 0; i < NUM_STATS; ++i) {
+        m_State.settable(-1, toupper(get_stat_name((STATS)i)), i);
+    }
+    lua_settable(L, -3);
+
+
+    lua_pushstring(L, "SKILLS");
+    lua_newtable(L);
+    for(int i = 0; i < NUM_SKILLS; ++i) {
+        m_State.settable(-1, toupper(get_skill_name((SKILLS)i)), i);
+    }
+    lua_settable(L, -3);
+
+    lua_pushstring(L, "ACTIONS");
+    lua_newtable(L);
+    for(int i = 0; i < NUM_ACTIONTYPES; ++i) {
+        m_State.settable(-1, toupper(get_action_name((Action_Types)i)), i);
+    }
+    lua_settable(L, -3);
     lua_setglobal(m_State.get_state(), "wm");
     sLuaGirl::init(m_State.get_state());
     sLuaCustomer::init(m_State.get_state());

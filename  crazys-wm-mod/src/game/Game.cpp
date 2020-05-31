@@ -342,7 +342,7 @@ void Game::load(tinyxml2::XMLElement& root)
 void Game::read_attributes_xml(tinyxml2::XMLElement& el)
 {
     // load cheating
-    int cheat;
+    int cheat = 0;
     el.QueryIntAttribute("Cheat", &cheat);
     m_IsCheating = cheat;
 

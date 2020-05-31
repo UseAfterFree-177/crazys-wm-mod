@@ -96,8 +96,8 @@ cListBox::cListBox(cInterfaceWindow* parent, int ID, int x, int y, int width, in
         m_HeaderBackground = m_HeaderBackground.FillRect(dest_rect, g_ListBoxHeaderBackgroundColor);
 
         DirPath dp = ImagePath("ListboxSort");
-        std::string Asc = dp.str() + "Asc.png";
-        std::string Desc = dp.str() + "Desc.png";
+        m_SortAscImage = dp.str() + "Asc.png";
+        m_SortDescImage = dp.str() + "Desc.png";
         std::string None = dp.str() + "None.png";
         m_HeaderUnSort = GetGraphics().LoadImage(None, -1, -1, true);
 
@@ -419,10 +419,8 @@ void cListBox::DrawWidget(const CGraphics& gfx)
 				m_HeaderSortBack.DrawSurface(sort_offset.x, sort_offset.y);
 			}
 			m_Columns[i].header_gfx.DrawSurface(offset.x + 3 + m_Columns[i].offset, offset.y + 3);
-			//m_Font.SetFontBold(true);
 		}
 
-		//m_Font.SetFontBold(false);
 		m_Font.SetColor(g_ListBoxTextColor.r, g_ListBoxTextColor.g, g_ListBoxTextColor.b);
 	}
 
@@ -643,6 +641,7 @@ void cListBox::DefineColumns(std::vector<std::string> name, std::vector<std::str
 
     m_Font.SetColor(g_ListBoxHeaderTextColor.r, g_ListBoxHeaderTextColor.g, g_ListBoxHeaderTextColor.b);
 
+    m_Font.SetFontBold(true);
 	for (int i = 0; i < name.size(); i++)
 	{
 	    int left = int(offset[i] * GetGraphics().GetScaleX());
@@ -650,6 +649,7 @@ void cListBox::DefineColumns(std::vector<std::string> name, std::vector<std::str
 	    auto gfx = m_Font.RenderText(header[i]);
 	    m_Columns.emplace_back(sColumnData{std::move(name[i]), std::move(header[i]), left, right - left, i, skip[i], gfx});
 	}
+    m_Font.SetFontBold(false);
 
 	if (!m_HeaderDividers) return;
 
@@ -815,11 +815,7 @@ void cListBox::SortByColumn(std::string ColumnName, bool Descending)
 			dwidth = m_Columns[col_ref].width - 19;
 		if (col_ref == 0)
 			dwidth -= 2 + m_BorderSize;
-		if (Descending)
-            m_HeaderSortBack = GetGraphics().LoadImage(m_SortDescImage, dwidth, -1, true);
-        else
-            m_HeaderSortBack = GetGraphics().LoadImage(m_SortAscImage, dwidth, -1, true);
-
+		m_HeaderSortBack = GetGraphics().LoadImage(Descending ? m_SortDescImage : m_SortAscImage, dwidth, -1, true);
     }
 
 	m_ScrollBar->SetTopValue(m_Position);

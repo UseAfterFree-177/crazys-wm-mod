@@ -39,7 +39,7 @@ function DungeonInteractChoice(girl)
                 girl:pclove(2)
                 Dialog("You both have passionate wild sex, and then bask in each others glow.")
                 PlayerFucksGirl(girl)
-            elseif girl:obey_check(Girl.ACTIONS.SEX) then
+            elseif girl:obey_check(wm.ACTIONS.SEX) then
                 girl:happiness(2)
                 girl:libido(1)
                 girl:tiredness(2)
@@ -49,7 +49,7 @@ function DungeonInteractChoice(girl)
                 Dialog("She refuses to sleep with you.")
             end
         elseif choice == 1 then
-            if girl:obey_check(Girl.ACTIONS.SEX) then
+            if girl:obey_check(wm.ACTIONS.SEX) then
                 girl:happiness(1)
                 girl:libido(1)
                 girl:tiredness(1)
@@ -59,7 +59,7 @@ function DungeonInteractChoice(girl)
                 Dialog("She refused to have sex with another girl.")
             end
         elseif choice == 2 then
-            if girl:obey_check(Girl.ACTIONS.SEX) then
+            if girl:obey_check(wm.ACTIONS.SEX) then
                 girl:happiness(1)
                 girl:libido(1)
                 girl:tiredness(1)
@@ -69,7 +69,7 @@ function DungeonInteractChoice(girl)
                 Dialog("She refused to have sex with creatures.")
             end
         elseif choice == 3 then
-            if girl:obey_check(Girl.ACTIONS.SEX) then
+            if girl:obey_check(wm.ACTIONS.SEX) then
                 girl:happiness(1)
                 girl:libido(1)
                 girl:tiredness(1)
@@ -81,7 +81,7 @@ function DungeonInteractChoice(girl)
         elseif choice == 4 then
             choice = ChoiceBox("", "Deepthroat", "Regular", "Go Back")
             if choice == 0 then
-                if girl:obey_check(Girl.ACTIONS.SEX) then
+                if girl:obey_check(wm.ACTIONS.SEX) then
                     girl:dignity(1)
                     Dialog("She lets you shove your cock deep down the back of her throat until you cum into her head.")
                 else
@@ -89,7 +89,7 @@ function DungeonInteractChoice(girl)
                     return
                 end
             elseif choice == 1 then
-                if girl:obey_check(Girl.ACTIONS.SEX) then
+                if girl:obey_check(wm.ACTIONS.SEX) then
                     girl:dignity(1)
                     Dialog("She sucks your cock until you cum in her mouth.")
                 else
@@ -105,7 +105,7 @@ function DungeonInteractChoice(girl)
             girl:spirit(-1)
             girl:anal(1)
         elseif choice == 5 then
-            if girl:obey_check(Girl.ACTIONS.SEX) then
+            if girl:obey_check(wm.ACTIONS.SEX) then
                 girl:happiness(1)
                 girl:libido(1)
                 girl:tiredness(1)
@@ -118,7 +118,7 @@ function DungeonInteractChoice(girl)
             -- THREESOME
             return DungeonInteractChoice(girl)      -- tail call
         elseif choice == 7 then
-            if girl:obey_check(Girl.ACTIONS.SEX) then
+            if girl:obey_check(wm.ACTIONS.SEX) then
                 girl:happiness(1)
                 girl:libido(1)
                 girl:tiredness(1)
@@ -326,7 +326,7 @@ function BrothelInteractChoice(girl)
                 "To be in a bondage session", "For a blowjob", "For some anal sex", "For a threesome (not yet working)",
                 "To join in with a group session", "Go Back")
         if choice == 0 then
-            if girl:obey_check(Girl.ACTIONS.SEX) then
+            if girl:obey_check(wm.ACTIONS.SEX) then
                 -- HAVE NORMAL SEX
                 if wm.Percent(girl:normalsex()) then
                     Dialog("As the head of your penis passes her labia you feel her squeeze her muscles around your member.  She starts rocking her hips and pushing against you.")
@@ -346,7 +346,7 @@ function BrothelInteractChoice(girl)
             end
         elseif choice == 1 then
             Dialog("She notices that you have not come alone.  Following her gaze you speak \"Ah I see you noticed.  I'd like you two girls to get to know each other better and...  :you wink slyly:  I'd like to watch.\"")
-            if girl:obey_check(Girl.ACTIONS.SEX) then
+            if girl:obey_check(wm.ACTIONS.SEX) then
                 -- LESBIAN SEX
                 Dialog("You sit down on the bed and make yourself comfortable as the girls approach one another.")
                 if wm.Percent(girl:lesbian()) then
@@ -369,7 +369,7 @@ function BrothelInteractChoice(girl)
             end
         elseif choice == 2 then
             Dialog("I wonder if you would cheer up my pet Malboro. He's been down lately and could really use a good fucking.")
-            if girl:obey_check(Girl.ACTIONS.SEX) then
+            if girl:obey_check(wm.ACTIONS.SEX) then
                 -- BEAST SEX
                 Dialog("She smiles and nods. I've always liked that \"little\" guy.  Let's go cheer him up.")
                 if wm.Percent(girl:beastiality()) then
@@ -395,7 +395,7 @@ function BrothelInteractChoice(girl)
         elseif choice == 3 then
             Dialog("As you enter her room you accidently jostle the crate you're carrying.  Hearing the clinking and clanging she eyes the crate.  \"What do you have got in the crate?\" She asks.")
             Dialog("\"Take a look.\" you say.  Her eyes widen at the sight of the whips, chains, and harnesses.")
-            if girl:obey_check(Girl.ACTIONS.SEX) then
+            if girl:obey_check(wm.ACTIONS.SEX) then
                 -- Bondage Sex
                 Dialog("A smile graces her face as she picks through the plethora of various bondage toys. ")
                 if wm.Percent(girl:bdsm()) then
@@ -426,7 +426,7 @@ function BrothelInteractChoice(girl)
             Dialog("\"Well never mind the previous reason you're down there.  I shall give you a new one.\"  You pull your member from you pants and  bring it within inches of her face.")
             if choice == 0 then
                 Dialog("\"Now let's see how well you've learned to suck a cock.\"")
-                if girl:obey_check(Girl.ACTIONS.SEX) then
+                if girl:obey_check(wm.ACTIONS.SEX) then
                     -- TODO oral sex
                     if wm.Percent(girl:oral()) then
                         Dialog("She smiles and reaches up to grasp your cock.  She begins by gently licking and kissing the tip.  Her tongue then traces down the length of your shaft and  draws circles around our balls.")
@@ -448,7 +448,7 @@ function BrothelInteractChoice(girl)
                 end
             elseif choice == 1 then
                 Dialog("\"I want to see how much of this you can fit in your mouth.\"")
-                if girl:obey_check(Girl.ACTIONS.SEX) then
+                if girl:obey_check(wm.ACTIONS.SEX) then
                     -- TODO oral sex
                     if wm.Percent(girl:bdsm()) then
                         Dialog("She eyes your cock hungrily and begins to suck the tip, swirling her tongue around the head.  She sucks harder and harder and you feel yourself being pulled deeper and deeper inside.")
@@ -470,7 +470,7 @@ function BrothelInteractChoice(girl)
                 end
             elseif choice == 2 then
                 Dialog("You sit down on a stool beside her. \"Why don't you use your tits and your mouth this time?\"")
-                if girl:obey_check(Girl.ACTIONS.SEX) then
+                if girl:obey_check(wm.ACTIONS.SEX) then
                     -- TODO ORAL SEX
                     -- TODO TRAITS
                     if girl:has_trait("Abnormally Large Boobs") then
@@ -507,7 +507,7 @@ function BrothelInteractChoice(girl)
         elseif choice == 5 then
             Dialog("As you enter the room, the sight of her luscious ass assails your delighted eyes.  She looks back at you and greets you with a smile.")
             Dialog("A thought pops into your head as you continue to admire the view.  You voice your thought \"I think we should try something a little different tonight?\"")
-            if girl:obey_check(Girl.ACTIONS.SEX) then
+            if girl:obey_check(wm.ACTIONS.SEX) then
                 -- ANAL SEX
                 Dialog("She shakes her ass and bends over further; slightly pulling down her panties.  'Well, come and get it.\" she purrs")
                 if wm.Percent(girl:anal()) then
@@ -537,7 +537,7 @@ function BrothelInteractChoice(girl)
             Dialog("Her back is toward you as you enter the room.  You notice that one of her hands  is between her legs.")
             Dialog("You sneak around her side to get a better view.  A few moments later she gasps and jumps up as she notices you standing there.")
             Dialog("\"Oh, you don't have to stop on my account.\"  you say with a wink.")
-            if girl:obey_check(Girl.ACTIONS.WORKSTRIP) then
+            if girl:obey_check(wm.ACTIONS.WORKSTRIP) then
                 Dialog("She relaxes and grins devilishly.  \"Alright, I hope you will enjoy the show,\" she then adds \"but no touching.\"")
                 if wm.Percent(girl:strip()) then
                     Dialog("She moves to her bed and makes herself comfortable and making sure you have a good view.  She begins rubbing her mound through her panties and before long a dark wet spot begins to grow;  you also start feeling some growth.")
@@ -566,7 +566,7 @@ function BrothelInteractChoice(girl)
         elseif choice == 7 then
             Dialog("You ask the group of men to wait in the hall as you enter her room.")
             Dialog("You find her relaxing on her bed looking through some of her lingerie.  She looks up as you speak.\"I wonder if you could help me, my dear.  I've got a group of gentlemen outside and I was wondering if you could help me entertain them?\"")
-            if girl:obey_check(Girl.ACTIONS.SEX) then
+            if girl:obey_check(wm.ACTIONS.SEX) then
                 -- GROUP SEX
                 Dialog("She nods in agreement, but asks for a few minutes to get ready.  As the door closes behind you, many rumbling and rustling sounds can be heard.  A minute or so later she declares that she is ready.")
                 if girl:has_trait("Nymphomaniac") then
@@ -604,7 +604,7 @@ function BrothelInteractChoice(girl)
                 -- TODO oral sex
                 Dialog("She immediately drops to her knees and takes you into her mouth.  Well, It's not exactly what you had in mind, but there's no point to stopping her now.  She swallows every drop as you unload in her mouth.")
             else
-                if girl:obey_check(Girl.ACTIONS.SEX) then
+                if girl:obey_check(wm.ACTIONS.SEX) then
                     -- TODO strip
                     Dialog("She leads you to a comfortable chair next to a small stage with a tall, metal pole in the center.")
                     if wm.Percent(girl:strip()) then
@@ -643,7 +643,7 @@ function BrothelInteractChoice(girl)
         InteractOffice(girl)
     elseif choice == 4 then
         Dialog("\"Hello My Dear, I wanted to ask you to come by my private quarters this evening.  Perhaps, we can get to know each other better.\" ")
-        if girl:obey_check(Girl.ACTIONS.SEX) then
+        if girl:obey_check(wm.ACTIONS.SEX) then
             Dialog("She smiles slightly and nods her agreement.")
             local event = ChoiceBox("", "Cocktails", "Dinner")
             -- GOTO 70 // 5
@@ -667,7 +667,7 @@ function InteractOffice(girl)
     local choice = ChoiceBox("Instruct her to tidy up your office", "Review her performance",
             "Send her on a mission", "Personal instruction", "Inspect her", "Go Back")
     if choice == 0 then
-        if girl:obey_check(Girl.ACTIONS.CLEANING) then
+        if girl:obey_check(wm.ACTIONS.CLEANING) then
             -- TODO clean
             Dialog("She puts on her maid's attire and sets about tidying up your office.  You always enjoy being around a women in a maid's outfit .")
         else
@@ -1213,7 +1213,7 @@ function InteractOffice(girl)
         -- GOTO 41 // 7
     elseif choice == 3 then
         Dialog("\"After observing your work these past couple days, I've noticed some things that could use improvement.  I think you will benefit from my personal instruction in these areas\"  *You wink at her slyly*")
-        if girl:obey_check(Girl.ACTIONS.SEX) then
+        if girl:obey_check(wm.ACTIONS.SEX) then
             Dialog("\"Please, join me on my office couch there and we will begin....\"")
             local action = wm.Range(1, 4)
             if action == 1 then
@@ -1244,7 +1244,7 @@ function InteractOffice(girl)
 
         Dialog("Remove your clothing.  I want to get a better look my investment.")
 
-        if girl:obey_check(Girl.ACTIONS.STRIPPING) then
+        if girl:obey_check(wm.ACTIONS.STRIPPING) then
             -- TODO strip
             Dialog("She removes her clothing and stands nervously before you.")
             if girl:has_trait("Futanari") then
@@ -1371,7 +1371,7 @@ function Punish(girl)
         girl:tiredness(20)
         girl:pcfear(10)
     elseif choice == 4 then
-        if girl:obey_check(Girl.ACTIONS.WORKSTRIP) then
+        if girl:obey_check(wm.ACTIONS.WORKSTRIP) then
             -- NUDE
             Dialog("However, they don't like when anyone disrespects their employer.  Before they leave her room they tear away her clothing and leave her naked and sobbing.")
         else

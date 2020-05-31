@@ -132,8 +132,6 @@ public:
 	int m_LastClickX = 0;
 	int m_LastClickY = 0;
 
-	cFont m_Font;
-
 	int m_BorderSize;
 	int m_RowHeight = LISTBOX_ITEMHEIGHT;
 	bool m_EnableEvents   = false;	// are events enabled
@@ -146,6 +144,8 @@ public:
     item_list_t::iterator FindSelected(const item_list_t::iterator& start);
 
 private:
+    cFont m_Font;
+
     item_list_t m_Items;
     item_list_t::iterator m_LastSelected;
 

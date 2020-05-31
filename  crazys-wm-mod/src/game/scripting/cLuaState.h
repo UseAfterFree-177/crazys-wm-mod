@@ -48,6 +48,9 @@ namespace scripting {
         lua_State *m_State = nullptr;
     };
 
+    // A cLuaState class with owns the underlying lua_State,
+    // i.e a new lua state is created in the constructor and
+    // closed in the destructor.
     struct cLuaInterpreter : public cLuaState {
         cLuaInterpreter();
         ~cLuaInterpreter();

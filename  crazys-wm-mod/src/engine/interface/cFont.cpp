@@ -88,12 +88,7 @@ int cFont::GetFontLineSkip() const
 
 void cFont::SetFontBold(bool Bold)
 {
-    TTF_SetFontStyle(m_Font.get(), (Bold ? TTF_STYLE_BOLD : TTF_STYLE_NORMAL) );
-}
-
-int cFont::IsFontFixedWidth()
-{
-    return TTF_FontFaceIsFixedWidth(m_Font.get());
+    TTF_SetFontStyle(m_Font.get(), Bold ? TTF_STYLE_BOLD : TTF_STYLE_NORMAL);
 }
 
 void cFont::GetSize(const std::string& text, int& width, int& height) const

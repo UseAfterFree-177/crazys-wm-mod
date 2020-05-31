@@ -73,29 +73,6 @@ void sLuaGirl::init(lua_State* L) {
         lua_pushcclosure(L, up_getset_skill, 1);
         lua_settable(L, -3);
     }
-
-    // TODO this can be a function
-    lua_pushstring(L, "STATS");
-    lua_newtable(L);
-    for(int i = 0; i < NUM_STATS; ++i) {
-        state.settable(-1, toupper(get_stat_name((STATS)i)), i);
-    }
-    lua_settable(L, -3);
-
-
-    lua_pushstring(L, "SKILLS");
-    lua_newtable(L);
-    for(int i = 0; i < NUM_SKILLS; ++i) {
-        state.settable(-1, toupper(get_skill_name((SKILLS)i)), i);
-    }
-    lua_settable(L, -3);
-
-    lua_pushstring(L, "ACTIONS");
-    lua_newtable(L);
-    for(int i = 0; i < NUM_ACTIONTYPES; ++i) {
-        state.settable(-1, toupper(get_action_name((Action_Types)i)), i);
-    }
-    lua_settable(L, -3);
 }
 
 void sLuaGirl::create(lua_State* L, sGirl* girl) {
