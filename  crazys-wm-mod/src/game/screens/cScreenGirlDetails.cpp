@@ -219,90 +219,53 @@ void cScreenGirlDetails::init(bool back)
         AddToListBox(jobtypelist_id, -1, "Languishing in dungeon");
         SetSelectedItemInList(jobtypelist_id, 0, false);
     } else if(pBuilding) {
+        std::vector<JOBFILTER> jobfilters;
         switch (pBuilding->type()) {
-        case BuildingType::ARENA:
-            AddToListBox(jobtypelist_id, JOBFILTER_ARENASTAFF,
-                         g_Game->job_manager().JobFilters[JOBFILTER_ARENASTAFF].Name);
-            AddToListBox(jobtypelist_id, JOBFILTER_ARENA, g_Game->job_manager().JobFilters[JOBFILTER_ARENA].Name);
-            RefreshJobList();
-            if (g_Game->job_manager().job_filter(JOBFILTER_ARENA, (JOBS)job))
-                SetSelectedItemInList(jobtypelist_id, JOBFILTER_ARENA);
-            else // if (g_Game->job_manager().job_filter(JOBFILTER_ARENASTAFF, (JOBS)job))
-                SetSelectedItemInList(jobtypelist_id, JOBFILTER_ARENASTAFF);
-            break;
-        case BuildingType::CLINIC:
-            AddToListBox(jobtypelist_id, JOBFILTER_CLINIC, g_Game->job_manager().JobFilters[JOBFILTER_CLINIC].Name);
-            AddToListBox(jobtypelist_id, JOBFILTER_CLINICSTAFF, g_Game->job_manager().JobFilters[JOBFILTER_CLINICSTAFF].Name);
-            RefreshJobList();
-            if (g_Game->job_manager().job_filter(JOBFILTER_CLINIC, (JOBS)job))
-                SetSelectedItemInList(jobtypelist_id, JOBFILTER_CLINIC);
-            else SetSelectedItemInList(jobtypelist_id, JOBFILTER_CLINICSTAFF);
-            break;
-        case BuildingType::CENTRE:
-            AddToListBox(jobtypelist_id, JOBFILTER_COMMUNITYCENTRE, g_Game->job_manager().JobFilters[JOBFILTER_COMMUNITYCENTRE].Name);
-            AddToListBox(jobtypelist_id, JOBFILTER_COUNSELINGCENTRE, g_Game->job_manager().JobFilters[JOBFILTER_COUNSELINGCENTRE].Name);
-            RefreshJobList();
-            if (g_Game->job_manager().job_filter(JOBFILTER_COUNSELINGCENTRE, (JOBS)job))
-                SetSelectedItemInList(jobtypelist_id, JOBFILTER_COUNSELINGCENTRE);
-            else SetSelectedItemInList(jobtypelist_id, JOBFILTER_COMMUNITYCENTRE);
-            break;
-        case BuildingType::HOUSE:
-            AddToListBox(jobtypelist_id, JOBFILTER_HOUSE, g_Game->job_manager().JobFilters[JOBFILTER_HOUSE].Name);
-            AddToListBox(jobtypelist_id, JOBFILTER_HOUSETTRAINING, g_Game->job_manager().JobFilters[JOBFILTER_HOUSETTRAINING].Name);
-            RefreshJobList();
-            if (g_Game->job_manager().job_filter(JOBFILTER_HOUSETTRAINING, (JOBS)job))
-                SetSelectedItemInList(jobtypelist_id, JOBFILTER_HOUSETTRAINING);
-            else SetSelectedItemInList(jobtypelist_id, JOBFILTER_HOUSE);
-            break;
-        case BuildingType::STUDIO:
-            Day0Night1 = SHIFT_NIGHT;
-            HideDNButtons = true;
-            // `J` When adding new Studio Scenes, search for "J-Add-New-Scenes"  :  found in >> cScreenGirlDetails.cpp
-            AddToListBox(jobtypelist_id, JOBFILTER_STUDIOCREW, g_Game->job_manager().JobFilters[JOBFILTER_STUDIOCREW].Name);
-            AddToListBox(jobtypelist_id, JOBFILTER_STUDIONONSEX, g_Game->job_manager().JobFilters[JOBFILTER_STUDIONONSEX].Name);
-            AddToListBox(jobtypelist_id, JOBFILTER_STUDIOSOFTCORE, g_Game->job_manager().JobFilters[JOBFILTER_STUDIOSOFTCORE].Name);
-            AddToListBox(jobtypelist_id, JOBFILTER_STUDIOPORN, g_Game->job_manager().JobFilters[JOBFILTER_STUDIOPORN].Name);
-            AddToListBox(jobtypelist_id, JOBFILTER_STUDIOHARDCORE, g_Game->job_manager().JobFilters[JOBFILTER_STUDIOHARDCORE].Name);
-            AddToListBox(jobtypelist_id, JOBFILTER_RANDSTUDIO, g_Game->job_manager().JobFilters[JOBFILTER_RANDSTUDIO].Name);
-            RefreshJobList();
-            /* */if (g_Game->job_manager().job_filter(JOBFILTER_STUDIONONSEX, (JOBS)job))		SetSelectedItemInList(jobtypelist_id, JOBFILTER_STUDIONONSEX);
-            else if (g_Game->job_manager().job_filter(JOBFILTER_STUDIOSOFTCORE, (JOBS)job))	SetSelectedItemInList(jobtypelist_id, JOBFILTER_STUDIOSOFTCORE);
-            else if (g_Game->job_manager().job_filter(JOBFILTER_STUDIOPORN, (JOBS)job))		SetSelectedItemInList(jobtypelist_id, JOBFILTER_STUDIOPORN);
-            else if (g_Game->job_manager().job_filter(JOBFILTER_STUDIOHARDCORE, (JOBS)job))	SetSelectedItemInList(jobtypelist_id, JOBFILTER_STUDIOHARDCORE);
-            else if (g_Game->job_manager().job_filter(JOBFILTER_RANDSTUDIO, (JOBS)job))		SetSelectedItemInList(jobtypelist_id, JOBFILTER_RANDSTUDIO);
-            else SetSelectedItemInList(jobtypelist_id, JOBFILTER_STUDIOCREW);
-            break;
-        case BuildingType::FARM:
-            AddToListBox(jobtypelist_id, JOBFILTER_FARMSTAFF, g_Game->job_manager().JobFilters[JOBFILTER_FARMSTAFF].Name);
-            AddToListBox(jobtypelist_id, JOBFILTER_LABORERS, g_Game->job_manager().JobFilters[JOBFILTER_LABORERS].Name);
-            AddToListBox(jobtypelist_id, JOBFILTER_PRODUCERS, g_Game->job_manager().JobFilters[JOBFILTER_PRODUCERS].Name);
-            RefreshJobList();
-            if (g_Game->job_manager().job_filter(JOBFILTER_LABORERS, (JOBS)job))
-                SetSelectedItemInList(jobtypelist_id, JOBFILTER_LABORERS);
-            else if (g_Game->job_manager().job_filter(JOBFILTER_PRODUCERS, (JOBS)job))
-                SetSelectedItemInList(jobtypelist_id, JOBFILTER_PRODUCERS);
-            else SetSelectedItemInList(jobtypelist_id, JOBFILTER_FARMSTAFF);
-        case BuildingType::BROTHEL:
-            // if not in dungeon, set up job lists
-            // add the job filters
-            //	for(int i=0; i<NUMJOBTYPES; i++)  // loop through all job types
-            for (unsigned int i = 0; i <= JOBFILTER_BROTHEL; i++)  // temporary limit to job types shown
-            {
-                AddToListBox(jobtypelist_id, i, g_Game->job_manager().JobFilters[i].Name);
-            }
+            case BuildingType::ARENA:
+                jobfilters.push_back(JOBFILTER_ARENASTAFF);
+                jobfilters.push_back(JOBFILTER_ARENA);
+                break;
+            case BuildingType::CLINIC:
+                jobfilters.push_back(JOBFILTER_CLINIC);
+                jobfilters.push_back(JOBFILTER_CLINICSTAFF);
+                break;
+            case BuildingType::CENTRE:
+                jobfilters.push_back(JOBFILTER_COMMUNITYCENTRE);
+                jobfilters.push_back(JOBFILTER_COUNSELINGCENTRE);
+                break;
+            case BuildingType::HOUSE:
+                jobfilters.push_back(JOBFILTER_HOUSE);
+                jobfilters.push_back(JOBFILTER_HOUSETTRAINING);
+                break;
+            case BuildingType::FARM:
+                jobfilters.push_back(JOBFILTER_FARMSTAFF);
+                jobfilters.push_back(JOBFILTER_LABORERS);
+                jobfilters.push_back(JOBFILTER_LABORERS);
+                break;
+            case BuildingType::BROTHEL:
+                jobfilters.push_back(JOBFILTER_GENERAL);
+                jobfilters.push_back(JOBFILTER_BAR);
+                jobfilters.push_back(JOBFILTER_GAMBHALL);
+                jobfilters.push_back(JOBFILTER_SLEAZYBAR);
+                jobfilters.push_back(JOBFILTER_BROTHEL);
+                break;
+            case BuildingType::STUDIO:
+                jobfilters.push_back(JOBFILTER_STUDIOCREW);
+                jobfilters.push_back(JOBFILTER_STUDIONONSEX);
+                jobfilters.push_back(JOBFILTER_STUDIOSOFTCORE);
+                jobfilters.push_back(JOBFILTER_STUDIOPORN);
+                jobfilters.push_back(JOBFILTER_STUDIOHARDCORE);
+                jobfilters.push_back(JOBFILTER_PRODUCERS);
+                break;
+        }
 
-            // set the job filter
-            int jobtype = 0;
-            for (unsigned int i = 0; i < NUMJOBTYPES; i++)
-            {
-                if (g_Game->job_manager().job_filter(i, (JOBS)job))
-                {
-                    jobtype = i;
-                    break;
-                }
-            }
-            SetSelectedItemInList(jobtypelist_id, jobtype);
-            RefreshJobList();
+        for(auto& f : jobfilters) {
+            AddToListBox(jobtypelist_id, f, g_Game->job_manager().JobFilters[f].Name);
+        }
+        RefreshJobList();
+        for(auto& f : jobfilters) {
+            if (g_Game->job_manager().job_filter(f, (JOBS)job))
+                SetSelectedItemInList(jobtypelist_id, f);
         }
     }
 
