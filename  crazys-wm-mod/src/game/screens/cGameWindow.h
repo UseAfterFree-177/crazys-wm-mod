@@ -29,6 +29,9 @@ class cGameWindow : public cInterfaceWindowXML {
 public:
     using cInterfaceWindowXML::cInterfaceWindowXML;
 
+    /// This function should be overwriden by screens that expect scripts to change an image.
+    /// This is not a perfect solution, but will do for now.
+    virtual void UpdateImage(int imagetype) {};
     void PrepareImage(int girlimage_id, sGirl* selected_girl, int imagetype, bool rand = true, int ImageNum = -1, bool gallery = false, std::string ImageName = "");
 protected:
     // active building

@@ -119,11 +119,21 @@ void cWindowManager::OnMouseWheel(int x, int y, bool mouseWheelDown)
         m_WindowStack.back()->MouseWheel(x, y, mouseWheelDown);
 }
 
-cInterfaceWindow* cWindowManager::GetWindow()
+cInterfaceWindow* cWindowManager::GetWindow(bool allow_modal)
 {
     if(m_WindowStack.empty())
         return nullptr;
-	return m_WindowStack.back().get();
+    if(allow_modal) {
+        return m_WindowStack.back().get();
+    } else {
+        auto tp = m_WindowStack.back().get();
+        if(tp->IsTransparent()) {
+            return m_WindowStack.at(m_WindowStack.size() - 2).get();
+        } else {
+            return tp;
+        }
+    }
+
 }
 
 void cWindowManager::Draw()

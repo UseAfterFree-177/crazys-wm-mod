@@ -27,10 +27,8 @@
 #include "cTariff.h"
 #include "cGirlGangFight.h"
 #include "cGirlTorture.h"
-#include "cScreenGirlDetails.h"
 #include "Game.hpp"
 
-extern cScreenGirlDetails*	g_GirlDetails;
 extern cRng					g_Dice;
 extern int					g_TalkCount;
 extern vector<int>			cycle_girls;
@@ -318,8 +316,6 @@ void cScreenDungeon::selection_change()
 
 int cScreenDungeon::view_girl()
 {
-    g_GirlDetails->lastsexact = -1;
-
 	selection = GetSelectedItemFromList(girllist_id);
 
 	if (selection == -1) return Continue;							// nothing selected, nothing to do.
@@ -713,13 +709,17 @@ void cScreenDungeon::update_image()
 	}
 	else if (selected_girl() && !IsMultiSelected(girllist_id))
 	{
-		PrepareImage(girlimage_id, selected_girl(), selected_girl()->m_Tort ? IMGTYPE_TORTURE : IMGTYPE_JAIL, true, ImageNum);
-        HideWidget(girlimage_id, false);
+	    UpdateImage(selected_girl()->m_Tort ? IMGTYPE_TORTURE : IMGTYPE_JAIL);
 	}
 	else
 	{
         HideWidget(girlimage_id, true);
 	}
+}
+
+void cScreenDungeon::UpdateImage(int imagetype) {
+    PrepareImage(girlimage_id, selected_girl(), imagetype, true, ImageNum);
+    HideWidget(girlimage_id, false);
 }
 
 void cScreenDungeon::get_selected_girls(vector<int> *girl_array)

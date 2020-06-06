@@ -249,3 +249,29 @@ const id_lookup_t<Fetishs>& get_fetish_lookup() {
 Fetishs get_fetish_id(const std::string& name) {
     return get_fetish_lookup().at(name);
 }
+
+const std::array<const char*, NUM_IMGTYPES>& get_imgtype_names() {
+    static std::array<const char*, NUM_IMGTYPES> names {
+            "anal", "bdsm", "sex", "beast", "group", "lesbian", "torture", "death",
+            "profile", "combat", "oral", "ecchi", "strip", "maid", "sing", "wait",
+            "card", "bunny", "nude", "mast", "titty", "milk", "hand", "foot",
+            "bed", "farm", "herd", "cook", "craft", "swim", "bath", "nurse",
+            "formal", "shop", "magic", "sign", "presented", "dom", "deepthroat", "eatout",
+            "dildo", "sub", "strapon", "les69", "lick", "suckballs", "cowgirl", "revcowgirl",
+            "sexdoggy", "jail", "puppygirl", "ponygirl", "catgirl", "brand", "rape", "rapebeast",
+            "birthhuman", "birthhumanmultiple", "birthbeast", "impregsex", "impreggroup", "impegbdsm",
+            "impregbeast", "virginsex", "virgingroup", "virginbdsm", "virginbeast", "escort",
+            "sport", "study", "teacher", "pregnant", "preganal", "pregbdsm", "pregsex", "pregbeast", "preggroup",
+            "preglesbian", "pregtorture", "pregdeath", "pregprofile", "pregcombat", "pregoral",
+            "pregecchi", "pregstrip", "pregmaid", "pregsing", "pregwait", "pregcard", "pregbunny",
+            "pregnude", "pregmast", "pregtitty", "pregmilk", "preghand", "pregfoot", "pregbed",
+            "pregfarm", "pregherd", "pregcook", "pregcraft", "pregswim", "pregbath", "pregnurse",
+            "pregformal", "pregshop", "pregmagic", "pregsign", "pregpresented", "pregdom",
+            "pregdeepthroat", "pregeatout", "pregdildo", "pregsub", "pregstrapon", "pregles69",
+            "preglick", "pregsuckballs", "pregcowgirl", "pregrevcowgirl", "pregdoggy", "pregjail",
+            "pregpuppy", "pregpony", "pregcat", "pregbrand", "pregrape", "pregrapebeast",
+            "", "", "", "", "", "", "", "", "", "", "", "pregescort", "pregsport", "pregstudy",
+            "pregteacher"
+    };
+    return names;
+}

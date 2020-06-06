@@ -61,7 +61,6 @@ private:
 	void NextGirl();
 	sGirl *get_prev_girl();
 	sGirl *get_next_girl();
-	bool do_take_gold(sGirl *girl, std::string &message);
 	void take_gold(sGirl *girl);
     void set_shift(int shift);
 
@@ -73,7 +72,6 @@ private:
 
     std::vector<sTraitInfo> m_TraitInfoCache;
 public:
-    int lastsexact = -1;
 	cScreenGirlDetails();
 
     void init(bool back) override;
@@ -91,4 +89,6 @@ public:
 
     void set_house_percentage(int value);
     void set_accomodation(int value);
+
+    void UpdateImage(int imagetype);
 };

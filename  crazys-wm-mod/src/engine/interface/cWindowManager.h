@@ -60,7 +60,7 @@ public:
 	void OnMouseClick(int x, int y, bool down);
 	void OnMouseWheel(int x, int y, bool mouseWheelDown = false);
 
-    cInterfaceWindow* GetWindow();
+    cInterfaceWindow* GetWindow(bool allow_model=true);
 	void Draw();
 
     CGraphics& GetGraphics();

@@ -46,6 +46,7 @@ namespace scripting {
         static int GivePlayerRandomSpecialItem(lua_State* state);
         static int AddCustomerToDungeon(lua_State* state);
         static int AddFamilyToDungeon(lua_State* state);
+        static int UpdateImage(lua_State* state);
 
         // random boolean with the given chance of being true
         static int Percent(lua_State* state);

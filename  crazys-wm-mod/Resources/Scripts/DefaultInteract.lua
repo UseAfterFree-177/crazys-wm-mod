@@ -14,6 +14,7 @@ function DungeonInteractChoice(girl)
     local choice = ChoiceBox("What would you like to do with her?", "Torture", "Chat", "Scold", "Ask", "Force")
     if choice == 0 then
         girl:torture()
+        wm.UpdateImage(wm.IMG.TORTURE)
     elseif choice == 1 then
         Chat(girl)
     elseif choice == 2 then
@@ -37,6 +38,7 @@ function DungeonInteractChoice(girl)
                 girl:pcfear(-1)
                 girl:pchate(-1)
                 girl:pclove(2)
+                wm.UpdateImage(wm.IMG.SEX)
                 Dialog("You both have passionate wild sex, and then bask in each others glow.")
                 PlayerFucksGirl(girl)
             elseif girl:obey_check(wm.ACTIONS.SEX) then
@@ -44,6 +46,7 @@ function DungeonInteractChoice(girl)
                 girl:libido(1)
                 girl:tiredness(2)
                 girl:pclove(1)
+                wm.UpdateImage(wm.IMG.SEX)
                 Dialog("You both enjoy fucking one another.")
             else
                 Dialog("She refuses to sleep with you.")
@@ -53,8 +56,8 @@ function DungeonInteractChoice(girl)
                 girl:happiness(1)
                 girl:libido(1)
                 girl:tiredness(1)
+                wm.UpdateImage(wm.IMG.LESBIAN)
                 Dialog("She enjoy you watching her while another girl fucks her.")
-                -- LESBIAN SEX
             else
                 Dialog("She refused to have sex with another girl.")
             end
@@ -63,8 +66,8 @@ function DungeonInteractChoice(girl)
                 girl:happiness(1)
                 girl:libido(1)
                 girl:tiredness(1)
+                wm.UpdateImage(wm.IMG.BEAST)
                 Dialog("She enjoys you watching her being fucked by all sorts of tentacled sex fiends.")
-                -- BEAST SEX
             else
                 Dialog("She refused to have sex with creatures.")
             end
@@ -73,8 +76,8 @@ function DungeonInteractChoice(girl)
                 girl:happiness(1)
                 girl:libido(1)
                 girl:tiredness(1)
+                wm.UpdateImage(wm.IMG.BDSM)
                 Dialog("She allows you to tie her up and spank her while you both cum hard.")
-                -- BDSM SEX
             else
                 Dialog("She refused to do this.")
             end
@@ -82,7 +85,8 @@ function DungeonInteractChoice(girl)
             choice = ChoiceBox("", "Deepthroat", "Regular", "Go Back")
             if choice == 0 then
                 if girl:obey_check(wm.ACTIONS.SEX) then
-                    girl:dignity(1)
+                    girl:dignity(-1)
+                    wm.UpdateImage(wm.IMG.DEEPTHROAT)
                     Dialog("She lets you shove your cock deep down the back of her throat until you cum into her head.")
                 else
                     Dialog("She refuses to do this.")
@@ -90,7 +94,8 @@ function DungeonInteractChoice(girl)
                 end
             elseif choice == 1 then
                 if girl:obey_check(wm.ACTIONS.SEX) then
-                    girl:dignity(1)
+                    girl:dignity(-1)
+                    wm.UpdateImage(wm.IMG.ORAL)
                     Dialog("She sucks your cock until you cum in her mouth.")
                 else
                     Dialog("She refuses to do this.")
@@ -109,6 +114,7 @@ function DungeonInteractChoice(girl)
                 girl:happiness(1)
                 girl:libido(1)
                 girl:tiredness(1)
+                wm.UpdateImage(wm.IMG.ANAL)
                 Dialog("She lets you fuck her in her tight little ass until you both cum.")
                 -- ANAL SEX
             else
@@ -122,8 +128,8 @@ function DungeonInteractChoice(girl)
                 girl:happiness(1)
                 girl:libido(1)
                 girl:tiredness(1)
+                wm.UpdateImage(wm.IMG.GROUP)
                 Dialog("You and a group of your male servants take the poor girl in all way, she was hurt.")
-                -- GANGBANG SEX
             else
                 Dialog("She refuse to be fucked in a gangbang")
             end
@@ -131,8 +137,8 @@ function DungeonInteractChoice(girl)
         else
             return DungeonInteractChoice(girl)      -- tail call
         end
-    elseif choice == 4 then
-        choice = ChoiceBox("", have_sex, "To have sex with another girl", "To have sex with a beast",
+    elseif choice == 4 then -- FORCE
+        choice = ChoiceBox("", "To have sex with you", "To have sex with another girl", "To have sex with a beast",
                 "To be in a bondage session", "For a blowjob", "For some anal sex", "For a threesome (not yet working)",
                 "To join in with a group session", "Go Back")
         if choice == 0 then
@@ -324,7 +330,7 @@ function BrothelInteractChoice(girl)
         end
         choice = ChoiceBox("", have_sex, "To have sex with another girl", "To have sex with a beast",
                 "To be in a bondage session", "For a blowjob", "For some anal sex", "For a threesome (not yet working)",
-                "To join in with a group session", "Go Back")
+                "To join in with a group session", "For a strip tease", "Go Back")
         if choice == 0 then
             if girl:obey_check(wm.ACTIONS.SEX) then
                 -- HAVE NORMAL SEX

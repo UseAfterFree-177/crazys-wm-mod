@@ -26,6 +26,7 @@
 #include <main.h>
 
 #include "interface/fwd.hpp"
+#include "screens/cGameWindow.h"
 
 #include "character/cPlayer.h"
 #include "buildings/cDungeon.h"
@@ -73,10 +74,11 @@ auto cify_no_arg(F&& f) {
 static const luaL_Reg funx [] = {
         { "ChoiceBox",                   cLuaScript::ChoiceBox },
         { "Dialog",                      cLuaScript::Dialog },
-        { "SetPlayerSuspicion", 			cify_int_arg([](int amount) { g_Game->player().suspicion(amount); })},
-		{ "GetPlayerSuspicion", 		 	cify_no_arg([](){ return g_Game->player().suspicion(); })},
+        { "UpdateImage",                 cLuaScript::UpdateImage },
+        { "SetPlayerSuspicion",          cify_int_arg([](int amount) { g_Game->player().suspicion(amount); })},
+		{ "GetPlayerSuspicion",          cify_no_arg([](){ return g_Game->player().suspicion(); })},
         { "SetPlayerDisposition",        cify_int_arg([](int amount) { g_Game->player().disposition(amount); })},
-		{ "GetPlayerDisposition", 		cify_no_arg([](){ return g_Game->player().disposition(); })},
+		{ "GetPlayerDisposition",        cify_no_arg([](){ return g_Game->player().disposition(); })},
 		/// TODO make separate fns for adding and for requesting beasts
         { "AddBeasts",                   cify_int_arg([](int amount) { g_Game->storage().add_to_beasts(amount); })},
         { "GetBeasts", 		            cify_no_arg([](){ return g_Game->storage().beasts(); })},
@@ -94,6 +96,16 @@ static const luaL_Reg funx [] = {
         {"ToDungeon",                    sLuaGirl::to_dungeon},
         { nullptr,                       nullptr }
 };
+
+template<std::size_t N>
+void register_table(const char* table, cLuaInterpreter& state, std::array<const char*, N> names) {
+    lua_pushstring(state.get_state(), table);
+    lua_newtable(state.get_state());
+    for(int i = 0; i < N; ++i) {
+        state.settable(-1, toupper(names[i]), i);
+    }
+    lua_settable(state.get_state(), -3);
+}
 
 cLuaScript::cLuaScript()
 {
@@ -114,12 +126,10 @@ cLuaScript::cLuaScript()
     }
     lua_settable(L, -3);
 
-    lua_pushstring(L, "ACTIONS");
-    lua_newtable(L);
-    for(int i = 0; i < NUM_ACTIONTYPES; ++i) {
-        m_State.settable(-1, toupper(get_action_name((Action_Types)i)), i);
-    }
-    lua_settable(L, -3);
+    register_table("FETISH", m_State, get_fetish_names());
+    register_table("STATUS", m_State, get_status_names());
+    register_table("ACTIONS", m_State, get_action_names());
+    register_table("IMG", m_State, get_imgtype_names());
     lua_setglobal(m_State.get_state(), "wm");
     sLuaGirl::init(m_State.get_state());
     sLuaCustomer::init(m_State.get_state());
@@ -240,6 +250,18 @@ int cLuaScript::Range(lua_State *state) {
     lua_pushinteger(state, result);
     return 1;
 }
+
+int cLuaScript::UpdateImage(lua_State* state) {
+    long image_type = luaL_checkinteger(state, 1);
+    auto top_window = window_manager().GetWindow(false);
+    if(auto gw = dynamic_cast<cGameWindow*>(top_window)) {
+        gw->UpdateImage(image_type);
+    } else {
+        g_LogFile.warning("scripting", "Script cannot set image on current screen");
+    }
+    return 0;
+}
+
 
 int cLuaScript::AddCustomerToDungeon(lua_State* state) {
     int reason = luaL_checkinteger(state, 1);

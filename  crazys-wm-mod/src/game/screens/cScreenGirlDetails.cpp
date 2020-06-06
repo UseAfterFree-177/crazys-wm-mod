@@ -127,6 +127,10 @@ void cScreenGirlDetails::set_ids()
     SetSliderCallback(accom_id, [this](int value) { set_accomodation(value); });
 }
 
+void cScreenGirlDetails::UpdateImage(int imagetype) {
+    PrepareImage(girlimage_id, m_SelectedGirl, imagetype, true, ImageNum);
+}
+
 void cScreenGirlDetails::init(bool back)
 {
     m_Refresh = false;
@@ -155,17 +159,11 @@ void cScreenGirlDetails::init(bool back)
 	else if (DetailLevel == 1)	detail = cGirls::GetMoreDetailsString(GetGraphics(), m_SelectedGirl);
 	else						detail = cGirls::GetThirdDetailsString(m_SelectedGirl);
 	EditTextItem(detail, girldesc_id);
-	
-    if (lastsexact != -1)
-    {
-        PrepareImage(girlimage_id, m_SelectedGirl, lastsexact, true, ImageNum);
-        lastsexact = -1;
-    }
-    else
-    {
+
+	/// TODO when do we reset the image?
+	if(!back) {
         PrepareImage(girlimage_id, m_SelectedGirl, IMGTYPE_PROFILE, true, ImageNum);
     }
-
 
 	SliderRange(houseperc_id, 0, 100, m_SelectedGirl->house(), 10);
 	ss.str("");	ss << "House Percentage: " << SliderValue(houseperc_id) << "%";
@@ -304,7 +302,7 @@ void cScreenGirlDetails::set_accomodation(int value)
         }
         EditTextItem(ss.str(), accomval_id);
     }
-    init(false);
+    init(true);
 }
 
 void cScreenGirlDetails::set_house_percentage(int value)
@@ -348,7 +346,7 @@ void cScreenGirlDetails::update_accomodation(int accadj)
     else if (m_SelectedGirl->m_AccLevel < 0) m_SelectedGirl->m_AccLevel = 0;
     if (accomval_id != -1) EditTextItem("Accommodation: " + cGirls::Accommodation(m_SelectedGirl->m_AccLevel),
                                         accomval_id);
-    init(false);
+    init(true);
 }
 
 void cScreenGirlDetails::release_from_dungeon()
@@ -372,7 +370,7 @@ void cScreenGirlDetails::release_from_dungeon()
         }
         else m_SelectedGirl = nextGirl;
     }
-    init(false);
+    init(true);
 }
 
 void cScreenGirlDetails::send_to_dungeon()
@@ -392,7 +390,7 @@ void cScreenGirlDetails::do_interaction()
 {
     if (!m_SelectedGirl) return;
     g_Game->TalkToGirl(*m_SelectedGirl);
-    init(false);
+    init(true);
 }
 
 void cScreenGirlDetails::set_shift(int shift)
@@ -400,7 +398,7 @@ void cScreenGirlDetails::set_shift(int shift)
     Day0Night1 = shift;
     DisableWidget(day_id, shift == SHIFT_DAY);
     DisableWidget(night_id, shift == SHIFT_NIGHT);
-    init(false);
+    init(true);
 }
 
 void cScreenGirlDetails::RefreshJobList()
@@ -489,101 +487,17 @@ sGirl *cScreenGirlDetails::get_next_girl()		// return next girl in the sorted li
     }
 }
 
-bool cScreenGirlDetails::do_take_gold(sGirl *girl, string &message)	// returns TRUE if the girl won
-{
-	const int GIRL_LOSES = false;
-	const int GIRL_WINS = true;
-	bool girl_win_flag = GIRL_WINS;
-
-	// she thinks about escape
-	auto result = AttemptEscape(*girl);
-	if (result == EGirlEscapeAttemptResult::STOPPED_BY_GOONS)
-	{		// put her in the dungeon
-		message += "She puts up a fight but your goons manage to subdue her and you take her gold anyway.";
-		return girl_win_flag;
-	} else if (result == EGirlEscapeAttemptResult::SUBMITS ) {
-        message += "She quietly allows you to take her gold.";
-        return GIRL_LOSES;	// no fight -> girl lose
-	} else if(result == EGirlEscapeAttemptResult::STOPPED_BY_PLAYER) {
-        /*
-        *	from here on down, the girl won against the goons
-        */
-        // TODO need to know whether there was a GANG fight
-        message += "She puts up a fight and your goons cannot stop her, ";
-        message += "but you defeat her yourself and take her gold.";
-        return false;	// girl did not win, after all
-    } else {
-        /*
-        *	Looks like she won: put her out of the brothel
-        *	and post her as a runaway
-        */
-        message += "after defeating you as well she escapes to the outside.\n";
-
-        sGirl* nextGirl = get_next_girl();
-        girl->run_away();
-
-        stringstream smess;
-        smess << girl->FullName() << " has run away";
-        g_Game->push_message(smess.str(), 1);
-
-        m_SelectedGirl = nextGirl;
-        init(false);
-
-        if (m_SelectedGirl == nullptr) pop_window();
-
-        return true;	// the girl still won
-	}
-}
 
 void cScreenGirlDetails::take_gold(sGirl *girl)
 {
-	string message;
-	bool girl_win = do_take_gold(girl, message);
-	/*
-	*	if the girl won, then we're pretty much sorted
-	*	display the message and return
-	*/
-	if (girl_win)
-	{
-		g_Game->push_message(message, 0);
-        init(false);
-		return;
-	}
-	/*
-	*	so the girl lost: take away her money now
-	*/
-	g_Game->gold().misc_credit(girl->m_Money);
-	girl->m_Money = 0;
-	/*
-	*	she isn't going to like this much
-	*	but it's not so bad for slaves
-	*/
-	if (girl->is_slave())
-	{
-		girl->confidence(-1);
-		girl->obedience(5);
-		girl->spirit(-2);
-		girl->pchate(5);
-		girl->pclove(-5);
-		girl->pcfear(5);
-		girl->happiness(-20);
-	}
-	else
-	{
-		girl->confidence(-5);
-		girl->obedience(5);
-		girl->spirit(-10);
-		girl->pchate(30);
-		girl->pclove(-30);
-		girl->pcfear(10);
-		girl->happiness(-50);
-	}
-	/*
-	*	and queue the message again
-	*/
-	g_Game->push_message(message, 0);
-    init(false);
-	return;
+    // a bit inefficient, but we can't do this after the girl has run away
+    sGirl* nextGirl = get_next_girl();
+    cGirls::TakeGold(*girl);
+    if(girl->m_RunAway) {
+        m_SelectedGirl = nextGirl;
+        if (m_SelectedGirl == nullptr) pop_window();
+    }
+    init(true);
 }
 
 void cScreenGirlDetails::OnKeyPress(SDL_keysym keysym)

@@ -668,7 +668,7 @@ enum Training_Types{
 
 // Character image
 // `J` When modifying Image types, search for "J-Change-Image-Types"  :  found in >> Constants.h
-enum Image_Types{
+enum Image_Types {
 	IMGTYPE_ANAL = 0,					// 
 	IMGTYPE_BDSM,						// 
 	IMGTYPE_SEX,						// 
@@ -835,9 +835,10 @@ IMGTYPE_PETLICK			- "petlick*."		- "PetLick"			- lick, oral, petprofile, bdsm, n
 };
 const int PREG_OFFSET = IMGTYPE_PREGNANT + 1;
 
+const std::array<const char*, NUM_IMGTYPES>& get_imgtype_names();
+
 
 const int NUM_GIRLFLAGS				= 30;
-const int MAXNUM_TRAITS				= 60;		// Maximum number of traits a girl can have
 const int MAXNUM_INVENTORY			= 3000;		// Maximum number of items in inventory
 const int MAXNUM_GIRL_INVENTORY		= 40;		// Maximum number of items a Girl can have in inventory
 const int MAXNUM_RIVAL_INVENTORY	= 40;		// Maximum number of items a Rival can have in inventory

@@ -178,6 +178,8 @@ public:
 
 	static sCustomer* GetBeast();
 
+	static void TakeGold(sGirl& girl);
+
 
 private:
 	std::list<sGirl*> m_Girls;	// list of girls who are dead, gone or in use

@@ -4985,3 +4985,89 @@ void cGirls::SetAntiPreg(sGirl * girl, bool useAntiPreg)
     girl->m_UseAntiPreg = useAntiPreg;
 }
 
+bool do_take_gold(sGirl& girl, string &message)	// returns TRUE if the girl won
+{
+    const int GIRL_LOSES = false;
+    const int GIRL_WINS = true;
+    bool girl_win_flag = GIRL_WINS;
+
+    // she thinks about escape
+    auto result = AttemptEscape(girl);
+    if (result == EGirlEscapeAttemptResult::STOPPED_BY_GOONS)
+    {		// put her in the dungeon
+        message += "She puts up a fight but your goons manage to subdue her and you take her gold anyway.";
+        return girl_win_flag;
+    } else if (result == EGirlEscapeAttemptResult::SUBMITS ) {
+        message += "She quietly allows you to take her gold.";
+        return GIRL_LOSES;	// no fight -> girl lose
+    } else if(result == EGirlEscapeAttemptResult::STOPPED_BY_PLAYER) {
+        /*
+        *	from here on down, the girl won against the goons
+        */
+        // TODO need to know whether there was a GANG fight
+        message += "She puts up a fight and your goons cannot stop her, ";
+        message += "but you defeat her yourself and take her gold.";
+        return false;	// girl did not win, after all
+    } else {
+        /*
+        *	Looks like she won: put her out of the brothel
+        *	and post her as a runaway
+        */
+        message += "She puts up a fight and your goons cannot stop her. "
+                   "After defeating you as well she escapes to the outside.\n";
+
+
+        girl.run_away();
+
+        stringstream smess;
+        smess << girl.FullName() << " has run away";
+        g_Game->push_message(smess.str(), 1);
+        return true;	// the girl still won
+    }
+}
+
+void cGirls::TakeGold(sGirl& girl) {
+    string message;
+    bool girl_win = do_take_gold(girl, message);
+    /*
+    *	if the girl won, then we're pretty much sorted
+    *	display the message and return
+    */
+    if (girl_win)
+    {
+        g_Game->push_message(message, 0);
+        return;
+    }
+    /*
+    *	so the girl lost: take away her money now
+    */
+    g_Game->gold().misc_credit(girl.m_Money);
+    girl.m_Money = 0;
+    /*
+    *	she isn't going to like this much
+    *	but it's not so bad for slaves
+    */
+    if (girl.is_slave())
+    {
+        girl.confidence(-1);
+        girl.obedience(5);
+        girl.spirit(-2);
+        girl.pchate(5);
+        girl.pclove(-5);
+        girl.pcfear(5);
+        girl.happiness(-20);
+    }
+    else
+    {
+        girl.confidence(-5);
+        girl.obedience(5);
+        girl.spirit(-10);
+        girl.pchate(30);
+        girl.pclove(-30);
+        girl.pcfear(10);
+        girl.happiness(-50);
+    }
+
+    g_Game->push_message(message, 0);
+}
+

@@ -96,11 +96,7 @@ public:
 	void	get_selected_girls(std::vector<int> *girl_array);
 	void	store_selected_girls();
 	void	update_image();
-
-	// WD	Replaced by Doclox's cGirlTorture and cGirlGangFight code.
-	//	int		girl_fights_gang(sGirl *girl, sGang *&gang);					
-	//	bool	girl_fight_torture(sGirl *girl, string &message, bool &fight);
-
+    void UpdateImage(int imagetype) override;
 
 	// XML screen replacement for cSelector, for multi-select listboxes
 	int multi_first() {
