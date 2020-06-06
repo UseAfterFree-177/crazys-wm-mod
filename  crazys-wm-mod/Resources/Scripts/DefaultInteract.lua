@@ -142,23 +142,25 @@ function DungeonInteractChoice(girl)
                 "To be in a bondage session", "For a blowjob", "For some anal sex", "For a threesome (not yet working)",
                 "To join in with a group session", "Go Back")
         if choice == 0 then
+            wm.UpdateImage(wm.IMG.SEX)
             Dialog("She stuggles to no avail as you force yourself inside her, you fuck her roughly until you unload yourself into her.")
-            -- NORMAL SEX
         elseif choice == 1 then
+            wm.UpdateImage(wm.IMG.LESBIAN)
             Dialog("You call a female customer who fuck the poor girl with dildo.")
-            -- LESBIAN SEX
         elseif choice == 2 then
+            wm.UpdateImage(wm.IMG.BEAST)
             Dialog("You forcefully tie her down and let in a tentacle creature followed by several other creatures to have their way with her.")
-            -- BEAST SEX
         elseif choice == 3 then
+            wm.UpdateImage(wm.IMG.BDSM)
             Dialog("You hog-tie her and pour hot wax all over her body before spanking her with a paddle.")
-            -- BDSM SEX
         elseif choice == 4 then
             choice = ChoiceBox("", "Deepthroat", "Regular", "Go Back")
             if choice == 0 then
-                girl:dignity(2)
+                wm.UpdateImage(wm.IMG.DEEPTHROAT)
+                girl:dignity(-2)
                 Dialog("You grab her by the back of her head and force your cock into her throat, she gags as you cum into her stomach.")
             elseif choice == 1 then
+                wm.UpdateImage(wm.IMG.ORAL)
                 Dialog("You grab her and force her to suck your cock, she struggles but cannot stop you.")
             else
                 return DungeonInteractChoice(girl)      -- tail call
@@ -169,12 +171,12 @@ function DungeonInteractChoice(girl)
             girl:spirit(-1)
             girl:anal(1)
         elseif choice == 5 then
+            wm.UpdateImage(wm.IMG.ANAL)
             Dialog("Although she tries to keep her ass closed you manage to get inside her and proceed to fuck her painfully.")
-            -- ANAL SEX
         elseif choice == 6 then
+            wm.UpdateImage(wm.IMG.GROUP)
             Dialog("One of your servant holds his head in his hands while your sperm spreads his face. All your servants are happy to unload on her pretty face")
-            -- BDSM SEX
-            girl:dignity(1)
+            girl:dignity(-1)
         else
             return DungeonInteractChoice(girl)
         end
@@ -333,7 +335,7 @@ function BrothelInteractChoice(girl)
                 "To join in with a group session", "For a strip tease", "Go Back")
         if choice == 0 then
             if girl:obey_check(wm.ACTIONS.SEX) then
-                -- HAVE NORMAL SEX
+                wm.UpdateImage(wm.IMG.SEX)
                 if wm.Percent(girl:normalsex()) then
                     Dialog("As the head of your penis passes her labia you feel her squeeze her muscles around your member.  She starts rocking her hips and pushing against you.")
                     Dialog("Without you realizing it she has switched positions and is now bouncing and grinding on top of you.")
@@ -353,7 +355,7 @@ function BrothelInteractChoice(girl)
         elseif choice == 1 then
             Dialog("She notices that you have not come alone.  Following her gaze you speak \"Ah I see you noticed.  I'd like you two girls to get to know each other better and...  :you wink slyly:  I'd like to watch.\"")
             if girl:obey_check(wm.ACTIONS.SEX) then
-                -- LESBIAN SEX
+                wm.UpdateImage(wm.IMG.LESBIAN)
                 Dialog("You sit down on the bed and make yourself comfortable as the girls approach one another.")
                 if wm.Percent(girl:lesbian()) then
                     Dialog("The girls lose themselves in passionate kisses.  They take turns removing each others clothes with their mouths; some of the intimate articles are playfully tossed your way.")
@@ -376,7 +378,7 @@ function BrothelInteractChoice(girl)
         elseif choice == 2 then
             Dialog("I wonder if you would cheer up my pet Malboro. He's been down lately and could really use a good fucking.")
             if girl:obey_check(wm.ACTIONS.SEX) then
-                -- BEAST SEX
+                wm.UpdateImage(wm.IMG.BEAST)
                 Dialog("She smiles and nods. I've always liked that \"little\" guy.  Let's go cheer him up.")
                 if wm.Percent(girl:beastiality()) then
                     Dialog("She smartly removes her clothing before she enters the cage. Beasts don't really care about what their fuck toys look like anyway.")
@@ -402,7 +404,7 @@ function BrothelInteractChoice(girl)
             Dialog("As you enter her room you accidently jostle the crate you're carrying.  Hearing the clinking and clanging she eyes the crate.  \"What do you have got in the crate?\" She asks.")
             Dialog("\"Take a look.\" you say.  Her eyes widen at the sight of the whips, chains, and harnesses.")
             if girl:obey_check(wm.ACTIONS.SEX) then
-                -- Bondage Sex
+                wm.UpdateImage(wm.IMG.BDSM)
                 Dialog("A smile graces her face as she picks through the plethora of various bondage toys. ")
                 if wm.Percent(girl:bdsm()) then
                     Dialog("She chooses a large wicked looking dildo and some anal beads from the crate.  She blushes as she begs you to use them after you've tied her up.")
@@ -433,7 +435,7 @@ function BrothelInteractChoice(girl)
             if choice == 0 then
                 Dialog("\"Now let's see how well you've learned to suck a cock.\"")
                 if girl:obey_check(wm.ACTIONS.SEX) then
-                    -- TODO oral sex
+                    wm.UpdateImage(wm.IMG.ORAL)
                     if wm.Percent(girl:oral()) then
                         Dialog("She smiles and reaches up to grasp your cock.  She begins by gently licking and kissing the tip.  Her tongue then traces down the length of your shaft and  draws circles around our balls.")
                         Dialog("She gently sucks each ball into her mouth in turn.  She turns her head and slides her lips back forth on your shaft.  She kisses the tip again and slowly slides you into  her mouth.")
@@ -455,7 +457,7 @@ function BrothelInteractChoice(girl)
             elseif choice == 1 then
                 Dialog("\"I want to see how much of this you can fit in your mouth.\"")
                 if girl:obey_check(wm.ACTIONS.SEX) then
-                    -- TODO oral sex
+                    wm.UpdateImage(wm.IMG.DEEPTHROAT)
                     if wm.Percent(girl:bdsm()) then
                         Dialog("She eyes your cock hungrily and begins to suck the tip, swirling her tongue around the head.  She sucks harder and harder and you feel yourself being pulled deeper and deeper inside.")
                         Dialog("You are amazed as you feel her nose brush against your abdomen. You look down at her and gaze into her eyes as you grasp the back of her head.")
@@ -477,7 +479,7 @@ function BrothelInteractChoice(girl)
             elseif choice == 2 then
                 Dialog("You sit down on a stool beside her. \"Why don't you use your tits and your mouth this time?\"")
                 if girl:obey_check(wm.ACTIONS.SEX) then
-                    -- TODO ORAL SEX
+                    wm.UpdateImage(wm.IMG.TITTY)
                     -- TODO TRAITS
                     if girl:has_trait("Abnormally Large Boobs") then
                         Dialog("As she frees her massive jugs from her, top you marvel at their size.  Your dick becomes lost in the undulating sea of soft pillowy flesh.")
@@ -514,7 +516,7 @@ function BrothelInteractChoice(girl)
             Dialog("As you enter the room, the sight of her luscious ass assails your delighted eyes.  She looks back at you and greets you with a smile.")
             Dialog("A thought pops into your head as you continue to admire the view.  You voice your thought \"I think we should try something a little different tonight?\"")
             if girl:obey_check(wm.ACTIONS.SEX) then
-                -- ANAL SEX
+                wm.UpdateImage(wm.IMG.ANAL)
                 Dialog("She shakes her ass and bends over further; slightly pulling down her panties.  'Well, come and get it.\" she purrs")
                 if wm.Percent(girl:anal()) then
                     Dialog("You move toward her and slide the panties down to the floor.  She reaches back and grips your rod, rubbing it against her wet pussy for lubrication and finally presses the now slick tip against her anus.")
@@ -544,6 +546,7 @@ function BrothelInteractChoice(girl)
             Dialog("You sneak around her side to get a better view.  A few moments later she gasps and jumps up as she notices you standing there.")
             Dialog("\"Oh, you don't have to stop on my account.\"  you say with a wink.")
             if girl:obey_check(wm.ACTIONS.WORKSTRIP) then
+                wm.UpdateImage(wm.IMG.STRIP)
                 Dialog("She relaxes and grins devilishly.  \"Alright, I hope you will enjoy the show,\" she then adds \"but no touching.\"")
                 if wm.Percent(girl:strip()) then
                     Dialog("She moves to her bed and makes herself comfortable and making sure you have a good view.  She begins rubbing her mound through her panties and before long a dark wet spot begins to grow;  you also start feeling some growth.")
@@ -573,7 +576,7 @@ function BrothelInteractChoice(girl)
             Dialog("You ask the group of men to wait in the hall as you enter her room.")
             Dialog("You find her relaxing on her bed looking through some of her lingerie.  She looks up as you speak.\"I wonder if you could help me, my dear.  I've got a group of gentlemen outside and I was wondering if you could help me entertain them?\"")
             if girl:obey_check(wm.ACTIONS.SEX) then
-                -- GROUP SEX
+                wm.UpdateImage(wm.IMG.GROUP)
                 Dialog("She nods in agreement, but asks for a few minutes to get ready.  As the door closes behind you, many rumbling and rustling sounds can be heard.  A minute or so later she declares that she is ready.")
                 if girl:has_trait("Nymphomaniac") then
                     Dialog("You lead the men inside and you all stand at attention for the amazing sight before you.  She stands in the center of the room surrounded by pillows and cushions.  There isn't a stitch of clothing on her body, which shines from the coating of lubricant she has applied.  She waits for the door to close before she strikes a sexy pose and exclaims \"Lets see who can catch the greased courtesan first!\"")
@@ -607,11 +610,11 @@ function BrothelInteractChoice(girl)
         elseif choice == 8 then
             Dialog("\"Good evening, my dear.  I stopped by because I wanted to see how well you've learned to work the pole.\"")
             if girl:has_trait("Slow Learner") then
-                -- TODO oral sex
+                wm.UpdateImage(wm.IMG.ORAL)
                 Dialog("She immediately drops to her knees and takes you into her mouth.  Well, It's not exactly what you had in mind, but there's no point to stopping her now.  She swallows every drop as you unload in her mouth.")
             else
                 if girl:obey_check(wm.ACTIONS.SEX) then
-                    -- TODO strip
+                    wm.UpdateImage(wm.IMG.STRIP)
                     Dialog("She leads you to a comfortable chair next to a small stage with a tall, metal pole in the center.")
                     if wm.Percent(girl:strip()) then
                         -- TODO other traits?
@@ -674,7 +677,7 @@ function InteractOffice(girl)
             "Send her on a mission", "Personal instruction", "Inspect her", "Go Back")
     if choice == 0 then
         if girl:obey_check(wm.ACTIONS.WORKCLEANING) then
-            -- TODO clean
+            wm.UpdateImage(wm.IMG.MAID)
             Dialog("She puts on her maid's attire and sets about tidying up your office.  You always enjoy being around a women in a maid's outfit .")
         else
             Dialog("She  refuses to clean your office.")
@@ -748,7 +751,7 @@ function InteractOffice(girl)
                 elseif girl:has_trait("Nymphomaniac") then
                     Dialog("She finds the Politician sitting at the bar of an upscale establishment.  She sits down next to him and strikes up a conversation.")
                     if wm.Percent(girl:charisma()) then
-                        -- TODO oral sex
+                        wm.UpdateImage(wm.IMG.ORAL)
                         Dialog("She uses her talent for seduction to lure the man back to a secluded room of the bar.  She begins by sucking his dick, before asking him to lick her pussy as she continues to give him head.  She enjoys the sensation of his tongue on her clitoris.  She sits up and begins to ride his face.  She presses down hard as she grinds her pussy.  He tries to scream as his breathing becomes difficult but to no avail.  She writhes and rides him hard  long after he has suffocated.")
                         Dialog("She had heard that a man's erection gets bigger and harder after he suffocates.  To her delight, she finds it to be true and she rides the dead man's dick for hours.")
                         Dialog("She returns to you office exhausted and with her clothes in disarray.  she doesn't speak as she places the signet ring on your desk and walks back to her room.")
@@ -775,6 +778,7 @@ function InteractOffice(girl)
                     Dialog("She teleports back to your office and hands you the ring and papers.  She looks tired from the night of conjuring and you dismiss her back to her room.")
                     wm.SetPlayerSuspicion(-30)
                 elseif girl:combat() > 60 then
+                    wm.UpdateImage(wm.IMG.COMBAT)
                     Dialog("She adorns her weapons and armor and heads to her chosen ambush location.")
                     Dialog("As the man and his bodyguards round the corner she takes a moment to evaluate their abilities.")
                     if wm.Percent(girl:combat()) then
@@ -784,13 +788,13 @@ function InteractOffice(girl)
                         Dialog("In one fluid motion she rises, cutting the guards throat, and bringing her blade to bear on the defenseless politician.  He begins to plead \"Please don't kill me! I'll *gurk* before he can finish his cowards talk she disembowels him.")
                         Dialog("She returns to your office with the signet ring and documents.  She places them on your desk and you hear her say something about washing off coward.")
                     else
+                        wm.UpdateImage(wm.IMG.ANAL)
                         Dialog("As she leaps from her perch her foot catches on a bit of string and she lands splayed out on the ground before the group.  The two brutes in front grab her arms and drag her to stand before the boss.")
                         Dialog("\"What have we here? A whore who would be an assassin?\"  A big barbarian guard speaks \"No, boss.  From the look of her gear. I'd say she fancies herself a fighter.\"  The Boss replies \"very well Ass Crusher. See if she can fight.\"")
                         Dialog("The two holding her let go and the big man steps forward. \"Come on little girl. Let's see what you got.\"  She swings hard but the Barbarian merely catches the blade in his bare hand.")
                         Dialog("He pulls a tiny dagger from his belt and blocks each of her swings, but as he does he makes small cuts on her armor.  Her armor begins to fall from her body and before long she stands naked before the huge man.")
                         Dialog("\"Now I will use my sword.\" and he pulls his massive erection from his loincloth.  Angered, She swings at the dick but his hands catch her by the arms.  Her spins her around and rams his cock into her ass.")
                         Dialog("He releases a huge load into her anal cavity and leaves her sprawled out on the street.  The men walk away laughing.")
-                        -- TODO ANAL SEX
                     end
                 else
                     Dialog("She positions herself across the street with a high powered magic crossbow and wait for her target to arrive at his office.")
