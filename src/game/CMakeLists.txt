@@ -170,7 +170,7 @@ set(SRC cEvents.cpp
         combat/combatant.cpp
         )
 
-add_executable(WhoreMaster ${BUILDINGS_SRC} ${SCREENS_SRC} ${JOBS_SRC} ${CHARACTER_SRC} ${SCRIPTING_SRC} ${SRC} main.cpp)
+add_executable(WhoreMaster fakemain.cpp)
 target_link_libraries(WhoreMaster PUBLIC WMEngine pthread)
 set_target_properties(WhoreMaster PROPERTIES CXX_STANDARD 14 RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/../..")
 
