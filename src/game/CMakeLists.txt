@@ -171,7 +171,7 @@ set(SRC cEvents.cpp
         )
 
 add_executable(WhoreMaster fakemain.cpp)
-target_link_libraries(WhoreMaster PUBLIC WMEngine pthread)
+target_link_libraries(WhoreMaster PUBLIC SDL2::TTF SDL2::SDL2)
 set_target_properties(WhoreMaster PROPERTIES CXX_STANDARD 14 RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/../..")
 
 target_include_directories(WhoreMaster PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
