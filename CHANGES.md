@@ -1,11 +1,13 @@
 # Version 07.00.alpha5
 ## Changes
-* About 500 lines of old scripts ported to lua
+* More old scripts ported to lua
+* Made lua scripts more composable
 * Some jobs now read configurations from XML files in `Resources/Data/Jobs`
 * Screen navigation buttons can be configured from interface xmls
 
 ## Fixes
 * Autosave/continue game should work again
+* Improved CMake build scripts
 
 # Version 07.00.alpha4
 
