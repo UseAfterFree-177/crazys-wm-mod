@@ -656,20 +656,369 @@ function BrothelInteractChoice(girl)
         if girl:obey_check(wm.ACTIONS.SEX) then
             Dialog("She smiles slightly and nods her agreement.")
             local event = ChoiceBox("", "Cocktails", "Dinner")
-            -- GOTO 70 // 5
+            if event == 0 then
+                return Drinks(girl, false)
+            else
+                return Dinner(girl)
+            end
         else
             Dialog("She declines your invitation.")
             RefusedSexAct(girl)
         end
     elseif choice == 5 then
-        local action = ChoiceBox("",
+        local action = ChoiceBox("Select Training",
                 "Send her to the Arcane Citadel for Magic Lessons. COST: 500 gold",
                 "Have her do Agility training with the local street acrobats.  Cost: 250 gold",
                 "Work with the stevedore's at the shipyard to improve her Strength and Stamina.  COST: 300 gold",
                 "Spend the day with a veteran adventurer for combat training. COST: 500 gold",
                 "Go Back"
         )
-        -- GOTO 80 // 6
+
+        if action == 5 then
+            return BrothelInteractChoice(girl)
+        elseif girl:tiredness() > 75 then
+            Dialog("She is too tired for training")
+            return
+        elseif girl:health() < 40 then
+            Dialog("She is not healthy enough for training today.")
+        elseif action == 0 then -- Magic Lesson
+            Dialog("Today you will spend the day at in the care of the mages at the Citadel.  Learn well from them. ")
+            -- TODO disobey check
+            if true then
+                Dialog("You hand her a bag of gold containing the lesson fee and send her on her way.")
+                wm.TakePlayerGold(500)
+                -- TODO this is a bit weird, magic training works better if she is good at magic
+                if wm.Chance(girl:magic()) then
+                    Dialog("She arrives at the Citadel a few minutes before her appointed time wearing he best robes.")
+                    Dialog("The Mages were impressed with her decorum and willingness to learn.  They praise her for her diligence and aptitude.")
+                    Dialog("She feels she will be able to apply the lessons she learned today. She also feels more confident in her ability.")
+                    girl:magic(wm.Range(3, 10))
+                    girl:intelligence(wm.Range(1, 5))
+                    girl:confidence(wm.Range(2, 7))
+                    girl:happiness(wm.Range(0, 5))
+                    girl:tiredness(wm.Range(1, 10))
+                else
+                    Dialog("Although she arrived on time, she was still wearing her brothel attire.  Her teachers were a little distracted and as a result the lesson was somewhat lacking.")
+                    girl:magic(wm.Range(1, 5))
+                    girl:intelligence(wm.Range(0, 1))
+                    girl:confidence(wm.Range(0, 2))
+                    girl:libido(wm.Range(2, 10))
+                    girl:tiredness(wm.Range(1, 10))
+                end
+            else
+                Dialog("She makes some excuses and says she can't go training today.")
+                return RefuseTraining(girl)
+            end
+        elseif action == 1 then
+            Dialog("\"I have made arrangements with a local acrobatics troupe.  They have agreed to show you some of their techniques.\"  You hand her a parchment with a crude map and the name of the troupe leader.")
+            -- TODO disobey check
+            wm.TakePlayerGold(250)
+            if true then
+                -- TODO this is a bit weird, agility training works better if she is good at agility
+                if wm.Chance(girl:agility()) then
+                    Dialog("She finds the plaza easily and introduced herself to the Head Troubadour. She easily picked up on the subtle important motions involved with tumbling and they acrobats were impressed by her natural flexibility.")
+                    Dialog("She had a fun day and learned a great deal from the troupe.")
+                    girl:agility(wm.Range(3, 10))
+                    girl:strength(wm.Range(0, 4))
+                    girl:charisma(wm.Range(0, 4))
+                    girl:happiness(wm.Range(0, 5))
+                    girl:tiredness(wm.Range(1, 10))
+                else
+                    Dialog("She got a little turned around but eventually found the correct street.")
+                    Dialog("She forgot to wear her underwear today, which made many of the lifts and holds distracting to both her and her fellow entertainers. More than one audience member got more of a show then they had expected.")
+                    Dialog("All in all, her unique brand of showmanship earned some better tips, but she was too distracted to learn everything.")
+                    girl:agility(wm.Range(1, 5))
+                    girl:strength(wm.Range(0, 1))
+                    girl:charisma(wm.Range(0, 1))
+                    girl:libido(wm.Range(5, 25))
+                    girl:tiredness(wm.Range(1, 10))
+                    wm.AddPlayerGold(wm.Range(20, 90))
+                end
+            else
+                Dialog("She pretends to have an injured ankle and mumbles some apologies as she hobbles out of the room.")
+                return RefuseTraining(girl)
+            end
+        elseif action == 2 then
+            Dialog("You have been lacking in exercise lately.  I've bribed the foreman of the shipyard workers to let you work with them for the day.")
+            wm.TakePlayerGold(300)
+            if true then
+                if wm.Chance(girl:constitution()) then
+                    Dialog("She shows up early at the docks and she remembered to bring a pair of thick leather gloves with her.")
+                    Dialog("It was hard work, and just as they thought they had unloaded the last ship, another was spotted on the horizon.  The Foreman could be heard shouting \"Looks like we got some overtime tonight, Lads!\"")
+                    Dialog("Although she was tired and cranky she helped the men unload the ship long into the night.  The Foreman thanked her for her help and refunded most of the bribe.")
+                    wm.AddPlayerGold(wm.Range(100, 200))
+                    girl:strength(wm.Range(4, 10))
+                    girl:constitution(wm.Range(4, 10))
+                    girl:obedience(wm.Range(1, 5))
+                    girl:refinement(-wm.Range(0, 2))
+                    girl:tiredness(wm.Range(2, 20))
+                else
+                    Dialog("She had meant to get to the docks on time, but somehow she managed to oversleep.  The Foreman was not pleased when she showed up around noon.")
+                    Dialog("She worked hard for the last half of the day, but she may have gotten more out of it if she had been on time.")
+                    girl:strength(wm.Range(1, 5))
+                    girl:constitution(wm.Range(1, 5))
+                    girl:libido(wm.Range(2, 10))
+                    girl:refinement(-wm.Range(1, 3))
+                    girl:tiredness(wm.Range(1, 15))
+                end
+            else
+                Dialog("She is visibly disgusted by the idea of working around sweaty men all day.  She makes some weak excuses and walks away.")
+                return RefuseTraining(girl)
+            end
+        elseif action == 3 then
+            Dialog("\"Grab your armor and gear.  I'm sending you to study with the veteran warrior, Titus Pullo.\"")
+            if true then
+                wm.TakePlayerGold(500)
+                if wm.Chance(girl:combat()) then
+                    Dialog("She arrives early to the combat ring and becomes lost in thought as she waits...")
+                    Dialog("She is startled out of her thoughts by the feeling of a hand between her thighs. She swings wildly at the brash pervert, but her attack is deflected.  \"Oh, You're some nice cunny aren't you, girl!\"  yells the man.  she attacks again and again, but each attack is deflected and followed by some other perverted comment.")
+                    Dialog("The battle continues for hours and the unnamed pervert continues to block, parry, and grope her. Throughout the day she becomes better at preventing his hands from reaching her.")
+                    girl:combat(wm.Range(3, 8))
+                    girl:strength(wm.Range(1, 5))
+                    girl:constitution(wm.Range(1, 7))
+                    girl:libido(wm.Range(5, 20))
+                    girl:tiredness(wm.Range(2, 20))
+                else
+                    Dialog("She arrives late to the combat ring and not yet wearing her armor.  Her instructor continues to drink as he waits for her to be ready.")
+                    Dialog("When she is finally prepared, the lesson begins.  By this time however, the warrior is slightly inebriated.  He is able to handily block and parry and swing she attempts, but he offers little in the form of verbal instruction.")
+                    Dialog("After an exhausting day sparring with the superior, although, drunken swordsmen;  She returns to the brothel with some minor skill improvements.")
+                    girl:combat(wm.Range(1, 5))
+                    girl:strength(wm.Range(0, 2))
+                    girl:constitution(wm.Range(0, 2))
+                    girl:libido(wm.Range(2, 10))
+                    girl:tiredness(wm.Range(2, 20))
+                end
+            else
+                Dialog("She mumbles something about her armor still being in the dirty laundry pile and meanders away.")
+                return RefuseTraining(girl)
+            end
+        end
+    end
+end
+
+function RefuseTraining(girl)
+    local action = ChoiceBox("",
+        ""
+    )
+    if choice == 0 then
+        Dialog("You say nothing and go about your other business.")
+        wm.SetPlayerDisposition(3)
+    elseif choice == 1 then
+        ScoldGirl(girl)
+    elseif choice == 2 then
+        Dialog("\"You will learn to obey me!\" You yell as you grab her arm and drag her across your knees.")
+        Dialog("She begins to cry as you pull her clothing and expose her ass.  \"Perhaps this will teach you some discipline.\" ")
+        Dialog("You smack her ass until her cheeks are rosy red and send her away sobbing.")
+        wm.SetPlayerDisposition(-3)
+        girl:happiness(-3)
+        girl:health(-1)
+        girl:obedience(3)
+    elseif choice == 3 then
+        Dialog("\"Oh I see.  You feel you have no need to obey me?\"  You ask calmly.  \"Perhaps then you also have no need for the things I have given you?\" ")
+        Dialog("\"I'll just be taking a few things back then.\"  You order your guards to strip her naked and make her stand in front of the brothel all day and night.")
+        Dialog("As she is lead outside you remark. \"Perhaps next time you will be more mindful of who it is that takes care of you.\"")
+        -- TODO Nude
+        wm.SetPlayerDisposition(-3)
+        girl:happiness(-3)
+        girl:pchate(5)
+        girl:pclove(-5)
+        girl:obedience(5)
+    elseif choice == 4 then
+        Dialog("Your eyes flash with rage. \"You dare refuse? I'll show you what happens to whores that refuse to do their master's bidding\"")
+        Dialog("You knock her down and begin to tear away her clothing.  She cries out as you force yourself inside her.")
+        Dialog("You release you semen deep inside her and leave her sobbing on the floor.")
+        PlayerRapeGirl(girl)
+        girl:happiness(-5)
+        girl:obedience(5)
+        girl:pchate(10)
+        girl:pclove(-10)
+        girl:pcfear(10)
+    end
+end
+
+function Drinks(girl, dinner_already)
+    Dialog("You invite her to make herself comfortable on your sofa as you mix some cocktails before joining her on the couch.")
+    local what = wm.Range(0, 100)
+    if what > 90 then
+        Dialog("She becomes very comfortable and giddy as she downs drink after drink.  However, she over does it and before long she passes out on the couch.")
+        return SheIsAsleep(girl)
+    elseif what > 70 then
+        Dialog("She opens up more and more with each drink.  Her words become slurred and the topics of conversation become more racy.  There can be no doubt that this girl is completely drunk.")
+        local choice = ChoiceBox("", "Take Advantage of her intoxication.", "Lead her back to her room")
+        if choice == 0 then
+            Dialog("You sense an opportunity in her inebriated state.  You start rubbing her shoulders and back.  Soon your hands are roaming towards her breasts...")
+            if wm.Percent(60) then
+                Dialog("She lets out a soft moan as your fingers caress her nipples thru the fabric of her top. Your other hand sneaks along her inner thigh;  meeting no resistance your fingers slide easily under her panties and your stimulate her clitoris.")
+                Dialog("Before long you are both kissing and probing each other...having lost all sense of time you come to your senses panting and gasping on the floor by your couch.  You look down to see that she her breathing heavily and deeply in an exhausted sleep.")
+                -- TODO normal sex
+            else
+                Dialog("A sharp smack on your hand and a harsh look in her eyes, tells you that your gamble has failed.  She regains a little sobriety and demands you take her back to her room.")
+                Dialog("You escort her back to her room and you both pause just outside her door...")
+                return HerRoom(girl)
+            end
+        elseif choice == 1 then
+            Dialog("You help her to her feet and lead her to her room...")
+            return HerRoom(girl)
+        end
+    elseif what > 10 then
+        Dialog("The two of you pass the time enjoying each others company and a couple drinks.  She seems a little tipsy.")
+        if dinner_already then
+            AfterDinner(girl)
+        else
+            return Dinner(girl)
+        end
+    else
+        Dialog("She politely asks for Non-alcoholic drinks.  Even without social lubrication you both enjoy some good conversation.")
+        if dinner_already then
+            AfterDinner(girl)
+        else
+            return Dinner(girl)
+        end
+    end
+end
+
+function HerRoom(girl)
+    local choice = ChoiceBox("", "Polite Good Night", "Lean in for a Kiss")
+    if choice == 0 then
+        Dialog("You politely bow slightly and bring her hand to your lips.  \"Good Night, My Dear.  I hope you had a pleasant evening.\"")
+        if girl:tiredness() > 70 then
+            Dialog("Apparently, she was more tired then she let on and she begins to sway on her feet.  You catch her before she hits the ground.  You pick her up and carry her to her bed...")
+            return SheIsAsleep(girl)
+        else
+            Dialog("She curtseys and smiles \"Good Night, Good Sir.\" She replies in a friendly but mocking tone. She closes the door behind her as she enters the room and  You head back down the hallway to your room alone.")
+        end
+    elseif choice == 1 then
+        Dialog("As you lean in to kiss her, you ponder exactly what kind of kiss it should be...")
+        local kiss = ChoiceBox("", "French Kiss", "Kiss")
+        if kiss == 0 then
+            Dialog("As your lips come together you slide your tongue into her mouth...")
+            if girl:libido() >= 45 then
+                Dialog("Her tongue meets yours and they begin a swirling dance back and forth. After several seconds the kiss ends with her gently biting your bottom lip as you separate.")
+                Dialog("She takes your hands and leads you silently inside her room and toward her bed.")
+                Dialog("The sounds of your lovemaking can be heard throughout the neighborhood.  A perfect ending to a perfect evening.")
+                -- TODO normal sex
+            else
+                Dialog("She kisses you back passively.  After a few moments you separate and say your final good nights.")
+            end
+        else
+            Dialog("You decide to not try using your tongue and your lips come together in a kiss...")
+            if girl:libido() >= 65 then
+                Dialog("A moment later you find her tongue sliding past your lips and you reciprocate passionately...")
+                Dialog("A trail of saliva hangs between you lips as you separate.  She kisses your neck unbuttoning your shirt; She kisses your chest and continues moving downward.  \"I'm still a little hungry.\" She whispers.  you revel in the feeling as she kisses the head of your dick and begins to lick and suck you hungrily.  You finish quickly under her onslaught and she gulps down every last drop.")
+                Dialog("You stand reeling from the pleasure,  She lays back on the bed removing her lingerie and spreading her legs wide.  \"Are you still hungry?\" She asks spreading her pussy lips wide with her fingers.")
+                Dialog("You smile and dive into the task before you.  You awake the next morning holding her tightly in her bed.")
+                -- TODO oral sex
+            else
+                Dialog("You kiss her lips and and say good night.")
+            end
+        end
+    end
+end
+
+function SheIsAsleep(girl)
+    local choice = ChoiceBox("", "Gently tuck her in", "Sleep Creep")
+    if choice == 0 then
+        Dialog("You spend a few moments watching her breath deeply and sleeping soundly.  You grab a nearby blanket and  gently tuck her in.  ")
+        wm.SetPlayerDisposition(10)
+    elseif choice == 1 then
+        Dialog("As you look at her sleeping soundly, an idea seeps into your brain.  You shake her slightly and call her name to see how deeply she is sleeping.  Satisfied, you begin to run your hands over her breasts.")
+        Dialog("Growing bolder, you begin to pull down her top to expose her breasts.  You give each nipple a little kiss.  Her breathing changes slightly and you freeze, but she is sleeping soundly.  You stroke your cock as you move to  slowly pull down her panties.")
+        Dialog("You pulse quickens as her panties slowly slide down.  Halfway down her ass....her upper thighs...her knees...calves...you stop and leave them at her ankles and begin to slide your fingers into her vagina as you stroke your cock.")
+        if wm.Percent(40) then
+            Dialog("She moans sleepily as you rub the head of your penis against her juicy labia,  Slowly you begin to push inside her.  You move slowly and deliberately enjoying the feeling.  She gasps repeatedly and her mouth hangs open slightly, giving you an idea.")
+            Dialog("You pull out of her pussy and bring your dick to her mouth.  gently you slide it past her lips.  The sensation and tension of the situation feel amazing and you release a large amount of cum down her throat.  Still sleeping she swallows it down. After a few moments you carefully put her closes back on and leave her to sleep.")
+            -- TODO oral sex
+        else
+            Dialog("She awakes with a sudden start and stares wide eyed at your fingers inside her and your erection moving closer.  \"What the fuck!\" She cries \"Get off of me!\"")
+            local action = ChoiceBox("", "Hold her down and Fuck her anyway.", "Apologize and Leave")
+            if action == 0 then
+                Dialog("Grabbing her arms you pin her down. \"I'm afraid I've come too far to stop now, my dear!\"  She tries to fight you off by you are too strong for her.  She cries as you force your penis inside her and pump her forcefully.  You explode while deep inside her and your cum fills her womb.")
+                wm.SetPlayerDisposition(-20)
+                PlayerRapeGirl(girl)
+            elseif action == 1 then
+                Dialog("Startled you jump off of her and issue pathetic apologies as you flee the room.")
+                wm.SetPlayerDisposition(-5)
+            end
+        end
+    end
+end
+
+function Dinner(girl)
+    Dialog("A bell ring from the dining room, informs you that dinner is served.")
+    local what = wm.Range(0, 100)
+    if what < 5 then
+        Dialog("As she samples a few of the rare treats, something causes her to have an allergic reaction and her throat begins to close up rapidly.  You rush her to the nearest healer and spend the rest of the evening by her bedside as the healers work to save her life.")
+        return
+    elseif what > 69 then
+        Dialog("Your personal chef has prepared a succulent feast of delicious and suggestive food.  As you lock eyes across the table, each bite becomes a seductive tease.  To finish the meal she sucks a long strand of pasta slowly into her mouth,  licking her lips, and flashing a coy smile.")
+        girl:libido(40)
+    elseif what >= 37 then
+        Dialog("You both look hungrily at the bounty laid before you.  Your Chef has prepared a wonderful assortment of exotic foods.  You both  spend the meal sampling the variety and conversing easily.")
+    else
+        Dialog("Although the meal before you is delectable beyond compare, both of you struggle to find topics of common interest and the meal passes quietly.")
+        girl:libido(-20)
+    end
+    local choice = ChoiceBox("", "Dessert", "Escort her back to her room.", "After dinner Cocktails")
+    if choice == 0 then
+        Dialog("You call for the chef to bring out the dessert course.")
+        if girl:libido() > 80 then
+            Dialog("The Creme Brulee this evening is exquisite. You become lost in each others eyes,  in fact, you become so distracted that you accidentally drop a spoonful of the sweet substance in your lap.  You apologize and move to clean it up, but she stops you saying \"Let me get that for you.\"")
+            Dialog("She kneels beside you and moves her face very close to your lap.  She begins to lick the creme from your crotch hungrily.  After a few moments your pants are clean, but she looks up at you poutingly \"Is that all there was?  I want more cream.\"")
+            Dialog("A devilish grin graces her face and she begins to remove your already rock hard erection from your trousers.  She licks and sucks greedily and expertly.  You feel the wave of cream swell within you and you release a massive explosion in her mouth..")
+            Dialog("She swallows it all down in one gulp and licks her lips.  \"Now that was really satisfying.\"  she says with that devilish grin.  She thanks you for the wonderful evening and returns to her room.")
+            -- TODO oral sex
+            girl:happiness(3)
+            girl:pclove(2)
+            girl:pchate(-2)
+        elseif girl:has_trait("Nymphomaniac") then
+            Dialog("\"Wait\" She says \"I want to make you a dessert myself.\"  She excuses herself to the kitchen for a few moments.")
+            Dialog("You nearly fall out of your chair when she returns wearing nothing but whipped cream lingerie with cherries over her nipples. \"I wanted to make you a banana split, but I couldn't find a good banana in the kitchen.\" she smiles coyly \"Do you know where I can find a banana?\"")
+            Dialog("\"I think I can help you out with that\" you reply as you approach her.  You spend the rest of the evening applying and removing whipped cream from each others bodies.")
+            -- TODO normal sex
+            girl:happiness(3)
+            girl:pclove(2)
+            girl:pchate(-2)
+        elseif wm.Percent(65) then
+            Dialog("You both enjoy sharing a large piece of creamy cheesecake.  She sighs contentedly as you feed her the last bite.  You both pause for several moments gazing into each others eyes.")
+            return AfterDinner(girl)
+        else
+            Dialog("You both both sit back heavily as you finish the rather large portions of cake.  She thanks you for the food and begins to leave.  You contemplate asking her to stay, but realize that any activity would likely cause both of you to explode, and not in a good way.")
+        end
+    elseif choice == 1 then
+        Dialog("You gently take her by the hand and walk back to her room ,arm in arm.")
+        return HerRoom(girl)
+    else
+        Dialog("You invite her to join you on the couch for some after dinner drinks.")
+        return Drinks(girl, true)
+    end
+end
+
+function AfterDinner(girl)
+    local choice = ChoiceBox("", "Escort her to her room.", "Invite her to spend the night.")
+    if choice == 0 then
+        return HerRoom(girl)
+    elseif choice == 1 then
+        Dialog("\"What now my dear?  Shall we continue this evening in the bedroom?\"")
+        if girl:tiredness() > 40 then
+            Dialog("She yawns and apologizes. \"I'm sorry, but I think it might be best to call it a night.\"")
+            return HerRoom(girl)
+        elseif girl:pchate() < 50 then
+            Dialog("She looks at you seriously. \"I appreciate that you're trying to be nice and all, but if you think a little wine and food means i'm going to fuck you, then you can go to hell.\"  She turns to storm out of your quarters.")
+            -- GOTO 555 // 8
+        elseif girl:pclove() > 50 then
+            Dialog("She looks deep into your eyes. \"Of course, my love, I have to properly thank you for this lovely evening...\"")
+            -- TODO normal sex
+        elseif girl:libido() > 60 then
+            Dialog("She giggles a bit as she looks up at you.  \"I've always wondered what the Master's bedroom looks like.\"")
+            Dialog("She adds with a wink \"Perhaps we could both enjoy some tossed salad on your bed.\"")
+            -- TODO anal sex
+        elseif wm.Percent(50) then
+            Dialog("\"How can I refuse the offer of an even more delicious dessert?\" She replies in a sultry voice.")
+            -- TOOD normal sex
+        else
+            Dialog("\"That is a lovely offer,\" She replies \"but I think it's best if I return to my room.\"")
+            return HerRoom(girl)
+        end
     end
 end
 
@@ -1983,6 +2332,107 @@ function GoOnQuest(girl)
                     else
                         Dialog("Street Hooker. generic.  Hooker was a city guards trap.  they gang bang her in the barracks.")
                         -- TODO group sex
+                    end
+                end
+            elseif what == 4 then
+                Dialog("Streets. Passage to underground lair.")
+                if girl:has_trait("Adventurer") then
+                    Dialog("Streets. Underground Lair. Adventurer attempt. defeat the rival gangs secret stockpile guards.")
+                    local result = wm.Range(1, 100)
+                    if result >= 95 then
+                        Dialog("Streets. Underground. Adventurer. Crit Win.  defeat gang bonus item.")
+                        -- TODO special item
+                    elseif result <= 10 then
+                        Dialog("Street. Underground. Adventurer. Crit Fail. injured and gang banged.")
+                        -- TODO group sex
+                        girl:health(-20)
+                    elseif wm.Chance(girl:combat()) then
+                        Dialog("Streets. Underground. Adventurer. Combat Win.  defeats gang. cash bonus")
+                        wm.AddPlayerGold(wm.Range(300, 700))
+                    else
+                        Dialog("Streets. Underground. Adventurer. Combat lose.  Forced to retreat injured.")
+                        girl:health(-10)
+                    end
+                elseif girl:has_trait("Nymphomaniac") then
+                    Dialog("Streets. Underground Lair. Nympho attempt. find a ancient sex pleasure dungeon.")
+                    local result = wm.Range(1, 100)
+                    if result >= 95 then
+                        Dialog("Streets. Underground. Nympho. fucking the statue of the god of anal sex unlocks a hidden chamber with treasure. item bonus.")
+                        -- TODO special item; Anal sex
+                        girl:level(1)
+                        girl:charisma(15)
+                    elseif result <= 10 then
+                        Dialog("Street. Underground. nympho.  magical sex devices trap her for hours but they absorb her youth.")
+                        -- TODO bondage sex
+                        girl:age(20)
+                    elseif wm.Chance(girl:libido()) then
+                        Dialog("Streets. UNderground. Nympho. Win.  she uses the devices for hours and gains knowledge of sex skills.")
+                        -- TODO normal sex
+                        girl:normalsex(5)
+                        girl:oral(5)
+                        girl:titty(5)
+                        girl:hand(5)
+                        girl:foot(5)
+                        girl:group(5)
+                        girl:lesbian(5)
+                        girl:strip(5)
+                        gril:bdsm(5)
+                        girl:charisma(5)
+                    else
+                        Dialog("Streets. underground. nympho.  fail.  She pleasures her self with the machines for hours but gains nothing but some happiness and a satisfied libido.")
+                        girl:happiness(20)
+                        girl:libido(-30)
+                        -- TODO anal sex
+                    end
+                elseif girl:has_trait("Construct") then
+                    Dialog("Streets. Underground Lair. Construct attempt.  Finds alchemy lab.")
+                    local result = wm.Range(1, 100)
+                    if result >= 95 then
+                        Dialog("Streets. UNderground. Construct. Crit Win.  Finds alchemical potion to boost her constitution. and some items")
+                        -- TODO special item
+                    elseif result <= 10 then
+                        Dialog("Streets. underground. construct.  Crit Fail.  Alchemist captures her. He \"explores\" her for hours before wiping he memory of the location and letting her go.")
+                        -- TODO normal sex
+                        girl:tiredness(80)
+                        girl:exp(-40)
+                    elseif wm.Chance(girl:constitution()) then
+                        Dialog("Streets. Underground. Construct. Con. pass.  she finds some potions to improve her constitution.")
+                    else
+                        Dialog("Street. UNderground. Construct. Fail. She finds nothing of value.")
+                    end
+                elseif girl:has_trait("Strong Magic") then
+                    Dialog("Streets. Underground lair. Strong Magic attempt. Ancient wizards secret lair.")
+                    local result = wm.Range(1, 100)
+                    if result >= 95 then
+                        Dialog("Street. Underground. Magic. Crit Win.  She boosts her Int and Magic and finds an item.")
+                        -- TODO special item
+                        girl:magic(15)
+                        girl:intelligence(15)
+                    elseif result <= 10 then
+                        Dialog("Street. UNderground. Magic. Crit Fail.  Wizard comes to life to fuck her ass and steal some youth.")
+                        -- TODO anal sex
+                        girl:age(5)
+                    elseif wm.Chance(girl:magic()) then
+                        Dialog("Street. Underground. Magic. win.  Studies some of the texts and increases her INT.")
+                    else
+                        Dialog("Street. Underground. Magic. Fail.  Books turn to dust when touched. she finds nothing.")
+                    end
+                else
+                    Dialog("Streets. Underground Lair. Generic attempt. investigate the bandit hide out.")
+                    local result = wm.Range(1, 100)
+                    if result >= 95 then
+                        Dialog("Street. Underground. Generic. Crit win.  City guard arrests bandits and she finds a cash bonus.")
+                        wm.SetPlayerDisposition(15)
+                        wm.AddPlayerGold(wm.Range(300, 500))
+                    elseif result > 60 then
+                        Dialog("Street. Underground. Generic. win.  Finds information for city guards.")
+                        wm.SetPlayerDisposition(10)
+                    elseif result > 10 then
+                        Dialog("Streets. Underground. Generic. Fail.  She finds nothing to help the guards.")
+                    else
+                        Dialog("Street. Underground. Generic. Crit Fail.  Bandits capture her. gang bang. you pay ransom.")
+                        -- TODO group sex
+                        wm.TakePlayerGold(wm.Range(300, 400))
                     end
                 end
             end
